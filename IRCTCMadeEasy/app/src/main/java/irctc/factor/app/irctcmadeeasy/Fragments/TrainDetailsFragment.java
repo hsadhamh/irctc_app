@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.rey.material.widget.CheckBox;
@@ -16,8 +17,10 @@ import com.rey.material.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import irctc.factor.app.irctcmadeeasy.Adapters.AutoCompleteStringAdapter;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.ShowHidePasswordEditText;
+import irctc.factor.app.irctcmadeeasy.TicketConstants;
 
 /**
  * Created by hassanhussain on 7/8/2016.
@@ -79,6 +82,7 @@ public class TrainDetailsFragment extends Fragment {
     public RadioButton mRbBookTwoLower;
 
     private Unbinder unbinder;
+    AutoCompleteStringAdapter stationAdapter,trainAdapter;
 
     @Override
     public void onDestroy(){
@@ -88,6 +92,26 @@ public class TrainDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ticket_irctc, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        //Loading Soucre and Destination,Boarding
+        stationAdapter=new AutoCompleteStringAdapter(container.getContext(),R.layout.activity_ticket_irctc,R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
+        mvStationSource.setThreshold(3);
+        mvStationDestination.setThreshold(3);
+        mvStationSource.setAdapter(stationAdapter);
+        mvStationDestination.setAdapter(stationAdapter);
+        mvStationBoarding.setAdapter(stationAdapter);
+
+        //Loading Train Details
+        trainAdapter=new AutoCompleteStringAdapter(container.getContext(),R.layout.activity_ticket_irctc,R.id.lbl_name,TicketConstants.TRAIN_CONST_LIST);
+        mvTrainNumber.setThreshold(3);
+        mvTrainNumber.setAdapter(trainAdapter);
+
+        //Loading Class Spinner items
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(container.getContext(),android.R.layout.simple_spinner_dropdown_item,getResources().getStringArray(R.array.train_class));
+        mSpClassTrain.setAdapter(spinnerArrayAdapter);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
         return view;
     }
 

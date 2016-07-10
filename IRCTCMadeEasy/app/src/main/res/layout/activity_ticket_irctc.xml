@@ -147,7 +147,10 @@
                     android:layout_height="match_parent"
                     android:gravity="center|start"
                     custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:entries="@array/train_class"
+                    android:spinnerMode="dialog"
+                    android:prompt="@string/train_class_prompt"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

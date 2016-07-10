@@ -74,4 +74,17 @@
 
     <string name="password_text">Password</string>
     <string name="username_text">UserName</string>
+
+    <string name="train_class_prompt">Select a class</string>
+    <string-array name="train_class">
+        <item>1A</item>
+        <item>2A</item>
+        <item>FC</item>
+        <item>3A</item>
+        <item>3E</item>
+        <item>CC</item>
+        <item>EC</item>
+        <item>SL</item>
+        <item>2S</item>
+    </string-array>
 </resources>
