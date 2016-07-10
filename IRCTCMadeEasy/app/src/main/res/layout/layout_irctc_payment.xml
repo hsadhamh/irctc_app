@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/id_payment_page">
+
+        <com.rey.material.widget.TextView
+            android:id="@+id/lbl_view_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_detail_text"
+            android:gravity="center"
+            android:textStyle="bold|normal"
+            android:paddingTop="@dimen/padding_three"
+            android:padding="@dimen/padding_two"
+            android:textSize="@dimen/header_text_size"
+            android:typeface="serif"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/id_payment_mode_saved"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spinner_view_height"
+            android:padding="@dimen/padding_ten"
+            android:orientation="horizontal">
+            <com.rey.material.widget.TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+                android:padding="@dimen/padding_five"
+                android:layout_weight="1"
+                android:text="@string/saved_cards_label"/>
+            <com.rey.material.widget.Spinner
+                android:id="@+id/id_saved_card_list"
+                style="@style/Material.Widget.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|start"
+                custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                android:layout_weight=".4"
+                android:padding="2dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_payment_mode_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_ten"
+            android:background="@drawable/rectangle_group_box">
+            <com.rey.material.widget.TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/payment_mode"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold|normal"
+                android:textSize="@dimen/header_text_size" />
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:flexWrap="wrap"
+                android:layout_gravity="center">
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_banking"
+                    android:text="@string/net_banking"
+                    android:checked="true"
+                    android:gravity="center" />
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_debit"
+                    android:gravity="center"
+                    android:text="@string/debit_card"/>
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_cash"
+                    android:text="@string/cash_card"
+                    android:gravity="center"
+                    android:checked="false" />
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_irctc"
+                    android:gravity="center"
+                    android:text="@string/irct_prepaid"/>
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_credit"
+                    android:gravity="center"
+                    android:text="@string/credit_card"/>
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_view_height"
+                android:orientation="horizontal">
+                <com.rey.material.widget.TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|start"
+                    android:gravity="center|start"
+                    android:layout_weight="1"
+                    android:text="@string/payment_options"/>
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/id_spinner_payment"
+                    style="@style/Material.Widget.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|start"
+                    custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                    android:layout_weight=".4"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_ten"
+        android:background="@drawable/rectangle_group_box">
+        <com.rey.material.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card_detail_text"
+            android:gravity="center"
+            android:textStyle="bold|normal"
+            android:paddingTop="@dimen/padding_three"
+            android:textSize="@dimen/header_text_size"
+            android:typeface="serif"
+            android:layout_gravity="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_view_height"
+                android:orientation="horizontal"
+                android:id="@+id/section_id_card_type">
+                <com.rey.material.widget.TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|start"
+                    android:gravity="center|start"
+                    android:layout_weight="2"
+                    android:text="@string/card_type_text"
+                    android:layout_marginLeft="-1dp" />
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spinner_card_type"
+                    style="@style/Material.Widget.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|start"
+                    custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                    android:layout_weight="1"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/section_id_card_details"
+                android:orientation="vertical">
+
+                <com.rey.material.widget.EditText
+                    android:id="@+id/specify_card_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/card_number"
+                    custom:et_supportMode="charCounter"
+                    custom:et_supportMaxChars="16"/>
+                <com.rey.material.widget.EditText
+                    android:id="@+id/specify_card_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name_on_card"
+                    custom:et_supportMode="none"/>
+
+                <LinearLayout
+                    android:id="@+id/card_details_month_yr"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_view_height"
+                    android:orientation="horizontal">
+                    <com.rey.material.widget.TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|start"
+                        android:gravity="center|start"
+                        android:layout_weight="1.2"
+                        android:text="@string/expiry_date"
+                        android:layout_marginLeft="-1dp" />
+                    <com.rey.material.widget.Spinner
+                        android:id="@+id/spn_month"
+                        style="@style/Material.Widget.Spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center|start"
+                        custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                        android:layout_weight="1.2"
+                        android:layout_gravity="center" />
+                    <EditText
+                        android:id="@+id/txt_year_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/year_text"
+                        android:layout_weight="1.4"
+                        android:layout_gravity="center"
+                        android:inputType="number"/>
+                </LinearLayout>
+                <com.rey.material.widget.EditText
+                    android:id="@+id/txt_cvv_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/cvv_text"
+                    custom:et_supportMode="charCounter"
+                    custom:et_supportMaxChars="3"/>
+
+            </LinearLayout>
+
+            <com.rey.material.widget.CheckBox
+                android:id="@+id/specify_checkbox_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:text="@string/saved_card_text"
+                android:layout_gravity="center|left"
+                android:layout_marginLeft="-5dp" />
+            <com.rey.material.widget.EditText
+                android:id="@+id/specify_name_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:layout_gravity="center|start"
+                android:hint="@string/specify_name_save"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

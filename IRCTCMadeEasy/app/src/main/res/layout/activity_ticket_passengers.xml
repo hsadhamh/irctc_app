@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_list_passengers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/padding_eight"
+        android:layout_marginRight="@dimen/padding_eight"
+        android:src="@drawable/ic_visibility_grey_900_24dp"
+        custom:fab_colorNormal="@color/colorPrimary"
+        custom:fab_colorPressed="@color/colorPrimaryDark"
+        custom:fab_colorRipple="@color/colorAccent"
+        custom:fab_showShadow="true"
+        custom:fab_shadowColor="#66000000"
+        custom:fab_shadowRadius="@dimen/padding_four"
+        custom:fab_shadowXOffset="@dimen/padding_one"
+        custom:fab_shadowYOffset="@dimen/padding_three"
+        custom:fab_size="normal"
+        custom:fab_showAnimation="@anim/fab_scale_up"
+        custom:fab_hideAnimation="@anim/fab_scale_down"
+        android:visibility="visible"
+        android:id="@+id/fab_add_passenger" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab_more_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/padding_ten"
+        android:layout_marginBottom="@dimen/padding_ten"
+        android:layout_marginLeft="@dimen/padding_ten"
+        custom:menu_fab_size="normal"
+        custom:menu_showShadow="true"
+        custom:menu_shadowColor="#66000000"
+        custom:menu_shadowRadius="@dimen/padding_four"
+        custom:menu_shadowXOffset="@dimen/padding_one"
+        custom:menu_shadowYOffset="@dimen/padding_three"
+        custom:menu_colorNormal="#DA4336"
+        custom:menu_colorPressed="#E75043"
+        custom:menu_colorRipple="#99FFFFFF"
+        custom:menu_animationDelayPerItem="50"
+        custom:menu_icon="@drawable/fab_add"
+        custom:menu_buttonSpacing="@dimen/no_width_button"
+        custom:menu_labels_margin="@dimen/no_width_button"
+        custom:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        custom:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        custom:menu_labels_paddingTop="@dimen/padding_four"
+        custom:menu_labels_paddingRight="@dimen/padding_eight"
+        custom:menu_labels_paddingBottom="@dimen/padding_four"
+        custom:menu_labels_paddingLeft="@dimen/padding_eight"
+        custom:menu_labels_padding="@dimen/padding_eight"
+        custom:menu_labels_textColor="#FFFFFF"
+        custom:menu_labels_textSize="@dimen/header_medium_text_size"
+        custom:menu_labels_cornerRadius="@dimen/padding_three"
+        custom:menu_labels_colorRipple="#66FFFFFF"
+        custom:menu_labels_showShadow="true"
+        custom:menu_labels_singleLine="false"
+        custom:menu_labels_ellipsize="none"
+        custom:menu_labels_maxLines="-1"
+        custom:menu_labels_style="@style/MenuButtonsStyle"
+        custom:menu_labels_position="left"
+        custom:menu_openDirection="up"
+        custom:menu_backgroundColor="@android:color/transparent"
+        custom:menu_fab_show_animation="@anim/show_from_bottom"
+        custom:menu_fab_hide_animation="@anim/hide_to_bottom"
+        android:layout_gravity="bottom|end">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:fab_size="mini"
+            custom:fab_label="Menu item 1" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+    
+</FrameLayout>

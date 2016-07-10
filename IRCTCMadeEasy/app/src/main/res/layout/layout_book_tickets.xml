@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.rey.material.widget.TextView
+        android:id="@+id/lbl_view_book_tickets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/book_tickets_now_text"
+        android:gravity="center"
+        android:textStyle="bold|normal"
+        android:paddingTop="@dimen/padding_three"
+        android:textSize="@dimen/header_text_size"
+        android:typeface="serif"
+        android:layout_gravity="center"
+        android:padding="@dimen/padding_four"/>
+
+    <com.rey.material.widget.TabPageIndicator
+        android:id="@+id/id_pager_indicator"
+        style="@style/Material.Widget.TabPageIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/width_image_button"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_pager_verses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/width_image_button"
+        android:orientation="horizontal"
+        android:layout_weight=".1">
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_book_now_info"
+            android:layout_width="@dimen/no_width_button"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:minHeight="@dimen/min_height_button"
+            android:gravity="center"
+            android:text="@string/book_now_text"/>
+        <com.rey.material.widget.Button
+            android:id="@+id/btn_save_info"
+            android:layout_width="@dimen/no_width_button"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:gravity="center"
+            android:minHeight="@dimen/min_height_button"
+            android:text="@string/save_for_later"/>
+    </LinearLayout>
+
+</LinearLayout>
