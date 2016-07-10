@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/page_train_details">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_two">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_eight"
+            android:id="@+id/layout_login_details"
+            android:background="@drawable/rectangle_group_box">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_eight">
+                <com.rey.material.widget.TextView
+                    android:id="@+id/lbl_view_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_detail_text"
+                    android:gravity="center"
+                    android:textStyle="bold|normal"
+                    android:textSize="@dimen/header_text_size"
+                    android:typeface="serif"
+                    android:layout_gravity="center" />
+                <com.rey.material.widget.EditText
+                    android:id="@+id/txt_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    custom:et_labelEnable="true"
+                    custom:et_labelPadding="@dimen/padding_two"
+                    custom:et_supportMode="helper"
+                    android:hint="@string/username_text"
+                    custom:et_helper="UserName" />
+                <irctc.factor.app.irctcmadeeasy.ShowHidePasswordEditText
+                    android:id="@+id/txt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password_text"
+                    custom:drawable_show="@drawable/ic_visibility_grey_900_24dp"
+                    custom:drawable_hide="@drawable/ic_visibility_off_grey_900_24dp"
+                    android:layout_gravity="center|start"
+                    android:layout_marginLeft="-4dp" />
+                <com.rey.material.widget.CheckBox
+                    style="@style/Material.Drawable.CheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/check_box_save_login"
+                    android:text="@string/login_save_text"
+                    android:layout_gravity="center|end"
+                    android:gravity="center|start" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:padding="@dimen/padding_eight"
+            android:id="@+id/layout_train_details"
+            android:layout_below="@id/layout_login_details"
+            android:background="@drawable/rectangle_group_box">
+
+            <com.rey.material.widget.TextView
+                android:id="@+id/lbl_view_train"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/train_details_text"
+                android:gravity="center"
+                android:textStyle="bold|normal"
+                android:textSize="@dimen/header_text_size"
+                android:typeface="serif"
+                android:layout_gravity="center" />
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/station_search_source"
+                android:inputType="textCapCharacters"
+                android:dropDownWidth="match_parent" />
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/station_search_destination"
+                android:inputType="textCapCharacters"
+                android:dropDownWidth="match_parent" />
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_boarding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:hint="@string/station_search_boarding"
+                android:dropDownWidth="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_view_height"
+                android:orientation="horizontal">
+                <com.rey.material.widget.EditText
+                    android:id="@+id/txt_journey_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:hint="@string/date_journey_text"
+                    android:gravity="center|start"
+                    android:paddingStart="@dimen/padding_three" />
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/btn_calendar_click"
+                    android:layout_width="@dimen/width_image_button"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_calendar_grey600_24dp"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/set_journey_date" />
+            </LinearLayout>
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_trains"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:hint="@string/type_train_number"
+                android:dropDownWidth="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_view_height"
+                android:orientation="horizontal">
+                <com.rey.material.widget.TextView
+                    android:layout_width="@dimen/heading_width_size"
+                    android:layout_height="match_parent"
+                    android:text="@string/train_class"
+                    android:padding="@dimen/padding_five"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textStyle="bold|normal" />
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/spinner_class_berth"
+                    style="@style/Material.Widget.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|start"
+                    custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.rey.material.widget.TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quota_text"
+                    android:padding="@dimen/padding_five"
+                    android:layout_gravity="center"
+                    android:gravity="center|start"
+                    android:textStyle="bold|normal"
+                    android:textSize="@dimen/header_text_size" />
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    custom:flexWrap="wrap"
+                    android:padding="@dimen/padding_two"
+                    android:layout_gravity="center">
+                    <com.rey.material.widget.RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/id_radio_gn"
+                        android:text="@string/quota_general"
+                        android:padding="@dimen/padding_two"
+                        android:checked="true"
+                        android:gravity="center" />
+                    <com.rey.material.widget.RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/id_radio_pt"
+                        android:layout_toEndOf="@id/id_radio_gn"
+                        android:padding="@dimen/padding_two"
+                        android:gravity="center"
+                        android:text="@string/quota_premium_tatkal"/>
+                    <com.rey.material.widget.RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/id_radio_ck"
+                        android:layout_toEndOf="@id/id_radio_pt"
+                        android:padding="@dimen/padding_two"
+                        android:gravity="center"
+                        android:text="@string/quota_tatkal"/>
+                    <com.rey.material.widget.RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/id_radio_hp"
+                        android:layout_toEndOf="@id/id_radio_ck"
+                        android:text="@string/quota_handicapped"
+                        android:padding="@dimen/padding_two"
+                        android:gravity="center"
+                        android:checked="false" />
+                    <com.rey.material.widget.RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/id_radio_ld"
+                        android:layout_toEndOf="@id/id_radio_hp"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_two"
+                        android:text="@string/quota_ladies"/>
+                </com.google.android.flexbox.FlexboxLayout>
+             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_eight"
+            android:id="@+id/layout_book_details"
+            android:layout_below="@id/layout_train_details"
+            android:background="@drawable/rectangle_group_box">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_ten">
+                <com.rey.material.widget.TextView
+                    android:id="@+id/lbl_view_book"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/booking_option_text"
+                    android:gravity="center"
+                    android:textStyle="bold|normal"
+                    android:textSize="@dimen/header_text_size"
+                    android:typeface="serif"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+            <com.rey.material.widget.EditText
+                android:id="@+id/txt_mobile_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:et_labelEnable="true"
+                custom:et_labelPadding="@dimen/padding_two"
+                custom:et_supportMode="helper"
+                custom:et_helper="Mobile Number" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_two">
+                <com.rey.material.widget.CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:id="@+id/id_check_preferred_coach" />
+                <com.rey.material.widget.TextView
+                    android:id="@+id/preferred_coach_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_prefer_coach_text"
+                    android:gravity="center|start"
+                    android:textStyle="bold|normal"
+                    android:textSize="@dimen/header_medium_text_size"
+                    android:layout_gravity="center" />
+                <com.rey.material.widget.EditText
+                    android:id="@+id/txt_prefer_coach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    custom:et_labelEnable="true"
+                    custom:et_labelPadding="@dimen/padding_two"
+                    custom:et_supportMode="helper"
+                    android:hint="@string/prefer_coach_id" />
+            </LinearLayout>
+
+            <com.rey.material.widget.CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:padding="@dimen/padding_two"
+                android:gravity="center|start"
+                android:text="@string/book_auto_upgrade"
+                android:id="@+id/id_check_auto_upgrade" />
+            <com.rey.material.widget.CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:gravity="center|start"
+                android:padding="@dimen/padding_two"
+                android:text="@string/book_confirm_tickets"
+                android:id="@+id/id_check_book_confirm" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:flexWrap="wrap"
+                android:padding="@dimen/padding_two"
+                android:enabled="false"
+                android:layout_gravity="center">
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_none"
+                    android:text="@string/book_confirm_none"
+                    android:checked="true"
+                    android:gravity="center" />
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_book_all"
+                    android:layout_toEndOf="@id/id_radio_gn"
+                    android:gravity="center"
+                    android:text="@string/book_same_coach"/>
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_book_at_one"
+                    android:layout_toEndOf="@id/id_radio_pt"
+                    android:gravity="center"
+                    android:text="@string/book_one_lower_alloted"/>
+                <com.rey.material.widget.RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/id_radio_book_at_two"
+                    android:layout_toEndOf="@id/id_radio_ck"
+                    android:text="@string/book_two_lower_alloted"
+                    android:gravity="center"
+                    android:checked="false" />
+            </com.google.android.flexbox.FlexboxLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

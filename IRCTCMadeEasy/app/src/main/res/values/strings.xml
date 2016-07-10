@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">IRCTC Made Easy</string>
+    <string name="error_title">Unable to connect Internet</string>
+    <string name="error_description">Please make sure of network state、and try again.</string>
+    <string name="reload_message">reload</string>
+
+    <string name="saved_cards_label">Saved Cards :</string>
+    <string name="payment_mode">Payment Mode</string>
+    <string name="net_banking">Net Banking</string>
+    <string name="credit_card">Payment Gateway/Credit Card</string>
+    <string name="debit_card">Debit Card</string>
+    <string name="cash_card">Cash Card/Wallets</string>
+    <string name="irct_prepaid">IRCTC Prepaid</string>
+
+    <string name="payment_options">Payment Options :</string>
+    <string name="card_type_text">Card Type :</string>
+    <string name="card_number">Card Number</string>
+    <string name="name_on_card">Name on Card</string>
+    <string name="expiry_date">Expiry Date :</string>
+    <string name="year_text">Year</string>
+    <string name="cvv_text">CVV</string>
+    <string name="saved_card_text">Save Card : </string>
+    <string name="specify_name_save">Specify name to save</string>
+
+    <string name="add_passenger_text">Passenger Details</string>
+    <string name="add_passenger_name">  Name</string>
+    <string name="add_passenger_age"> Age</string>
+    <string name="add_gender_text">Gender : </string>
+    <string name="add_passenger_male">MALE</string>
+    <string name="add_passenger_female">FEMALE</string>
+    <string name="add_passenger_berth_text">Berth : </string>
+    <string name="add_passenger_food_text">Food : </string>
+    <string name="add_passenger_child_text">Child</string>
+    <string name="add_passenger_senior_text">Senior</string>
+    <string name="add_passenger_bed_roll_text">Bed Roll</string>
+    <string name="add_passenger_opt_berth_text">Opt Berth</string>
+
+    <string name="view_passenger_edit_text">Edit</string>
+    <string name="view_passenger_delete_text">Delete</string>
+
+    <string name="login_detail_text">Login Details</string>
+    <string name="login_save_text">Save Login</string>
+    <string name="train_details_text">Train Details</string>
+    <string name="station_search_source">Search Source</string>
+    <string name="station_search_destination">Search Destination</string>
+    <string name="station_search_boarding">Search Boarding</string>
+    <string name="date_journey_text">  dd-mm-yyyy</string>
+    <string name="type_train_number">Type Train Number</string>
+    <string name="train_class">Class : </string>
+    <string name="set_journey_date">Set Journey Date</string>
+    <string name="quota_text">Quota : </string>
+    <string name="quota_ladies">LADIES</string>
+    <string name="quota_handicapped">PHYSICALLY HANDICAPPED</string>
+    <string name="quota_tatkal">TATKAL</string>
+    <string name="quota_premium_tatkal">PREMIUM TATKAL</string>
+    <string name="quota_general">GENERAL</string>
+    <string name="booking_option_text">Booking Options</string>
+    <string name="book_prefer_coach_text">Preferred Coach : </string>
+    <string name="prefer_coach_id">Coach ID</string>
+    <string name="book_auto_upgrade">Consider for Auto Upgradation</string>
+    <string name="book_confirm_tickets">Book only if confirm berths are allotted</string>
+    <string name="book_confirm_none">None</string>
+    <string name="book_same_coach">Book , only if all berths are allotted in same coach</string>
+    <string name="book_one_lower_alloted">Book, only if at least 1 lower berth is allotted</string>
+    <string name="book_two_lower_alloted"> Book, only if 2 lower berths are allotted.</string>
+
+    <string name="CompanyName">Factor Labs</string>
+
+    <string name="payment_detail_text">Payment Details</string>
+    <string name="card_detail_text">Card Details</string>
+    <string name="book_now_text">Book Now</string>
+    <string name="save_for_later">Save For Later</string>
+    <string name="book_tickets_now_text">Book Tickets Now</string>
+
+    <string name="password_text">Password</string>
+    <string name="username_text">UserName</string>
+</resources>
