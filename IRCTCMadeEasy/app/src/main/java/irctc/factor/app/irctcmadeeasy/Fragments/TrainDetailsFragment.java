@@ -94,7 +94,8 @@ public class TrainDetailsFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         //Loading Soucre and Destination,Boarding
-        stationAdapter=new AutoCompleteStringAdapter(container.getContext(),R.layout.activity_ticket_irctc,R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
+        stationAdapter = new AutoCompleteStringAdapter(container.getContext(),
+                R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
         mvStationSource.setThreshold(3);
         mvStationDestination.setThreshold(3);
         mvStationSource.setAdapter(stationAdapter);
@@ -102,12 +103,14 @@ public class TrainDetailsFragment extends Fragment {
         mvStationBoarding.setAdapter(stationAdapter);
 
         //Loading Train Details
-        trainAdapter=new AutoCompleteStringAdapter(container.getContext(),R.layout.activity_ticket_irctc,R.id.lbl_name,TicketConstants.TRAIN_CONST_LIST);
+        trainAdapter=new AutoCompleteStringAdapter(container.getContext(),
+                R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.TRAIN_CONST_LIST);
         mvTrainNumber.setThreshold(3);
         mvTrainNumber.setAdapter(trainAdapter);
 
         //Loading Class Spinner items
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(container.getContext(),android.R.layout.simple_spinner_dropdown_item,getResources().getStringArray(R.array.train_class));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(container.getContext(),
+                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.train_class));
         mSpClassTrain.setAdapter(spinnerArrayAdapter);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class FactorSplashScreen extends AppCompatActivity {
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 2000;
+    private static int SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class FactorSplashScreen extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
             try {
                 TicketConstants.Initialize(getApplicationContext());
+                TicketConstants.InitializeDatabase(getApplicationContext());
                 Thread.sleep(SPLASH_TIME_OUT);
             } catch (Exception e) {
                 e.printStackTrace();

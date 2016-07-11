@@ -15,7 +15,8 @@
             android:layout_width="@dimen/width_checkbox"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center" />
+            android:gravity="center"
+            android:id="@+id/chkbx_select_passenger" />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

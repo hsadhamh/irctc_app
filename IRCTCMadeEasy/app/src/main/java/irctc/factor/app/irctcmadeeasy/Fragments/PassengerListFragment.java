@@ -1,6 +1,8 @@
 package irctc.factor.app.irctcmadeeasy.Fragments;
 
 
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +16,12 @@ import com.github.clans.fab.FloatingActionMenu;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import irctc.factor.app.irctcmadeeasy.Adapters.PassengerCursorAdapter;
 import irctc.factor.app.irctcmadeeasy.R;
+import irctc.factor.app.irctcmadeeasy.TicketConstants;
+import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
+import irctc.factor.app.irctcmadeeasy.database.DaoSession;
+import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 
 /**
  * Created by hassanhussain on 7/8/2016.
@@ -30,6 +37,13 @@ public class PassengerListFragment extends Fragment {
 
     private Unbinder unbinder;
 
+    PassengerCursorAdapter mAdapter = null;
+
+    Cursor mCursor;
+    private DaoMaster mDaoMaster;
+    private DaoSession mDaoSession;
+    private PassengerInfoDao mPassengerInfo;
+
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -38,12 +52,30 @@ public class PassengerListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ticket_passengers, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        /*  Passenger List Initialize   */
+        mMenuMoreOptions.setVisibility(view.GONE);
+
+        mDaoMaster = new DaoMaster(TicketConstants.getReadableDatabase());
+        mDaoSession = mDaoMaster.newSession();
+        mPassengerInfo = mDaoSession.getPassengerInfoDao();
+
+        setCursorAdapterToList();
+
         return view;
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void setCursorAdapterToList(){
+        mCursor = TicketConstants
+                    .getReadableDatabase()
+                    .query(mPassengerInfo.getTablename(), mPassengerInfo.getAllColumns(), null, null, null, null, "");
+        mAdapter = new PassengerCursorAdapter(getActivity().getApplicationContext(), mCursor);
+        mListPassengers.setAdapter(mAdapter);
     }
 
 }
