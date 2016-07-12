@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"
         android:text="Medium Text"
         android:paddingLeft="@dimen/padding_eight"
         android:paddingRight="@dimen/padding_eight"

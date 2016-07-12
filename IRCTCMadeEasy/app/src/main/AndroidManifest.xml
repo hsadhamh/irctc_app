@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".IRCTCMainActivity"/>
+        <activity android:name=".IrctcMainActivity"/>
         <activity android:name=".BookTicketsNowActivity"/>
         <activity android:name=".DummyActivity"/>
         <activity android:name=".AddPassengerActivity"/>

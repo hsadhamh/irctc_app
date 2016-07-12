@@ -30,4 +30,6 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    compile 'org.greenrobot:greendao:2.2.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

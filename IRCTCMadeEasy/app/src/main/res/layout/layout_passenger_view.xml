@@ -15,7 +15,9 @@
             android:layout_width="@dimen/width_checkbox"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center" />
+            android:gravity="center"
+            android:theme="@style/checkBoxStyle"
+            android:id="@+id/chkbx_select_passenger" />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -27,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center|start"
+                android:textColor="@android:color/black"
                 android:text=""/>
             <com.rey.material.widget.TextView
                 android:id="@+id/txt_berth_food"
@@ -34,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center|start"
+                android:textColor="@android:color/black"
                 android:text=""/>
             <com.rey.material.widget.TextView
                 android:id="@+id/txt_child_senior_berth_bed"
@@ -41,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center|start"
+                android:textColor="@android:color/black"
                 android:text=""/>
         </LinearLayout>
     </LinearLayout>
@@ -55,6 +60,7 @@
             android:layout_weight=".5"
             android:minHeight="@dimen/min_height_button"
             android:gravity="center"
+            android:textColor="@android:color/black"
             android:text="@string/view_passenger_edit_text"/>
         <com.rey.material.widget.Button
             android:id="@+id/btn_delete_info"
@@ -63,6 +69,7 @@
             android:layout_weight=".5"
             android:gravity="center"
             android:minHeight="@dimen/min_height_button"
+            android:textColor="@android:color/black"
             android:text="@string/view_passenger_delete_text"/>
     </LinearLayout>
 </RelativeLayout>
