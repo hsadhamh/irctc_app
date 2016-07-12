@@ -14,10 +14,14 @@ import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerViewCursorAdapter;
 import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerViewCursorViewHolder;
+import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 
@@ -91,15 +95,25 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
             String passengerNationality = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Nationality.columnName));
             int passengerTransaction = cursor.getInt(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.TransactionId.columnName));
 
-            String sText1 = "<b>"+passengerName + "</b>, <b><i>" + (passengerGender.equals("MALE")? "M" : "F") + "</b></i>, " + passengerAge;
-            String sText2 = "Berth: " + passengerBerth + ", Food: " + (passengerFood.equals("NonVeg")? "NonVeg" : "Veg") + ", \n Nationality: INDIAN";
-            String sText3 = passengerChild + ", ID Proof : " + passengerProof;
+            String sText1 = "<b>"+passengerName + "</b>, <b><i>" + (passengerGender.equals("MALE")? "M" : "F") + "</b></i>, Age: " + passengerAge;
+            String sText2 = passengerChild + "Berth: " + passengerBerth + ", Food: " + (passengerFood.equals("NonVeg")? "NonVeg" : "Veg") + ", ";
+            String sText3 =  " Nationality: INDIAN, ID Proof : " + passengerProof;
 
             // Populate fields with extracted properties
             txtView1.setText(Html.fromHtml(sText1));
             txtView2.setText(Html.fromHtml(sText2));
             txtView3.setText(Html.fromHtml(sText3));
             txtView1.setTag(passengerId);
+        }
+
+        @OnClick(R.id.btn_edit_info)
+        public void onClickEditPassenger(){
+            EventBus.getDefault().post(new EditPassengerInfo((int)txtView1.getTag()));
+        }
+
+        @OnClick(R.id.btn_delete_info)
+        public void onClickDeletePassenger(){
+
         }
     }
 }

@@ -15,11 +15,14 @@ import com.rey.material.widget.EditText;
 import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.Spinner;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import de.greenrobot.dao.query.Query;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
 import irctc.factor.app.irctcmadeeasy.database.DaoSession;
@@ -64,12 +67,20 @@ public class AddPassengerActivity extends AppCompatActivity{
     private DaoSession mDaoSession;
     private PassengerInfoDao mPassengerInfo;
 
+    private int mnPassengerID = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_row_passenger);
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+
+        if(intent != null){
+            mnPassengerID = intent.getIntExtra("passenger", 0);
+        }
 
         mPassengerAge.addTextChangedListener(new TextWatcher() {
             @Override
@@ -121,6 +132,9 @@ public class AddPassengerActivity extends AppCompatActivity{
         mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
         mDaoSession = mDaoMaster.newSession();
         mPassengerInfo = mDaoSession.getPassengerInfoDao();
+
+        if(mnPassengerID > 0)
+            GetPassengerInfo();
     }
 
     @OnCheckedChanged(R.id.check_box_child)
@@ -171,7 +185,14 @@ public class AddPassengerActivity extends AppCompatActivity{
         passenger.setNationality("Indian");
         passenger.setTransactionId(256);
         Toast.makeText(getApplicationContext(), "add to Db info", Toast.LENGTH_SHORT).show();
-        mPassengerInfo.insert(passenger);
+
+        if(mnPassengerID > 0)
+            passenger.setId((long)mnPassengerID);
+
+        if(mnPassengerID > 0)
+            mPassengerInfo.update(passenger);
+        else
+            mPassengerInfo.insert(passenger);
         Toast.makeText(getApplicationContext(), "added to Db info", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent();
@@ -181,4 +202,41 @@ public class AddPassengerActivity extends AppCompatActivity{
 
     }
 
+    public void GetPassengerInfo(){
+        PassengerInfo pass = mPassengerInfo.load((long) mnPassengerID);
+        mPassengerName.setText(pass.getName());
+        mPassengerAge.setText(""+pass.getAge());
+
+        if(pass.getGender().equals("MALE"))
+            mRbMale.setChecked(true);
+        else
+            mRbFemale.setChecked(true);
+
+        if(pass.getChild().equals("CHILD"))
+            mCbChild.setChecked(true);
+        else if(pass.getChild().equals("SENIOR"))
+            mCbSenior.setChecked(true);
+
+        if(pass.getFood().equals("NonVeg"))
+            mFoodOption.setSelection(2);
+        else
+            mFoodOption.setSelection(1);
+        mBerthOption.setSelection(getBerthIndex(pass.getBerth()));
+    }
+
+    public int getBerthIndex(String s){
+        if(s.equals("Lower"))
+            return 1;
+        else if(s.equals("Middle"))
+            return 2;
+        else if(s.equals("Upper"))
+            return 3;
+        else if(s.equals("Side Upper"))
+            return 4;
+        else if(s.equals("Side Lower"))
+            return 5;
+        else if(s.equals("Window Seat"))
+            return 6;
+        return 0;
+    }
 }

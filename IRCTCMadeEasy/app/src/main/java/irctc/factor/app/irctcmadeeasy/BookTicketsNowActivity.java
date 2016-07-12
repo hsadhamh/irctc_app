@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import irctc.factor.app.irctcmadeeasy.Adapters.BookTicketAdapter;
 import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
+import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 import irctc.factor.app.irctcmadeeasy.Events.PassengerListUpdated;
 import irctc.factor.app.irctcmadeeasy.Fragments.BookingPaymentFragment;
@@ -78,6 +79,13 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(AddPassengerEvent e){
         Intent i = new Intent(BookTicketsNowActivity.this, AddPassengerActivity.class);
+        startActivityForResult(i, EventConstants.EVENT_REQUEST_ADD_PASSENGER);
+    }
+
+    @Subscribe
+    public void onEvent(EditPassengerInfo e){
+        Intent i = new Intent(BookTicketsNowActivity.this, AddPassengerActivity.class);
+        i.putExtra("passenger", e.getPassengerID());
         startActivityForResult(i, EventConstants.EVENT_REQUEST_ADD_PASSENGER);
     }
 
