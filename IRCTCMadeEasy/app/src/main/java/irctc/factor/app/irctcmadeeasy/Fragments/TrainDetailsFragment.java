@@ -94,8 +94,7 @@ public class TrainDetailsFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         //Loading Soucre and Destination,Boarding
-        stationAdapter = new AutoCompleteStringAdapter(container.getContext(),
-                R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
+        stationAdapter=new AutoCompleteStringAdapter(container.getContext(),R.layout.activity_ticket_irctc,R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
         mvStationSource.setThreshold(3);
         mvStationDestination.setThreshold(3);
         mvStationSource.setAdapter(stationAdapter);
@@ -103,17 +102,17 @@ public class TrainDetailsFragment extends Fragment {
         mvStationBoarding.setAdapter(stationAdapter);
 
         //Loading Train Details
-        trainAdapter=new AutoCompleteStringAdapter(container.getContext(),
-                R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.TRAIN_CONST_LIST);
+        trainAdapter=new AutoCompleteStringAdapter(container.getContext(),R.layout.activity_ticket_irctc,R.id.lbl_name,TicketConstants.TRAIN_CONST_LIST);
         mvTrainNumber.setThreshold(3);
         mvTrainNumber.setAdapter(trainAdapter);
 
         //Loading Class Spinner items
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(container.getContext(),
-                android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.train_class));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(container.getContext(),android.R.layout.simple_spinner_dropdown_item,getResources().getStringArray(R.array.train_class));
         mSpClassTrain.setAdapter(spinnerArrayAdapter);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        quotaRadioButtonHandler();
+        miscRadioButtonHandler();
 
         return view;
     }
@@ -121,6 +120,94 @@ public class TrainDetailsFragment extends Fragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+    public void quotaRadioButtonHandler() {
+        mvGeneralButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mvTatkal.setChecked(false);
+                mvTatkalPremium.setChecked(false);
+                mvHandicapped.setChecked(false);
+                mvLadies.setChecked(false);
+            }
+        });
+        mvTatkal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mvGeneralButton.setChecked(false);
+                mvTatkalPremium.setChecked(false);
+                mvHandicapped.setChecked(false);
+                mvLadies.setChecked(false);
+            }
+        });
+
+        mvTatkalPremium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mvGeneralButton.setChecked(false);
+                mvTatkal.setChecked(false);
+                mvHandicapped.setChecked(false);
+                mvLadies.setChecked(false);
+            }
+        });
+
+        mvHandicapped.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mvGeneralButton.setChecked(false);
+                mvTatkal.setChecked(false);
+                mvTatkalPremium.setChecked(false);
+                mvLadies.setChecked(false);
+            }
+        });
+
+        mvLadies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mvGeneralButton.setChecked(false);
+                mvTatkal.setChecked(false);
+                mvTatkalPremium.setChecked(false);
+                mvHandicapped.setChecked(false);
+            }
+        });
+
+    }
+
+    public void miscRadioButtonHandler(){
+
+        mRbNone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRbBookOnSameCoach.setChecked(false);
+                mRbBookOneLower.setChecked(false);
+                mRbBookTwoLower.setChecked(false);
+            }
+        });
+        mRbBookOnSameCoach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRbNone.setChecked(false);
+                mRbBookOneLower.setChecked(false);
+                mRbBookTwoLower.setChecked(false);
+            }
+        });
+        mRbBookOneLower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRbNone.setChecked(false);
+                mRbBookOnSameCoach.setChecked(false);
+                mRbBookTwoLower.setChecked(false);
+            }
+        });
+        mRbBookTwoLower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRbNone.setChecked(false);
+                mRbBookOnSameCoach.setChecked(false);
+                mRbBookOneLower.setChecked(false);
+            }
+        });
+
     }
 
 }

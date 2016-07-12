@@ -21,6 +21,7 @@ import irctc.factor.app.irctcmadeeasy.Adapters.BookTicketAdapter;
 import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
+
 import irctc.factor.app.irctcmadeeasy.Fragments.BookingPaymentFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;
@@ -39,9 +40,9 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     @BindView(R.id.btn_save_info)
     Button mSaveForLaterButton;
 
-    List<Fragment> listFrags = new ArrayList<>();
-
     String[] mPagerTitles = {"Train Details","Passengers","Payment"};
+
+    List<Fragment> listFrags = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,6 @@ public class BookTicketsNowActivity extends AppCompatActivity {
         setContentView(R.layout.layout_book_tickets);
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
-
 
         listFrags.add(new TrainDetailsFragment());
         listFrags.add(new PassengerListFragment());
