@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,7 +40,7 @@ import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 /**
  * Created by hassanhussain on 7/8/2016.
  */
-public class PassengerListFragment extends Fragment {
+public class PassengerListFragment extends Fragment{
 
     @BindView(R.id.id_list_passengers)
     public RecyclerView mListPassengers;
@@ -51,7 +53,7 @@ public class PassengerListFragment extends Fragment {
 
     PassengerCursorAdapter mAdapter = null;
 
-    Cursor mCursor;
+
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
     private PassengerInfoDao mPassengerInfo;
@@ -59,13 +61,11 @@ public class PassengerListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -96,16 +96,23 @@ public class PassengerListFragment extends Fragment {
     }
 
     public void setCursorAdapterToList(){
-        mCursor = TicketConstants
+        Cursor localCursor;
+        localCursor = TicketConstants
                     .getReadableDatabase()
                     .query(mPassengerInfo.getTablename(), mPassengerInfo.getAllColumns(), null, null, null, null, "");
-        mAdapter = new PassengerCursorAdapter(getActivity().getApplicationContext(), mCursor);
+        mAdapter = new PassengerCursorAdapter(getActivity().getApplicationContext(), localCursor);
         mListPassengers.setAdapter(mAdapter);
     }
 
     @OnClick(R.id.fab_add_passenger)
     public void onAddPassengerClick(){ EventBus.getDefault().post(new AddPassengerEvent("")); }
 
-    public void onListUpdatedEvent(){ mAdapter.swapCursor(mCursor); }
+    public void onListUpdatedEvent(){
+        Cursor localCursor;
+        localCursor = TicketConstants
+                .getReadableDatabase()
+                .query(mPassengerInfo.getTablename(), mPassengerInfo.getAllColumns(), null, null, null, null, "");
+        mAdapter.swapCursor(localCursor);
+    }
 
 }

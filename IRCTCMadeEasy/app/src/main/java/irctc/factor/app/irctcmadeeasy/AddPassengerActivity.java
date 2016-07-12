@@ -164,7 +164,7 @@ public class AddPassengerActivity extends AppCompatActivity{
         passenger.setAadharCardNo(1234);
         passenger.setAge(Integer.parseInt(mPassengerAge.getText().toString()));
         passenger.setBerth(mBerthOption.getSelectedItem().toString());
-        passenger.setChild(mCbChild.isChecked()? "Child" : "Adult");
+        passenger.setChild(mCbChild.isChecked()? "CHILD" : mCbSenior.isChecked()? "SENIOR" : "ADULT");
         passenger.setFood(mFoodOption.getSelectedItem().toString());
         passenger.setGender(mRbMale.isChecked()? "MALE" : "FEMALE");
         passenger.setName(mPassengerName.getText().toString());

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,23 +84,22 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
             String passengerProof = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.AadharCardNo.columnName));
             int passengerAge = cursor.getInt(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Age.columnName));
             String passengerBerth = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Berth.columnName));
-            int passengerChild = cursor.getInt(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Child.columnName));
+            String passengerChild = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Child.columnName));
             String passengerFood = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Food.columnName));
             String passengerGender = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Gender.columnName));
             int passengerId = cursor.getInt(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Id.columnName));
             String passengerNationality = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Nationality.columnName));
             int passengerTransaction = cursor.getInt(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.TransactionId.columnName));
 
-
-            String sText1 = passengerName + ", " + passengerGender == "MALE"? "M" : "F" + ", " + passengerAge;
-            String sText2 = passengerBerth+ ", " + passengerFood == "MALE"? "M" : "F" ;
-            String sText3 = passengerChild > 0 ? "CHILD" : passengerAge > 60 ? "SENIOR" : "";
-            sText3 += ", ID Proof : " + passengerProof;
+            String sText1 = "<b>"+passengerName + "</b>, <b><i>" + (passengerGender.equals("MALE")? "M" : "F") + "</b></i>, " + passengerAge;
+            String sText2 = "Berth: " + passengerBerth + ", Food: " + (passengerFood.equals("NonVeg")? "NonVeg" : "Veg") + ", \n Nationality: INDIAN";
+            String sText3 = passengerChild + ", ID Proof : " + passengerProof;
 
             // Populate fields with extracted properties
-            txtView1.setText(sText1);
-            txtView2.setText(sText2);
-            txtView3.setText(sText3);
+            txtView1.setText(Html.fromHtml(sText1));
+            txtView2.setText(Html.fromHtml(sText2));
+            txtView3.setText(Html.fromHtml(sText3));
+            txtView1.setTag(passengerId);
         }
     }
 }

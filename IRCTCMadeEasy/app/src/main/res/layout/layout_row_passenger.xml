@@ -31,6 +31,7 @@
                 android:id="@+id/txt_passenger_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
                 android:hint="@string/add_passenger_name"
                 android:padding="@dimen/padding_two"/>
             <com.rey.material.widget.EditText
