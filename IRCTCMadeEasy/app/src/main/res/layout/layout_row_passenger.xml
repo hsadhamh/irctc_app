@@ -13,7 +13,8 @@
         <LinearLayout android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/add_passenger_page">
+            android:id="@+id/add_passenger_page"
+            android:padding="@dimen/padding_eight">
 
             <TextView
                 android:id="@+id/lbl_view_passenger"
@@ -44,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/padding_two">
-                <TextView
+                <com.rey.material.widget.TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_gender_text"
@@ -56,7 +57,8 @@
 
                 <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layout_radio_group">
 
                     <com.rey.material.widget.RadioButton
                         android:layout_width="wrap_content"
@@ -70,18 +72,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/id_radio_female"
-                        android:layout_toEndOf="@id/id_radio_gn"
                         android:padding="@dimen/padding_two"
                         android:gravity="center"
-                        android:text="@string/add_passenger_male"/>
+                        android:text="@string/add_passenger_female"/>
 
                 </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spinner_view_height"
-                android:orientation="horizontal">
+                android:layout_height="@dimen/spinner_view_height_lower"
+                android:orientation="horizontal"
+                android:id="@+id/id_holder_berth">
                 <com.rey.material.widget.TextView
                     android:layout_width="@dimen/heading_width_size"
                     android:layout_height="match_parent"
@@ -92,18 +94,21 @@
                     android:textStyle="bold|normal" />
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_berth"
-                    style="@style/Material.Widget.Spinner"
+                    style="@style/SpinnerStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|start"
                     custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:entries="@array/passenger_berth"
+                    android:spinnerMode="dialog"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spinner_view_height"
-                android:orientation="horizontal">
+                android:layout_height="@dimen/spinner_view_height_lower"
+                android:orientation="horizontal"
+                android:id="@+id/id_holder_food">
                 <com.rey.material.widget.TextView
                     android:layout_width="@dimen/heading_width_size"
                     android:layout_height="match_parent"
@@ -114,12 +119,14 @@
                     android:textStyle="bold|normal" />
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_food"
-                    style="@style/Material.Widget.Spinner"
+                    style="@style/SpinnerStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     custom:rd_style="@style/Material.Drawable.Ripple.Wave"
                     android:gravity="center|start"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:entries="@array/passenger_food"
+                    android:spinnerMode="dialog"/>
             </LinearLayout>
 
             <com.rey.material.widget.CheckBox

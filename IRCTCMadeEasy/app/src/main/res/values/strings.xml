@@ -87,4 +87,20 @@
         <item>SL</item>
         <item>2S</item>
     </string-array>
+
+    <string-array name="passenger_food">
+        <item>NotSet</item>
+        <item>Veg</item>
+        <item>NonVeg</item>
+    </string-array>
+
+    <string-array name="passenger_berth">
+        <item>No Preference</item>
+        <item>Lower</item>
+        <item>Middle</item>
+        <item>Upper</item>
+        <item>Side Upper</item>
+        <item>Side Lower</item>
+        <item>Window Seat</item>
+    </string-array>
 </resources>
