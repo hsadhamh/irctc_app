@@ -73,7 +73,7 @@
     <string name="book_tickets_now_text">Book Tickets Now</string>
 
     <string name="password_text">Password</string>
-    <string name="username_text">UserName</string>
+    <string name="username_text">Username</string>
 
     <string name="train_class_prompt">Select a class</string>
     <string-array name="train_class">

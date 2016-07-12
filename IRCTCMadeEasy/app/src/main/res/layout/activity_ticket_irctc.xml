@@ -36,10 +36,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     custom:et_labelEnable="true"
-                    custom:et_labelPadding="@dimen/padding_two"
-                    custom:et_supportMode="helper"
+                    custom:et_labelPadding="@dimen/padding_three"
+                    custom:et_labelTextSize=""
+
                     android:hint="@string/username_text"
-                    custom:et_helper="UserName" />
+
+                     />
                 <irctc.factor.app.irctcmadeeasy.ShowHidePasswordEditText
                     android:id="@+id/txt_password"
                     android:layout_width="match_parent"
@@ -177,7 +179,7 @@
                         android:id="@+id/id_radio_gn"
                         android:text="@string/quota_general"
                         android:padding="@dimen/padding_two"
-                        android:checked="true"
+                        android:checked="false"
                         android:gravity="center" />
                     <com.rey.material.widget.RadioButton
                         android:layout_width="wrap_content"
@@ -212,6 +214,7 @@
                         android:gravity="center"
                         android:padding="@dimen/padding_two"
                         android:text="@string/quota_ladies"/>
+
                 </com.google.android.flexbox.FlexboxLayout>
              </LinearLayout>
         </LinearLayout>
@@ -242,12 +245,13 @@
             </LinearLayout>
             <com.rey.material.widget.EditText
                 android:id="@+id/txt_mobile_no"
+                android:textSize="25sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 custom:et_labelEnable="true"
                 custom:et_labelPadding="@dimen/padding_two"
                 custom:et_supportMode="helper"
-                custom:et_helper="Mobile Number" />
+                android:hint="Mobile Number" />
 
             <LinearLayout
                 android:orientation="horizontal"

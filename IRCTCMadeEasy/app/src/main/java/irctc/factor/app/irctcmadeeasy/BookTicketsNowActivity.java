@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.rey.material.widget.Button;
+import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.TabPageIndicator;
 
 import java.util.ArrayList;
@@ -32,6 +34,9 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     @BindView(R.id.btn_save_info)
     Button mSaveForLaterButton;
 
+
+
+
     String[] mPagerTitles = {"Train Details","Passengers","Payment"};
 
     @Override
@@ -52,5 +57,9 @@ public class BookTicketsNowActivity extends AppCompatActivity {
         assert mPagerIndicator != null;
         mPagerIndicator.setViewPager(mPager);
 
+
+
     }
+
+
 }
