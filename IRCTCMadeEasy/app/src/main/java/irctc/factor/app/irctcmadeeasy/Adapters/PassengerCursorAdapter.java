@@ -21,8 +21,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerViewCursorAdapter;
 import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerViewCursorViewHolder;
+import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.R;
+import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
 import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 
 /**
@@ -95,12 +97,13 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
             String passengerNationality = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Nationality.columnName));
             int passengerTransaction = cursor.getInt(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.TransactionId.columnName));
 
-            String sText1 = "<b>"+passengerName + "</b>, <b><i>" + (passengerGender.equals("MALE")? "M" : "F") + "</b></i>, Age: " + passengerAge;
-            String sText2 = passengerChild + "Berth: " + passengerBerth + ", Food: " + (passengerFood.equals("NonVeg")? "NonVeg" : "Veg") + ", ";
-            String sText3 =  " Nationality: INDIAN, ID Proof : " + passengerProof;
+            String sText1 = "<b>"+passengerName + "</b>, <b><i>" + (passengerGender.equals("MALE")? "M" : "F") + "</i></b>, <b>Age:</b> " + passengerAge;
+            String sText2 = passengerChild + "; <b>Berth: </b>" + passengerBerth + "; <b>Food:</b> " + (passengerFood.equals("NonVeg")? "NonVeg" : "Veg");
+            String sText3 =  "<b>Nationality:</b> INDIAN; <b>ID Proof :</b> " + passengerProof;
 
             // Populate fields with extracted properties
             txtView1.setText(Html.fromHtml(sText1));
+            txtView1.setTextSize(15.0f);
             txtView2.setText(Html.fromHtml(sText2));
             txtView3.setText(Html.fromHtml(sText3));
             txtView1.setTag(passengerId);
@@ -113,7 +116,7 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
 
         @OnClick(R.id.btn_delete_info)
         public void onClickDeletePassenger(){
-
+            EventBus.getDefault().post(new DeletePassengerEvent((int)txtView1.getTag()));
         }
     }
 }

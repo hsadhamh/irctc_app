@@ -21,7 +21,6 @@ import irctc.factor.app.irctcmadeeasy.Adapters.BookTicketAdapter;
 import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
-import irctc.factor.app.irctcmadeeasy.Events.PassengerListUpdated;
 import irctc.factor.app.irctcmadeeasy.Fragments.BookingPaymentFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;

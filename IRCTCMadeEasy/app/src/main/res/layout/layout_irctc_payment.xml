@@ -10,24 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/id_payment_page">
-
-        <com.rey.material.widget.TextView
-            android:id="@+id/lbl_view_payment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/payment_detail_text"
-            android:gravity="center"
-            android:textStyle="bold|normal"
-            android:paddingTop="@dimen/padding_three"
-            android:padding="@dimen/padding_two"
-            android:textSize="@dimen/header_text_size"
-            android:typeface="serif"
-            android:layout_gravity="center" />
-
         <LinearLayout
             android:id="@+id/id_payment_mode_saved"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/spinner_view_height"
+            android:layout_height="wrap_content"
             android:padding="@dimen/padding_ten"
             android:orientation="horizontal">
             <com.rey.material.widget.TextView
@@ -35,7 +21,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center|start"
                 android:gravity="center|start"
-                android:padding="@dimen/padding_five"
+                android:padding="@dimen/padding_two"
                 android:layout_weight="1"
                 android:text="@string/saved_cards_label"/>
             <com.rey.material.widget.Spinner
@@ -106,7 +92,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spinner_view_height"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <com.rey.material.widget.TextView
                     android:layout_width="match_parent"
@@ -148,7 +134,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spinner_view_height"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/section_id_card_type">
                 <com.rey.material.widget.TextView
@@ -194,7 +180,7 @@
                 <LinearLayout
                     android:id="@+id/card_details_month_yr"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/spinner_view_height"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <com.rey.material.widget.TextView
                         android:layout_width="match_parent"

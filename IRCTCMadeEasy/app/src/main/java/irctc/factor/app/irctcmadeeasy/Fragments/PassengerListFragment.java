@@ -29,12 +29,14 @@ import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Adapters.PassengerCursorAdapter;
 import irctc.factor.app.irctcmadeeasy.AddPassengerActivity;
 import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
+import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 import irctc.factor.app.irctcmadeeasy.Events.PassengerListUpdated;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.TicketConstants;
 import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
 import irctc.factor.app.irctcmadeeasy.database.DaoSession;
+import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
 import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 
 /**
@@ -46,8 +48,6 @@ public class PassengerListFragment extends Fragment{
     public RecyclerView mListPassengers;
     @BindView(R.id.fab_add_passenger)
     public FloatingActionButton mListAddPassenger;
-    @BindView(R.id.fab_more_menu)
-    public FloatingActionMenu mMenuMoreOptions;
 
     private Unbinder unbinder;
 
@@ -61,11 +61,13 @@ public class PassengerListFragment extends Fragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -80,8 +82,6 @@ public class PassengerListFragment extends Fragment{
         mListPassengers.setLayoutManager(linearLayoutManager);
 
         /*  Passenger List Initialize   */
-        mMenuMoreOptions.setVisibility(view.GONE);
-
         mDaoMaster = new DaoMaster(TicketConstants.getReadableDatabase());
         mDaoSession = mDaoMaster.newSession();
         mPassengerInfo = mDaoSession.getPassengerInfoDao();
@@ -113,6 +113,13 @@ public class PassengerListFragment extends Fragment{
                 .getReadableDatabase()
                 .query(mPassengerInfo.getTablename(), mPassengerInfo.getAllColumns(), null, null, null, null, "");
         mAdapter.swapCursor(localCursor);
+    }
+
+    @Subscribe
+    public void onEventHandle(DeletePassengerEvent e){
+        PassengerInfo pass = mPassengerInfo.load((long)e.getPassengerID());
+        mPassengerInfo.delete(pass);
+        onListUpdatedEvent();
     }
 
 }

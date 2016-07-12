@@ -32,4 +32,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'org.greenrobot:greendao:2.2.0'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
 }

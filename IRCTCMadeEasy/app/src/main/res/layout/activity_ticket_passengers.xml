@@ -15,10 +15,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/padding_eight"
         android:layout_marginRight="@dimen/padding_eight"
-        android:src="@drawable/ic_visibility_grey_900_24dp"
-        custom:fab_colorNormal="@color/colorPrimary"
-        custom:fab_colorPressed="@color/colorPrimaryDark"
-        custom:fab_colorRipple="@color/colorAccent"
+        android:src="@drawable/ic_plus_white_24dp"
+        custom:fab_colorNormal="@color/colorAccent"
+        custom:fab_colorRipple="#66000000"
         custom:fab_showShadow="true"
         custom:fab_shadowColor="#66000000"
         custom:fab_shadowRadius="@dimen/padding_four"
@@ -30,7 +29,7 @@
         android:visibility="visible"
         android:id="@+id/fab_add_passenger" />
 
-    <com.github.clans.fab.FloatingActionMenu
+    <!--<com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab_more_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,6 +79,6 @@
             custom:fab_size="mini"
             custom:fab_label="Menu item 1" />
 
-    </com.github.clans.fab.FloatingActionMenu>
+    </com.github.clans.fab.FloatingActionMenu>-->
     
 </FrameLayout>

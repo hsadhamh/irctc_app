@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
@@ -172,34 +173,32 @@ public class AddPassengerActivity extends AppCompatActivity{
     @OnClick(R.id.fab_save_passenger)
     public void SavePassengerInfo(){
         /*    VALIDATE INFORMATION    */
-
+        if(isValidInformationGiven()) {
         /*  SAVE INFORMATION TO DB  */
-        PassengerInfo passenger = new PassengerInfo();
-        passenger.setAadharCardNo(1234);
-        passenger.setAge(Integer.parseInt(mPassengerAge.getText().toString()));
-        passenger.setBerth(mBerthOption.getSelectedItem().toString());
-        passenger.setChild(mCbChild.isChecked()? "CHILD" : mCbSenior.isChecked()? "SENIOR" : "ADULT");
-        passenger.setFood(mFoodOption.getSelectedItem().toString());
-        passenger.setGender(mRbMale.isChecked()? "MALE" : "FEMALE");
-        passenger.setName(mPassengerName.getText().toString());
-        passenger.setNationality("Indian");
-        passenger.setTransactionId(256);
-        Toast.makeText(getApplicationContext(), "add to Db info", Toast.LENGTH_SHORT).show();
+            PassengerInfo passenger = new PassengerInfo();
+            passenger.setAadharCardNo(1234);
+            passenger.setAge(Integer.parseInt(mPassengerAge.getText().toString()));
+            passenger.setBerth(mBerthOption.getSelectedItem().toString());
+            passenger.setChild(mCbChild.isChecked() ? "CHILD" : mCbSenior.isChecked() ? "SENIOR" : "ADULT");
+            passenger.setFood(mFoodOption.getSelectedItem().toString());
+            passenger.setGender(mRbMale.isChecked() ? "MALE" : "FEMALE");
+            passenger.setName(mPassengerName.getText().toString());
+            passenger.setNationality("Indian");
+            passenger.setTransactionId(256);
 
-        if(mnPassengerID > 0)
-            passenger.setId((long)mnPassengerID);
+            if (mnPassengerID > 0)
+                passenger.setId((long) mnPassengerID);
 
-        if(mnPassengerID > 0)
-            mPassengerInfo.update(passenger);
-        else
-            mPassengerInfo.insert(passenger);
-        Toast.makeText(getApplicationContext(), "added to Db info", Toast.LENGTH_SHORT).show();
+            if (mnPassengerID > 0)
+                mPassengerInfo.update(passenger);
+            else
+                mPassengerInfo.insert(passenger);
 
-        Intent intent = new Intent();
-        intent.putExtra("dummy_value","value_here");
-        setResult(EventConstants.EVENT_RESP_ADD_PASSENGER_OK, intent);
-        finish();
-
+            Intent intent = new Intent();
+            intent.putExtra("dummy_value", "value_here");
+            setResult(EventConstants.EVENT_RESP_ADD_PASSENGER_OK, intent);
+            finish();
+        }
     }
 
     public void GetPassengerInfo(){
@@ -238,5 +237,30 @@ public class AddPassengerActivity extends AppCompatActivity{
         else if(s.equals("Window Seat"))
             return 6;
         return 0;
+    }
+
+    public boolean isValidInformationGiven(){
+        String sAge = mPassengerAge.getText().toString();
+        if(sAge.isEmpty()
+                || Integer.parseInt(sAge) > 135
+                || Integer.parseInt(sAge) == 0) {
+            new MaterialDialog
+                    .Builder(this)
+                    .content("Given age is not valid.")
+                    .positiveText("OK")
+                    .show();
+            return false;
+        }
+
+        String sName = mPassengerName.getText().toString();
+        if(sName.isEmpty() || sName.length() <= 2) {
+            new MaterialDialog
+                    .Builder(this)
+                    .content("Given name is not valid.")
+                    .positiveText("OK")
+                    .show();
+            return false;
+        }
+        return true;
     }
 }

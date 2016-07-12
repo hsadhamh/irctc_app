@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/padding_fifteen"
-    android:id="@+id/row_passenger_info">
+    android:id="@+id/row_passenger_info"
+    android:background="@drawable/rectangle_group_box">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/section_passenger_info">
+        android:id="@+id/section_passenger_info"
+        android:padding="@dimen/padding_three">
         <com.rey.material.widget.CheckBox
             android:layout_width="@dimen/width_checkbox"
             android:layout_height="match_parent"
@@ -61,7 +63,10 @@
             android:minHeight="@dimen/min_height_button"
             android:gravity="center"
             android:textColor="@android:color/black"
-            android:text="@string/view_passenger_edit_text"/>
+            android:text="@string/view_passenger_edit_text"
+            android:background="@color/buttonColor"
+            android:paddingStart="@dimen/padding_two"
+            android:paddingEnd="@dimen/padding_two" />
         <com.rey.material.widget.Button
             android:id="@+id/btn_delete_info"
             android:layout_width="@dimen/no_width_button"
@@ -70,6 +75,9 @@
             android:gravity="center"
             android:minHeight="@dimen/min_height_button"
             android:textColor="@android:color/black"
-            android:text="@string/view_passenger_delete_text"/>
+            android:background="@color/buttonColor"
+            android:text="@string/view_passenger_delete_text"
+            android:paddingStart="@dimen/padding_two"
+            android:paddingEnd="@dimen/padding_two"/>
     </LinearLayout>
 </RelativeLayout>
