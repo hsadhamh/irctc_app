@@ -34,4 +34,9 @@
         <item name="spn_popupItemAnimOffset">120</item>
     </style>
 
+    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

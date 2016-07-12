@@ -1,6 +1,7 @@
 package irctc.factor.app.irctcmadeeasy.Fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -56,9 +57,19 @@ public class PassengerListFragment extends Fragment {
     private PassengerInfoDao mPassengerInfo;
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy(){ super.onDestroy(); }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ticket_passengers, container, false);
@@ -76,7 +87,6 @@ public class PassengerListFragment extends Fragment {
         mPassengerInfo = mDaoSession.getPassengerInfoDao();
 
         setCursorAdapterToList();
-
         return view;
     }
 
@@ -94,13 +104,8 @@ public class PassengerListFragment extends Fragment {
     }
 
     @OnClick(R.id.fab_add_passenger)
-    public void onAddPassengerClick(){
-        EventBus.getDefault().post(new AddPassengerEvent(""));
-    }
+    public void onAddPassengerClick(){ EventBus.getDefault().post(new AddPassengerEvent("")); }
 
-    @Subscribe
-    public void onEvent(PassengerListUpdated e){
-        mAdapter.swapCursor(mCursor);
-    }
+    public void onListUpdatedEvent(){ mAdapter.swapCursor(mCursor); }
 
 }

@@ -39,6 +39,8 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     @BindView(R.id.btn_save_info)
     Button mSaveForLaterButton;
 
+    List<Fragment> listFrags = new ArrayList<>();
+
     String[] mPagerTitles = {"Train Details","Passengers","Payment"};
 
     @Override
@@ -48,7 +50,7 @@ public class BookTicketsNowActivity extends AppCompatActivity {
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
 
-        List<Fragment> listFrags = new ArrayList<>();
+
         listFrags.add(new TrainDetailsFragment());
         listFrags.add(new PassengerListFragment());
         listFrags.add(new BookingPaymentFragment());
@@ -83,7 +85,7 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EventConstants.EVENT_REQUEST_ADD_PASSENGER) {
             if(resultCode == EventConstants.EVENT_RESP_ADD_PASSENGER_OK){
-                EventBus.getDefault().post(new PassengerListUpdated(""));
+                ((PassengerListFragment)listFrags.get(1)).onListUpdatedEvent();
             }
         }
     }//onActivityResult

@@ -1,11 +1,13 @@
 package irctc.factor.app.irctcmadeeasy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.rey.material.widget.CheckBox;
@@ -18,6 +20,11 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
+import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
+import irctc.factor.app.irctcmadeeasy.database.DaoSession;
+import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
+import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 
 /**
  * Created by hassanhussain on 7/9/2016.
@@ -53,6 +60,10 @@ public class AddPassengerActivity extends AppCompatActivity{
     @BindView(R.id.fab_save_passenger)
     public FloatingActionButton mSaveButton;
 
+    private DaoMaster mDaoMaster;
+    private DaoSession mDaoSession;
+    private PassengerInfoDao mPassengerInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +75,8 @@ public class AddPassengerActivity extends AppCompatActivity{
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                String sAge = mPassengerAge.getText().toString();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String sAge = s.toString();
                 if(!sAge.isEmpty()) {
                     int age = Integer.parseInt(sAge);
                     if (age > 0 && age < 6) {
@@ -95,6 +104,8 @@ public class AddPassengerActivity extends AppCompatActivity{
                     mCbSenior.setChecked(false);
                 }
             }
+            @Override
+            public void afterTextChanged(Editable s) { }
         });
 
         ArrayAdapter<String> spBerthAdapter = new ArrayAdapter<String>(getApplicationContext(),
@@ -106,21 +117,25 @@ public class AddPassengerActivity extends AppCompatActivity{
                 R.layout.layout_spinner_item, getResources().getStringArray(R.array.passenger_food));
         spFoodAdapter.setDropDownViewResource(R.layout.layout_spinner_item);
         mFoodOption.setAdapter(spFoodAdapter);
+
+        mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
+        mDaoSession = mDaoMaster.newSession();
+        mPassengerInfo = mDaoSession.getPassengerInfoDao();
     }
 
     @OnCheckedChanged(R.id.check_box_child)
     public void onChildChecked(){
         if(mCbChild.isChecked()) {
-            mHolderBerth.setEnabled(false);
-            mHolderFood.setEnabled(false);
+            mBerthOption.setEnabled(false);
+            mFoodOption.setEnabled(false);
             mCbChild.setEnabled(true);
             mCbSenior.setEnabled(false);
             mCbBedRoll.setEnabled(false);
             mCbOptBerth.setEnabled(false);
         }
         else {
-            mHolderBerth.setEnabled(true);
-            mHolderFood.setEnabled(true);
+            mBerthOption.setEnabled(true);
+            mFoodOption.setEnabled(true);
             mCbChild.setEnabled(false);
             mCbSenior.setEnabled(true);
             mCbBedRoll.setEnabled(true);
@@ -138,6 +153,32 @@ public class AddPassengerActivity extends AppCompatActivity{
                 mRbMale.setChecked(false);
             }
         }
+    }
+
+    @OnClick(R.id.fab_save_passenger)
+    public void SavePassengerInfo(){
+        /*    VALIDATE INFORMATION    */
+
+        /*  SAVE INFORMATION TO DB  */
+        PassengerInfo passenger = new PassengerInfo();
+        passenger.setAadharCardNo(1234);
+        passenger.setAge(Integer.parseInt(mPassengerAge.getText().toString()));
+        passenger.setBerth(mBerthOption.getSelectedItem().toString());
+        passenger.setChild(mCbChild.isChecked()? "Child" : "Adult");
+        passenger.setFood(mFoodOption.getSelectedItem().toString());
+        passenger.setGender(mRbMale.isChecked()? "MALE" : "FEMALE");
+        passenger.setName(mPassengerName.getText().toString());
+        passenger.setNationality("Indian");
+        passenger.setTransactionId(256);
+        Toast.makeText(getApplicationContext(), "add to Db info", Toast.LENGTH_SHORT).show();
+        mPassengerInfo.insert(passenger);
+        Toast.makeText(getApplicationContext(), "added to Db info", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent();
+        intent.putExtra("dummy_value","value_here");
+        setResult(EventConstants.EVENT_RESP_ADD_PASSENGER_OK, intent);
+        finish();
+
     }
 
 }
