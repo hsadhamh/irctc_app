@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
@@ -20,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.R;
-import irctc.factor.app.irctcmadeeasy.ShowHidePasswordEditText;
+import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 
 /**
  * Created by hassanhussain on 7/8/2016.

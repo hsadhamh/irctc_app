@@ -266,7 +266,7 @@
                 android:gravity="center"
                 android:hint="@string/username_text"
                 android:textSize="16sp"/>
-            <irctc.factor.app.irctcmadeeasy.ShowHidePasswordEditText
+            <irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText
                 android:id="@+id/txt_internet_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

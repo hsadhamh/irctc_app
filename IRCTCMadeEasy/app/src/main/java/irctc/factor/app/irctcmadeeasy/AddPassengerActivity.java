@@ -78,11 +78,34 @@ public class AddPassengerActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-
         if(intent != null){
             mnPassengerID = intent.getIntExtra("passenger", 0);
         }
 
+        setUiListeners();
+        setAdapters();
+
+        mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
+        mDaoSession = mDaoMaster.newSession();
+        mPassengerInfo = mDaoSession.getPassengerInfoDao();
+
+        if(mnPassengerID > 0)
+            GetPassengerInfo();
+    }
+
+    public void setAdapters(){
+        ArrayAdapter<String> spBerthAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                R.layout.layout_spinner_item, getResources().getStringArray(R.array.passenger_berth));
+        spBerthAdapter.setDropDownViewResource(R.layout.layout_spinner_item);
+        mBerthOption.setAdapter(spBerthAdapter);
+
+        ArrayAdapter<String> spFoodAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                R.layout.layout_spinner_item, getResources().getStringArray(R.array.passenger_food));
+        spFoodAdapter.setDropDownViewResource(R.layout.layout_spinner_item);
+        mFoodOption.setAdapter(spFoodAdapter);
+    }
+
+    public void setUiListeners(){
         mPassengerAge.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -91,23 +114,10 @@ public class AddPassengerActivity extends AppCompatActivity{
                 String sAge = s.toString();
                 if(!sAge.isEmpty()) {
                     int age = Integer.parseInt(sAge);
-                    if (age > 0 && age < 6) {
-                        mCbChild.setEnabled(true);
-                        mCbChild.setChecked(true);
-                        mCbSenior.setEnabled(false);
-                        mCbSenior.setChecked(false);
-                    } else if (age >= 60) {
-                        mCbChild.setEnabled(false);
-                        mCbChild.setChecked(false);
-                        mCbSenior.setEnabled(true);
-                        mCbSenior.setChecked(true);
-                    }
-                    else {
-                        mCbChild.setEnabled(false);
-                        mCbChild.setChecked(false);
-                        mCbSenior.setEnabled(false);
-                        mCbSenior.setChecked(false);
-                    }
+                    mCbChild.setEnabled(age > 0 && age < 6);
+                    mCbChild.setChecked(age > 0 && age < 6);
+                    mCbSenior.setEnabled(age >= 60);
+                    mCbSenior.setChecked(age >= 60);
                 }
                 else {
                     mCbChild.setEnabled(false);
@@ -119,43 +129,16 @@ public class AddPassengerActivity extends AppCompatActivity{
             @Override
             public void afterTextChanged(Editable s) { }
         });
-
-        ArrayAdapter<String> spBerthAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                R.layout.layout_spinner_item, getResources().getStringArray(R.array.passenger_berth));
-        spBerthAdapter.setDropDownViewResource(R.layout.layout_spinner_item);
-        mBerthOption.setAdapter(spBerthAdapter);
-
-        ArrayAdapter<String> spFoodAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                R.layout.layout_spinner_item, getResources().getStringArray(R.array.passenger_food));
-        spFoodAdapter.setDropDownViewResource(R.layout.layout_spinner_item);
-        mFoodOption.setAdapter(spFoodAdapter);
-
-        mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
-        mDaoSession = mDaoMaster.newSession();
-        mPassengerInfo = mDaoSession.getPassengerInfoDao();
-
-        if(mnPassengerID > 0)
-            GetPassengerInfo();
     }
 
     @OnCheckedChanged(R.id.check_box_child)
     public void onChildChecked(){
-        if(mCbChild.isChecked()) {
-            mBerthOption.setEnabled(false);
-            mFoodOption.setEnabled(false);
-            mCbChild.setEnabled(true);
-            mCbSenior.setEnabled(false);
-            mCbBedRoll.setEnabled(false);
-            mCbOptBerth.setEnabled(false);
-        }
-        else {
-            mBerthOption.setEnabled(true);
-            mFoodOption.setEnabled(true);
-            mCbChild.setEnabled(false);
-            mCbSenior.setEnabled(true);
-            mCbBedRoll.setEnabled(true);
-            mCbOptBerth.setEnabled(true);
-        }
+        mBerthOption.setEnabled(!mCbChild.isChecked());
+        mFoodOption.setEnabled(!mCbChild.isChecked());
+        mCbChild.setEnabled(mCbChild.isChecked());
+        mCbSenior.setEnabled(!mCbChild.isChecked());
+        mCbBedRoll.setEnabled(!mCbChild.isChecked());
+        mCbOptBerth.setEnabled(!mCbChild.isChecked());
     }
 
     @OnCheckedChanged({R.id.id_radio_male, R.id.id_radio_female})
