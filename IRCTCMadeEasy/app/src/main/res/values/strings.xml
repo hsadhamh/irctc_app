@@ -13,12 +13,14 @@
     <string name="irct_prepaid">IRCTC Prepaid</string>
 
     <string name="payment_options">Payment Options :</string>
+    <string name="internet_banking_text">Internet Banking</string>
     <string name="card_type_text">Card Type :</string>
     <string name="card_number">Card Number</string>
     <string name="name_on_card">Name on Card</string>
     <string name="expiry_date">Expiry Date :</string>
     <string name="year_text">Year</string>
     <string name="cvv_text">CVV</string>
+    <string name="atm_pin_text">ATM PIN</string>
     <string name="saved_card_text">Save Card : </string>
     <string name="specify_name_save">Specify name to save</string>
 
@@ -102,5 +104,98 @@
         <item>Side Upper</item>
         <item>Side Lower</item>
         <item>Window Seat</item>
+    </string-array>
+
+    <string-array name="net_banking_options">
+        <item>Not Set</item>
+        <item>State Bank of India</item>
+        <item>State Bank of India and Associates</item>
+        <item>Federal Bank</item>
+        <item>Indian Bank</item>
+        <item>Union Bank of India</item>
+        <item>Andhra Bank</item>
+        <item>Punjab National Bank</item>
+        <item>Allahabad Bank</item>
+        <item>Vijaya Bank</item>
+        <item>AXIS Bank</item>
+        <item>HDFC Bank</item>
+        <item>Bank of Baroda</item>
+        <item>Karnataka Bank</item>
+        <item>Oriental Bank of Commerce</item>
+        <item>Karur Vysya Bank</item>
+        <item>Kotak Mahindra Bank</item>
+        <item>ICICI Bank</item>
+        <item>IndusInd Bank</item>
+        <item>Central Bank of India</item>
+        <item>Bank of India</item>
+        <item>Syndicate Bank</item>
+        <item>Bank of Maharashatra</item>
+        <item>IDBI Bank</item>
+        <item>Corporation Bank</item>
+        <item>Yes Bank</item>
+        <item>Nepal SBI Bank Ltd.</item>
+        <item>South Indian Bank</item>
+    </string-array>
+
+    <string-array name="credit_card_options">
+        <item>Not Set</item>
+        <item>Visa/Master Card(Powered By ICICI BANK)</item>
+        <item>Visa/Master Card(Powered By CITI BANK)</item>
+        <item>Visa/Master Card(Powered By HDFC BANK)</item>
+        <item>American Express</item>
+        <item>Visa/Master Card(Powered By AXIS BANK)</item>
+        <item>RuPay Card (Powered by Kotak Bank)</item>
+        <item>International cards (Powered by ATOM)</item>
+    </string-array>
+
+    <string-array name="debit_card_options">
+        <item>Not Set</item>
+        <item>State Bank of India</item>
+        <item>Indian Overseas Bank</item>
+        <item>Punjab National Bank</item>
+        <item>Indian Bank</item>
+        <item>Union Bank of India</item>
+        <item>Bank of India</item>
+        <item>Andhra Bank</item>
+        <item>Canara Bank</item>
+        <item>CITI Bank</item>
+        <item>ICICI Bank</item>
+        <item>HDFC Bank</item>
+        <item>AXIS Bank</item>
+    </string-array>
+
+    <string-array name="cash_cards_option">
+        <item>Not Set</item>
+        <item>ITZ Cash Card</item>
+        <item>I Cash Card</item>
+        <item>OXI Cash Card</item>
+        <item>Mobikwik Wallet</item>
+        <item>mRUPEE Wallet</item>
+        <item>Paytm Wallet</item>
+    </string-array>
+
+    <string-array name="irctc_card_option">
+        <item>Not Set</item>
+        <item>IRCTC Union Bank prepaid (RuPay)</item>
+    </string-array>
+
+    <string-array name="months_calendar">
+        <item>JAN</item>
+        <item>FEB</item>
+        <item>MAR</item>
+        <item>APR</item>
+        <item>MAY</item>
+        <item>JUN</item>
+        <item>JUL</item>
+        <item>AUG</item>
+        <item>SEP</item>
+        <item>OCT</item>
+        <item>NOV</item>
+        <item>DEC</item>
+    </string-array>
+
+    <string-array name="cards_type">
+        <item>VISA</item>
+        <item>MASTER</item>
     </string-array>
 </resources>
