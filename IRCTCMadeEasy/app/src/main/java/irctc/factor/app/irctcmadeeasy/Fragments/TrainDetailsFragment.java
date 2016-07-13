@@ -1,5 +1,6 @@
 package irctc.factor.app.irctcmadeeasy.Fragments;
 
+import android.app.DatePickerDialog;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import com.rey.material.widget.EditText;
 import com.rey.material.widget.ImageButton;
 import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.Spinner;
+
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,6 +88,8 @@ public class TrainDetailsFragment extends Fragment {
     private Unbinder unbinder;
     AutoCompleteStringAdapter stationAdapter,trainAdapter;
 
+    private int mYear,mMonth,mDay;
+
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -113,6 +119,7 @@ public class TrainDetailsFragment extends Fragment {
 
         quotaRadioButtonHandler();
         miscRadioButtonHandler();
+        ShowDatePicker(container);
 
         return view;
     }
@@ -169,6 +176,36 @@ public class TrainDetailsFragment extends Fragment {
                 mvTatkalPremium.setChecked(false);
                 mvHandicapped.setChecked(false);
             }
+        });
+
+    }
+
+     public void ShowDatePicker(final ViewGroup container) {
+
+        mvDateCalButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Get Current Date
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(container.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(android.widget.DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+
         });
 
     }
