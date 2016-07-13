@@ -42,7 +42,7 @@ public class BookTicketsNowActivity extends AppCompatActivity {
 
     String[] mPagerTitles = {"Train Details","Passengers","Payment"};
 
-    List<Fragment> listFrags = new ArrayList<>();
+    List<Fragment> mListUiFragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +51,15 @@ public class BookTicketsNowActivity extends AppCompatActivity {
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
 
-        listFrags.add(new TrainDetailsFragment());
-        listFrags.add(new PassengerListFragment());
-        listFrags.add(new BookingPaymentFragment());
+        mListUiFragments.add(new TrainDetailsFragment());
+        mListUiFragments.add(new PassengerListFragment());
+        mListUiFragments.add(new BookingPaymentFragment());
 
-        BookTicketAdapter adpater = new BookTicketAdapter(getSupportFragmentManager(), listFrags, mPagerTitles);
-        mPager.setAdapter(adpater);
+        BookTicketAdapter bookTicketAdapter = new BookTicketAdapter(getSupportFragmentManager(), mListUiFragments, mPagerTitles);
+        mPager.setAdapter(bookTicketAdapter);
 
         assert mPagerIndicator != null;
         mPagerIndicator.setViewPager(mPager);
-
     }
 
     @Override
@@ -92,7 +91,7 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EventConstants.EVENT_REQUEST_ADD_PASSENGER) {
             if(resultCode == EventConstants.EVENT_RESP_ADD_PASSENGER_OK){
-                ((PassengerListFragment)listFrags.get(1)).onListUpdatedEvent();
+                ((PassengerListFragment)mListUiFragments.get(1)).onListUpdatedEvent();
             }
         }
     }//onActivityResult

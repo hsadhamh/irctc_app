@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Adapters.AutoCompleteStringAdapter;
 import irctc.factor.app.irctcmadeeasy.R;
-import irctc.factor.app.irctcmadeeasy.ShowHidePasswordEditText;
+import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 import irctc.factor.app.irctcmadeeasy.TicketConstants;
 
 /**

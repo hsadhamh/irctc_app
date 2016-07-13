@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_ten"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
             <com.rey.material.widget.TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -47,10 +48,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/payment_mode"
-                android:layout_gravity="center"
                 android:gravity="center"
                 android:textStyle="bold|normal"
-                android:textSize="@dimen/header_text_size" />
+                android:paddingTop="@dimen/padding_three"
+                android:textSize="@dimen/header_text_size"
+                android:typeface="serif"
+                android:layout_gravity="center" />
             <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,19 +96,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <com.rey.material.widget.TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center|start"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payment_options"
                     android:gravity="center|start"
-                    android:layout_weight="1"
-                    android:text="@string/payment_options"/>
+                    android:textStyle="bold|normal"
+                    android:paddingTop="@dimen/padding_three"
+                    android:textSize="@dimen/header_text_size"
+                    android:typeface="serif"
+                    android:layout_gravity="center" />
                 <com.rey.material.widget.Spinner
                     android:id="@+id/id_spinner_payment"
                     style="@style/Material.Widget.Spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center|start"
                     custom:rd_style="@style/Material.Drawable.Ripple.Wave"
                     android:layout_weight=".4"
@@ -120,7 +126,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/padding_ten"
-        android:background="@drawable/rectangle_group_box">
+        android:background="@drawable/rectangle_group_box"
+        android:id="@+id/id_card_section">
         <com.rey.material.widget.TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -168,6 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/card_number"
+                    android:inputType="number"
                     custom:et_supportMode="charCounter"
                     custom:et_supportMaxChars="16"/>
                 <com.rey.material.widget.EditText
@@ -184,7 +192,7 @@
                     android:orientation="horizontal">
                     <com.rey.material.widget.TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:gravity="center|start"
                         android:layout_weight="1.2"
@@ -194,7 +202,7 @@
                         android:id="@+id/spn_month"
                         style="@style/Material.Widget.Spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center|start"
                         custom:rd_style="@style/Material.Drawable.Ripple.Wave"
                         android:layout_weight="1.2"
@@ -202,38 +210,90 @@
                     <EditText
                         android:id="@+id/txt_year_no"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:hint="@string/year_text"
                         android:layout_weight="1.4"
                         android:layout_gravity="center"
                         android:inputType="number"/>
                 </LinearLayout>
-                <com.rey.material.widget.EditText
-                    android:id="@+id/txt_cvv_no"
+                <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/cvv_text"
-                    custom:et_supportMode="charCounter"
-                    custom:et_supportMaxChars="3"/>
+                    android:layout_height="wrap_content">
+                    <com.rey.material.widget.EditText
+                        android:id="@+id/txt_cvv_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/cvv_text"
+                        android:inputType="number"
+                        custom:et_supportMode="charCounter"
+                        custom:et_supportMaxChars="3"
+                        android:padding="@dimen/padding_two" />
+                    <com.rey.material.widget.EditText
+                        android:id="@+id/txt_atm_pin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/atm_pin_text"
+                        android:inputType="number"
+                        custom:et_supportMode="charCounter"
+                        custom:et_supportMaxChars="4"
+                        android:padding="@dimen/padding_two" />
+                </com.google.android.flexbox.FlexboxLayout>
 
             </LinearLayout>
 
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_ten"
+            android:background="@drawable/rectangle_group_box"
+            android:id="@+id/id_internet_section">
+            <com.rey.material.widget.TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/internet_banking_text"
+                android:gravity="center"
+                android:textStyle="bold|normal"
+                android:paddingTop="@dimen/padding_three"
+                android:textSize="@dimen/header_text_size"
+                android:typeface="serif"
+                android:layout_gravity="center" />
+            <com.rey.material.widget.EditText
+                android:id="@+id/txt_internet_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/username_text"
+                android:textSize="16sp"/>
+            <irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText
+                android:id="@+id/txt_internet_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_text"
+                custom:drawable_show="@drawable/ic_visibility_grey_900_24dp"
+                custom:drawable_hide="@drawable/ic_visibility_off_grey_900_24dp"
+                android:layout_gravity="center"
+                android:gravity="center" />
+        </LinearLayout>
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
             <com.rey.material.widget.CheckBox
                 android:id="@+id/specify_checkbox_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
                 android:text="@string/saved_card_text"
-                android:layout_gravity="center|left"
-                android:layout_marginLeft="-5dp" />
+                android:layout_gravity="center|start" />
             <com.rey.material.widget.EditText
                 android:id="@+id/specify_name_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
-                android:layout_gravity="center|start"
+                android:layout_gravity="center|end"
                 android:hint="@string/specify_name_save"/>
-
-        </LinearLayout>
+        </com.google.android.flexbox.FlexboxLayout>
     </LinearLayout>
 </ScrollView>

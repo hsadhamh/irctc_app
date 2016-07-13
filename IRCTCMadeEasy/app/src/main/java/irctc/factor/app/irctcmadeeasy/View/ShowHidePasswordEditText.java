@@ -1,4 +1,4 @@
-package irctc.factor.app.irctcmadeeasy;
+package irctc.factor.app.irctcmadeeasy.View;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -20,6 +20,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+
+import irctc.factor.app.irctcmadeeasy.R;
 
 
 /**
