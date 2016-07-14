@@ -35,15 +35,19 @@
                     android:id="@+id/txt_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/username_text" />
-                <irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText
+                    android:hint="@string/username_text"
+                    android:textSize="18sp"
+                    style="@style/Material.Widget.EditText"/>
+                <irctc.factor.app.irctcmadeeasy.ShowHidePasswordEditText
+                    style="@style/Material.Widget.EditText"
                     android:id="@+id/txt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password_text"
                     custom:drawable_show="@drawable/ic_visibility_grey_900_24dp"
                     custom:drawable_hide="@drawable/ic_visibility_off_grey_900_24dp"
-                    android:layout_gravity="center|start" />
+                    android:layout_gravity="center|start"
+                    android:layout_marginLeft="-4dp" />
                 <com.rey.material.widget.CheckBox
                     style="@style/Material.Drawable.CheckBox"
                     android:layout_width="wrap_content"
@@ -104,6 +108,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
+                    style="@style/Material.Widget.EditText"
+                    android:textSize="18sp"
                     android:hint="@string/date_journey_text"
                     android:gravity="center|start"
                     android:paddingStart="@dimen/padding_three" />
@@ -132,6 +138,7 @@
                     android:layout_height="match_parent"
                     android:text="@string/train_class"
                     android:padding="@dimen/padding_five"
+                    android:textSize="18sp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textStyle="bold|normal" />
@@ -238,13 +245,15 @@
             </LinearLayout>
             <com.rey.material.widget.EditText
                 android:id="@+id/txt_mobile_no"
-                android:textSize="25sp"
+                android:textSize="18sp"
+                android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 custom:et_labelEnable="true"
                 custom:et_labelPadding="@dimen/padding_two"
                 custom:et_supportMode="helper"
-                android:hint="Mobile Number" />
+                android:hint="Mobile Number"
+                style="@style/Material.Widget.EditText"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -267,9 +276,10 @@
                     android:layout_gravity="center" />
                 <com.rey.material.widget.EditText
                     android:id="@+id/txt_prefer_coach"
+                    style="@style/Material.Widget.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
+                    android:enabled="true"
                     custom:et_labelEnable="true"
                     custom:et_labelPadding="@dimen/padding_two"
                     custom:et_supportMode="helper"
@@ -311,18 +321,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/id_radio_book_all"
+                    android:layout_toEndOf="@id/id_radio_gn"
                     android:gravity="center"
                     android:text="@string/book_same_coach"/>
                 <com.rey.material.widget.RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/id_radio_book_at_one"
+                    android:layout_toEndOf="@id/id_radio_pt"
                     android:gravity="center"
                     android:text="@string/book_one_lower_alloted"/>
                 <com.rey.material.widget.RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/id_radio_book_at_two"
+                    android:layout_toEndOf="@id/id_radio_ck"
                     android:text="@string/book_two_lower_alloted"
                     android:gravity="center"
                     android:checked="false" />
