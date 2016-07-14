@@ -9,7 +9,7 @@
     <com.rey.material.widget.ProgressView
         android:id="@+id/progress_linear_page"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="4dp"
         android:layout_gravity="center"
         custom:pv_progressMode="indeterminate"
         custom:pv_circular="false"
