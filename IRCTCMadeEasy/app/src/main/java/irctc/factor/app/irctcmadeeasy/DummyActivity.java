@@ -42,6 +42,20 @@ public class DummyActivity extends AppCompatActivity {
     @OnClick(R.id.id_btn2)
     public void showIrctcSite() {
         Intent i = new Intent(DummyActivity.this, IrctcMainActivity.class);
+        i.putExtra("JSON_String",  "{ \"username\":\"hssbs\", \"password\":\"hssbs1992\", \"source\":\"COIMBATORE JN - CBE\", ' +\n" +
+                "    '\"destination\":\"KSR BENGALURU - SBC\", \"boarding\":\"ERODE JN - ED\", \"date-journey\":\"08-07-2016\", ' +\n" +
+                "    '\"train-no\":\"12678\", \"class\":\"2S\", \"Quota\":\"TATKAL\", ' +\n" +
+                "    '\"child-passenger-info\":[{\"name\":\"Hussain\", \"age\":\"2\", \"gender\":\"M\"}],' +\n" +
+                "    '\"passenger-info\":[ ' +\n" +
+                "    '{ \"name\":\"Sadham Hussain H\", \"age\":\"21\", \"gender\":\"M\", \"berth\":\"UB\", \"nationality\":\"indian\", ' +\n" +
+                "    '\"ID-card\":\"\", \"ID-Card-No\":\"\", \"type\":\"adult\", \"senior\":\"false\" }, ' +\n" +
+                "    '{ \"name\":\"Sadham Hussain H\", \"age\":\"25\", \"gender\":\"M\", \"berth\":\"LB\", \"nationality\":\"indian\", \"ID-card\":\"\", ' +\n" +
+                "    '\"ID-Card-No\":\"\", \"type\":\"adult\", \"senior\":\"false\" }, ' +\n" +
+                "    '{ \"name\":\"Sadham Hussain H\", \"age\":\"25\", \"gender\":\"M\", \"berth\":\"LB\", \"nationality\":\"indian\", ' +\n" +
+                "    '\"ID-card\":\"\", \"ID-Card-No\":\"\", \"type\":\"adult\", \"senior\":\"false\" } ], ' +\n" +
+                "    '\"Auto-Upgrade\":\"false\", \"book-confirm\":\"false\", \"book-id-cond\":\"2\", \"preferred-coach\":\"false\", \"coachID\":\"S7\", ' +\n" +
+                "    '\"mobile\":\"9500454034\", \"payment-mode\":\"CREDIT_CARD\", \"payment-mode-id\":\"21\", \"card-no-value\":\"5241465278458104\", \"card-type\":\"MC\", ' +\n" +
+                "    '\"expiry-mon\":\"02\", \"expiry-year\":\"2018\", \"Card-CVV\":\"374\", \"name-card\":\"Sadham Hussain H\" } ");
         startActivity(i);
     }
 

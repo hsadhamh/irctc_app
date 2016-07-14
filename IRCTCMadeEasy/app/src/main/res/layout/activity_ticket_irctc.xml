@@ -38,7 +38,7 @@
                     android:hint="@string/username_text"
                     android:textSize="18sp"
                     style="@style/Material.Widget.EditText"/>
-                <irctc.factor.app.irctcmadeeasy.ShowHidePasswordEditText
+                <irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText
                     style="@style/Material.Widget.EditText"
                     android:id="@+id/txt_password"
                     android:layout_width="match_parent"

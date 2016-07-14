@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 /**
  * Created by hassanhussain on 7/7/2016.
@@ -35,6 +36,7 @@ public class FactorSplashScreen extends AppCompatActivity {
             try {
                 TicketConstants.Initialize(getApplicationContext());
                 TicketConstants.InitializeDatabase(getApplicationContext());
+                TicketConstants.InitializeJavaScript(getApplicationContext());
                 Thread.sleep(SPLASH_TIME_OUT);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -7,19 +7,22 @@
     tools:context="irctc.factor.app.irctcmadeeasy.IrctcMainActivity">
 
     <com.rey.material.widget.ProgressView
-        android:id="@+id/progress_pv_linear_determinate"
+        android:id="@+id/progress_linear_page"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="10dp"
         android:layout_gravity="center"
-        custom:pv_autostart="true" />
+        custom:pv_progressMode="indeterminate"
+        custom:pv_circular="false"
+        custom:pv_progressStyle="@style/LightDeterminateLinearProgressDrawable"/>
 
     <irctc.factor.app.irctcmadeeasy.WebView.LxWebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/webView"
-        android:layout_below="@id/progress_pv_linear_determinate"
+        android:id="@+id/irctc_web_view_id"
+        android:layout_below="@id/progress_linear_page"
         custom:dom_storage_enabled="true"
         custom:app_cache_enabled="true"
-        custom:java_script_enabled="true" />
+        custom:java_script_enabled="true"
+        custom:built_in_zoom_controls="true"/>
 
 </RelativeLayout>

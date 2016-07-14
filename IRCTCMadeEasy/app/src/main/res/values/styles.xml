@@ -39,37 +39,8 @@
         <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="LightLinearProgressDrawable" parent="Material.Drawable.LinearProgress">
-        <item name="lpd_strokeColor">@color/colorPrimary</item>
-        <item name="lpd_strokeSecondaryColor">@android:color/transparent</item>
-    </style>
-
-    <style name="LightLinearProgressView">
-        <item name="pv_autostart">false</item>
-        <item name="pv_circular">false</item>
-        <item name="pv_progressStyle">@style/LightLinearProgressDrawable</item>
-        <item name="pv_progressMode">indeterminate</item>
-    </style>
-
-    <style name="LightDeterminateLinearProgressView" parent="LightLinearProgressView">
-        <item name="pv_progressStyle">@style/LightDeterminateLinearProgressDrawable</item>
-        <item name="pv_progressMode">determinate</item>
-    </style>
-
-    <style name="DarkDeterminateLinearProgressView" parent="LightLinearProgressView">
-        <item name="pv_progressStyle">@style/DarkDeterminateLinearProgressDrawable</item>
-        <item name="pv_progressMode">determinate</item>
-    </style>
-
     <style name="LightDeterminateLinearProgressDrawable" parent="Material.Drawable.LinearProgress.Determinate">
-        <item name="lpd_strokeColor">@color/colorPrimary</item>
-        <item name="lpd_strokeSecondaryColor">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="DarkDeterminateLinearProgressDrawable" parent="Material.Drawable.LinearProgress.Determinate">
         <item name="lpd_strokeColor">@color/colorAccent</item>
-        <item name="lpd_strokeSecondaryColor">@color/colorAccent</item>
-        <item name="lpd_reverse">false</item>
     </style>
 
 

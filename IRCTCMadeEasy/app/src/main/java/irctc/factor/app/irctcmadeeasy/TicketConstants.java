@@ -2,11 +2,13 @@ package irctc.factor.app.irctcmadeeasy;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Base64;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,9 @@ public class TicketConstants {
     public static List<String> STATION_CONST_LIST = new ArrayList<>();
     public static SQLiteDatabase mWriteDatabase = null;
     static DaoMaster.DevOpenHelper mDbHelper = null;
+
+    public static String mJsAutoPrefix = "javascript: var jsonString ";
+    public static String JavaScriptForAutoFill = "";
 
     public static void LoadDataFromFile(Context context, boolean station_trains) {
         String csvFile = "stations.prop";
@@ -69,6 +74,31 @@ public class TicketConstants {
         return true;
     }
 
+    public static boolean InitializeJavaScript(Context context){
+        InputStream input;
+        try {
+            StringBuffer sBuffer = new StringBuffer();
+            input = context.getAssets().open("javascript.js");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            String data = "";
+            if (input != null) {
+                while ((data = reader.readLine()) != null) {
+                    sBuffer.append(data + "\n");
+                }
+                input.close();
+            }
+            // String-ify the script byte-array using BASE64 encoding !!!
+            JavaScriptForAutoFill = sBuffer.toString();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public static SQLiteDatabase getReadableDatabase(){ return mDbHelper.getReadableDatabase(); }
     public static SQLiteDatabase getWritableDatabase(){ return mDbHelper.getWritableDatabase(); }
+
+
 }
