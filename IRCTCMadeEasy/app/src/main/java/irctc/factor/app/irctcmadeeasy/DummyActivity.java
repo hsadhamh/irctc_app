@@ -4,11 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.rey.material.widget.Button;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
+import irctc.factor.app.irctcmadeeasy.Json.flJsonParser;
 
 /**
  * Created by hassanhussain on 7/9/2016.
@@ -63,6 +71,103 @@ public class DummyActivity extends AppCompatActivity {
     public void showAddPass() {
         Intent i = new Intent(DummyActivity.this, AddPassengerActivity.class);
         startActivity(i);
+    }
+
+    @OnClick(R.id.id_btn4)
+    public void showJsonCreate() {
+        String json  = "{\n" +
+                "   \"username\":\"hssbs\",\n" +
+                "   \"password\":\"hssbs1992\",\n" +
+                "   \"source\":\"COIMBATORE JN - CBE\",\n" +
+                "   \"destination\":\"KSR BENGALURU - SBC\",\n" +
+                "   \"boarding\":\"ERODE JN - ED\",\n" +
+                "   \"date-journey\":\"08-07-2016\",\n" +
+                "   \"train-no\":\"12678\",\n" +
+                "   \"class\":\"2S\",\n" +
+                "   \"Quota\":\"TATKAL\",\n" +
+
+                "   \"child-passenger-info\":[\n" +
+                "      {\n" +
+                "         \"name\":\"Hussain\",\n" +
+                "         \"age\":\"2\",\n" +
+                "         \"gender\":\"M\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "         \"name\":\"Hussain\",\n" +
+                "         \"age\":\"2\",\n" +
+                "         \"gender\":\"M\"\n" +
+                "      }\n" +
+                "   ],\n" +
+
+                "   \"passenger-info\":[\n" +
+                "      {\n" +
+                "         \"name\":\"Sadham Hussain H\",\n" +
+                "         \"age\":\"21\",\n" +
+                "         \"gender\":\"M\",\n" +
+                "         \"berth\":\"UB\",\n" +
+                "         \"nationality\":\"indian\",\n" +
+                "         \"ID-card\":\"\",\n" +
+                "         \"ID-Card-No\":\"\",\n" +
+                "         \"type\":\"adult\",\n" +
+                "         \"senior\":\"false\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "         \"name\":\"Sadham Hussain H\",\n" +
+                "         \"age\":\"25\",\n" +
+                "         \"gender\":\"M\",\n" +
+                "         \"berth\":\"LB\",\n" +
+                "         \"nationality\":\"indian\",\n" +
+                "         \"ID-card\":\"\",\n" +
+                "         \"ID-Card-No\":\"\",\n" +
+                "         \"type\":\"adult\",\n" +
+                "         \"senior\":\"false\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "         \"name\":\"Sadham Hussain H\",\n" +
+                "         \"age\":\"25\",\n" +
+                "         \"gender\":\"M\",\n" +
+                "         \"berth\":\"LB\",\n" +
+                "         \"nationality\":\"indian\",\n" +
+                "         \"ID-card\":\"\",\n" +
+                "         \"ID-Card-No\":\"\",\n" +
+                "         \"type\":\"adult\",\n" +
+                "         \"senior\":\"false\"\n" +
+                "      }\n" +
+                "   ],\n" +
+
+                "   \"Auto-Upgrade\":\"false\",\n" +
+                "   \"book-confirm\":\"false\",\n" +
+                "   \"book-id-cond\":\"2\",\n" +
+                "   \"preferred-coach\":\"false\",\n" +
+                "   \"coachID\":\"S7\",\n" +
+                "   \"mobile\":\"9500454034\",\n" +
+                "   \"payment-mode\":\"CREDIT_CARD\",\n" +
+                "   \"payment-mode-id\":\"21\",\n" +
+                "   \"card-no-value\":\"5241465278458104\",\n" +
+                "   \"card-type\":\"MC\",\n" +
+                "   \"expiry-mon\":\"02\",\n" +
+                "   \"expiry-year\":\"2018\",\n" +
+                "   \"Card-CVV\":\"374\",\n" +
+                "   \"name-card\":\"Sadham Hussain H\"\n" +
+                "}";
+        try {
+            TicketJson jsonTicket = flJsonParser.getTicketDetailObject(json);
+            new MaterialDialog
+                    .Builder(this)
+                    .content("Convert successful - " + jsonTicket.getTrainNumber() + " : " + jsonTicket.getBoardingStation())
+                    .title("From : " + jsonTicket.getSrcStation() + " - To: " + jsonTicket.getDestStation())
+                    .show();
+
+            jsonTicket.setAutoUpgrade(true);
+            String sConvertJson = flJsonParser.getTicketDetailString(jsonTicket);
+            new MaterialDialog
+                    .Builder(this)
+                    .content("Convert successful - " + sConvertJson)
+                    .title("Convert")
+                    .show();
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
