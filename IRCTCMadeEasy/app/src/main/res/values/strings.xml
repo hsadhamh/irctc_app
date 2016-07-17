@@ -39,6 +39,7 @@
 
     <string name="view_passenger_edit_text">Edit</string>
     <string name="view_passenger_delete_text">Delete</string>
+    <string name="view_book_now_text">Book Now</string>
 
     <string name="login_detail_text">Login Details</string>
     <string name="login_save_text">Save Login</string>

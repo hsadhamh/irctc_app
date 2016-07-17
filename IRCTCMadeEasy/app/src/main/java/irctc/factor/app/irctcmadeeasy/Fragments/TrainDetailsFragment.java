@@ -1,13 +1,18 @@
 package irctc.factor.app.irctcmadeeasy.Fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+
 
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
@@ -16,15 +21,29 @@ import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.Spinner;
 
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Adapters.AutoCompleteStringAdapter;
+import irctc.factor.app.irctcmadeeasy.Adapters.PassengerCursorAdapter;
+import irctc.factor.app.irctcmadeeasy.Adapters.TicketDetailsCursorAdapter;
+import irctc.factor.app.irctcmadeeasy.AddPassengerActivity;
+import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
+import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
+import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 import irctc.factor.app.irctcmadeeasy.TicketConstants;
+import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
+import irctc.factor.app.irctcmadeeasy.database.DaoSession;
+import irctc.factor.app.irctcmadeeasy.database.TicketDetails;
+import irctc.factor.app.irctcmadeeasy.database.TicketDetailsDao;
 
 /**
  * Created by hassanhussain on 7/8/2016.
@@ -90,10 +109,27 @@ public class TrainDetailsFragment extends Fragment {
 
     private int mYear,mMonth,mDay;
 
+    private DaoMaster mDaoMaster;
+    private DaoSession mDaoSession;
+    private TicketDetailsDao ticketDetails;
+    private int mnTrainID = 0;
+
+    TicketDetailsCursorAdapter mAdapter = null;
+
     @Override
-    public void onDestroy(){
-        super.onDestroy();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroy(){ super.onDestroy(); }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ticket_irctc, container, false);
@@ -121,6 +157,25 @@ public class TrainDetailsFragment extends Fragment {
         miscRadioButtonHandler();
         ShowDatePicker(container);
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //mListPassengers.setLayoutManager(linearLayoutManager);
+
+
+
+       // Toast.makeText(getContext().getApplicationContext(),Integer.toString(mnTrainID),Toast.LENGTH_SHORT).show();
+
+
+        mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
+        mDaoSession = mDaoMaster.newSession();
+        ticketDetails=mDaoSession.getTicketDetailsDao();
+
+        Intent intent = getActivity().getIntent();
+        if(intent != null){
+            mnTrainID = intent.getIntExtra("form", 0);
+        }
+        if(mnTrainID > 0)
+            GetTrainInfo(mnTrainID);
         return view;
     }
 
@@ -245,6 +300,68 @@ public class TrainDetailsFragment extends Fragment {
             }
         });
 
+    }
+
+    @Subscribe
+    public void onEvent(AddFormsEvent e){
+
+        saveTrainInfo();
+
+    }
+
+    public void saveTrainInfo()
+    {
+        TicketDetails ticket=new TicketDetails();
+        ticket.setSource(mvStationSource.getText().toString());
+        ticket.setDestination(mvStationDestination.getText().toString());
+        ticket.setBoarding(mvStationBoarding.getText().toString());
+        ticket.setJourneyDate(mvDateJourney.getText().toString());
+        ticket.setTrainno(mvTrainNumber.getText().toString());
+        ticket.setIrctcClass(mSpClassTrain.getSelectedItem().toString());
+        ticket.setQuota(mvGeneralButton.isChecked() ? "GN" : mvTatkalPremium.isChecked() ? "PT" : mvTatkal.isChecked() ? "CK" : mvHandicapped.isChecked() ? "HP" : "LD");
+        ticket.setMobileNumber(mvMobileNumber.getText().toString());
+        ticket.setCoach(mCbPreferredCoach.isChecked() ? mvPreferredCoachTxt.getText().toString() : "");
+        ticket.setAutoUpgrade(mCbAutoUpgrade.isChecked() ? "true" : "false");
+        ticket.setBookOnConfirm(mCbBookCondition.isChecked() ? "true" : "false");
+
+        if (mnTrainID > 0)
+            ticket.setId((long) mnTrainID);
+
+        if (mnTrainID > 0)
+            ticketDetails.update(ticket);
+        else
+            ticketDetails.insert(ticket);
+
+    }
+
+
+    public void GetTrainInfo(int trainId){
+       TicketDetails train = ticketDetails.load((long)trainId);
+        mvStationSource.setText(train.getSource());
+        mvStationDestination.setText(train.getDestination());
+        mvStationBoarding.setText(train.getBoarding());
+        mvDateJourney.setText(train.getJourneyDate());
+        mvTrainNumber.setText(train.getTrainno());
+        mSpClassTrain.setSelection(Integer.parseInt(train.getIrctcClass()));
+
+        mvMobileNumber.setText(train.getMobileNumber());
+        mCbPreferredCoach.setText(train.getCoach());
+        mvPreferredCoachTxt.setText(train.getCoach());
+        mCbAutoUpgrade.setText(train.getAutoUpgrade());
+        mCbBookCondition.setText(train.getBookOnConfirm());
+
+
+
+
+
+
+    }
+    public void onListUpdatedEvent(){
+        Cursor localCursor;
+        localCursor = TicketConstants
+                .getReadableDatabase()
+                .query(ticketDetails.getTablename(), ticketDetails.getAllColumns(), null, null, null, null, "");
+        mAdapter.swapCursor(localCursor);
     }
 
 }

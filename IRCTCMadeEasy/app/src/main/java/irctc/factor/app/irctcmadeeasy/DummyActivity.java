@@ -31,6 +31,8 @@ public class DummyActivity extends AppCompatActivity {
     Button btn3;
     @BindView(R.id.id_btn4)
     Button btn4;
+    @BindView(R.id.id_forms)
+    Button forms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,13 @@ public class DummyActivity extends AppCompatActivity {
 
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.id_forms)
+    public void Allforms(){
+        Intent i=new Intent(DummyActivity.this,FormsList.class);
+        startActivity(i);
+
     }
 
     @OnClick(R.id.id_btn1)

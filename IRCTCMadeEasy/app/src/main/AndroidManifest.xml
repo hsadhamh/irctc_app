@@ -29,6 +29,7 @@
         <activity android:name=".BookTicketsNowActivity"/>
         <activity android:name=".DummyActivity"/>
         <activity android:name=".AddPassengerActivity"/>
+        <activity android:name=".FormsList"/>
 
 
     </application>

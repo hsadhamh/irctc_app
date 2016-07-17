@@ -3,8 +3,10 @@ package irctc.factor.app.irctcmadeeasy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TabPageIndicator;
@@ -17,14 +19,22 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 import irctc.factor.app.irctcmadeeasy.Adapters.BookTicketAdapter;
+import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
 import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
+import irctc.factor.app.irctcmadeeasy.Events.EditFormInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 
 import irctc.factor.app.irctcmadeeasy.Fragments.BookingPaymentFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;
+import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
+import irctc.factor.app.irctcmadeeasy.database.DaoSession;
+import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
+import irctc.factor.app.irctcmadeeasy.database.TicketDetailsDao;
 
 /**
  * Created by hassanhussain on 7/8/2016.
@@ -44,6 +54,8 @@ public class BookTicketsNowActivity extends AppCompatActivity {
 
     List<Fragment> mListUiFragments = new ArrayList<>();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +72,8 @@ public class BookTicketsNowActivity extends AppCompatActivity {
 
         assert mPagerIndicator != null;
         mPagerIndicator.setViewPager(mPager);
-    }
+
+}
 
     @Override
     protected void onPause() {
@@ -80,12 +93,16 @@ public class BookTicketsNowActivity extends AppCompatActivity {
         startActivityForResult(i, EventConstants.EVENT_REQUEST_ADD_PASSENGER);
     }
 
+
+
     @Subscribe
     public void onEvent(EditPassengerInfo e){
         Intent i = new Intent(BookTicketsNowActivity.this, AddPassengerActivity.class);
         i.putExtra("passenger", e.getPassengerID());
         startActivityForResult(i, EventConstants.EVENT_REQUEST_ADD_PASSENGER);
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -95,4 +112,12 @@ public class BookTicketsNowActivity extends AppCompatActivity {
             }
         }
     }//onActivityResult
+
+
+    @OnClick(R.id.btn_save_info)
+    public void saveAsForm(){
+        EventBus.getDefault().post(new AddFormsEvent(""));
+    }
+
+
 }

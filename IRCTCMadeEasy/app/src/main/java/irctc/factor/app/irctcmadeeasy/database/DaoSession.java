@@ -29,10 +29,12 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig pnrInfoDaoConfig;
     private final DaoConfig transactionInfoDaoConfig;
     private final DaoConfig passengerInfoDaoConfig;
+    private final DaoConfig ticketDetailsDaoConfig;
 
     private final PnrInfoDao pnrInfoDao;
     private final TransactionInfoDao transactionInfoDao;
     private final PassengerInfoDao passengerInfoDao;
+    private final TicketDetailsDao ticketDetailsDao;
 
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -47,10 +49,15 @@ public class DaoSession extends AbstractDaoSession {
         passengerInfoDaoConfig = daoConfigMap.get(PassengerInfoDao.class).clone();
         passengerInfoDaoConfig.initIdentityScope(type);
 
+        ticketDetailsDaoConfig = daoConfigMap.get(TicketDetailsDao.class).clone();
+        ticketDetailsDaoConfig.initIdentityScope(type);
+
         pnrInfoDao = new PnrInfoDao(pnrInfoDaoConfig, this);
         transactionInfoDao = new TransactionInfoDao(transactionInfoDaoConfig, this);
         passengerInfoDao = new PassengerInfoDao(passengerInfoDaoConfig, this);
+        ticketDetailsDao = new TicketDetailsDao(ticketDetailsDaoConfig, this);
 
+        registerDao(TicketDetails.class, ticketDetailsDao);
         registerDao(PnrInfo.class, pnrInfoDao);
         registerDao(TransactionInfo.class, transactionInfoDao);
         registerDao(PassengerInfo.class, passengerInfoDao);
@@ -60,6 +67,7 @@ public class DaoSession extends AbstractDaoSession {
         pnrInfoDaoConfig.getIdentityScope().clear();
         transactionInfoDaoConfig.getIdentityScope().clear();
         passengerInfoDaoConfig.getIdentityScope().clear();
+        ticketDetailsDaoConfig.getIdentityScope().clear();
     }
 
     public PnrInfoDao getPnrInfoDao() {
@@ -72,6 +80,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public PassengerInfoDao getPassengerInfoDao() {
         return passengerInfoDao;
+    }
+
+    public TicketDetailsDao getTicketDetailsDao() {
+        return ticketDetailsDao;
     }
 
 }

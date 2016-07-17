@@ -24,6 +24,7 @@ public class DaoMaster extends AbstractDaoMaster {
         PnrInfoDao.createTable(db, ifNotExists);
         TransactionInfoDao.createTable(db, ifNotExists);
         PassengerInfoDao.createTable(db, ifNotExists);
+        TicketDetailsDao.createTable(db, ifNotExists);
     }
     
     /** Drops underlying database table using DAOs. */
@@ -31,6 +32,7 @@ public class DaoMaster extends AbstractDaoMaster {
         PnrInfoDao.dropTable(db, ifExists);
         TransactionInfoDao.dropTable(db, ifExists);
         PassengerInfoDao.dropTable(db, ifExists);
+        TicketDetailsDao.dropTable(db, ifExists);
     }
     
     public static abstract class OpenHelper extends SQLiteOpenHelper {
@@ -65,6 +67,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(PnrInfoDao.class);
         registerDaoClass(TransactionInfoDao.class);
         registerDaoClass(PassengerInfoDao.class);
+        registerDaoClass(TicketDetailsDao.class);
     }
     
     public DaoSession newSession() {
