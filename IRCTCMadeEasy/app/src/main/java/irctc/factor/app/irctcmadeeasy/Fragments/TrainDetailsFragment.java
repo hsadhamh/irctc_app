@@ -105,9 +105,9 @@ public class TrainDetailsFragment extends Fragment {
     public RadioButton mRbBookTwoLower;
 
     private Unbinder unbinder;
-    AutoCompleteStringAdapter stationAdapter,trainAdapter;
+    AutoCompleteStringAdapter stationAdapter, trainAdapter;
 
-    private int mYear,mMonth,mDay;
+    private int mYear, mMonth, mDay;
 
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
@@ -129,14 +129,16 @@ public class TrainDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy(){ super.onDestroy(); }
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ticket_irctc, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         //Loading Soucre and Destination,Boarding
-        stationAdapter=new AutoCompleteStringAdapter(container.getContext(),R.layout.activity_ticket_irctc,R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
+        stationAdapter = new AutoCompleteStringAdapter(container.getContext(), R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
         mvStationSource.setThreshold(3);
         mvStationDestination.setThreshold(3);
         mvStationSource.setAdapter(stationAdapter);
@@ -144,12 +146,12 @@ public class TrainDetailsFragment extends Fragment {
         mvStationBoarding.setAdapter(stationAdapter);
 
         //Loading Train Details
-        trainAdapter=new AutoCompleteStringAdapter(container.getContext(),R.layout.activity_ticket_irctc,R.id.lbl_name,TicketConstants.TRAIN_CONST_LIST);
+        trainAdapter = new AutoCompleteStringAdapter(container.getContext(), R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.TRAIN_CONST_LIST);
         mvTrainNumber.setThreshold(3);
         mvTrainNumber.setAdapter(trainAdapter);
 
         //Loading Class Spinner items
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(container.getContext(),android.R.layout.simple_spinner_dropdown_item,getResources().getStringArray(R.array.train_class));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(container.getContext(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.train_class));
         mSpClassTrain.setAdapter(spinnerArrayAdapter);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -162,27 +164,28 @@ public class TrainDetailsFragment extends Fragment {
         //mListPassengers.setLayoutManager(linearLayoutManager);
 
 
-
-       // Toast.makeText(getContext().getApplicationContext(),Integer.toString(mnTrainID),Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getContext().getApplicationContext(),Integer.toString(mnTrainID),Toast.LENGTH_SHORT).show();
 
 
         mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
         mDaoSession = mDaoMaster.newSession();
-        ticketDetails=mDaoSession.getTicketDetailsDao();
+        ticketDetails = mDaoSession.getTicketDetailsDao();
 
         Intent intent = getActivity().getIntent();
-        if(intent != null){
+        if (intent != null) {
             mnTrainID = intent.getIntExtra("form", 0);
         }
-        if(mnTrainID > 0)
+        if (mnTrainID > 0)
             GetTrainInfo(mnTrainID);
         return view;
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     public void quotaRadioButtonHandler() {
         mvGeneralButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +238,7 @@ public class TrainDetailsFragment extends Fragment {
 
     }
 
-     public void ShowDatePicker(final ViewGroup container) {
+    public void ShowDatePicker(final ViewGroup container) {
 
         mvDateCalButton.setOnClickListener(new View.OnClickListener() {
 
@@ -245,7 +248,7 @@ public class TrainDetailsFragment extends Fragment {
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH) + 1;
 
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(container.getContext(),
@@ -254,7 +257,7 @@ public class TrainDetailsFragment extends Fragment {
                             public void onDateSet(android.widget.DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
 
                             }
                         }, mYear, mMonth, mDay);
@@ -265,7 +268,7 @@ public class TrainDetailsFragment extends Fragment {
 
     }
 
-    public void miscRadioButtonHandler(){
+    public void miscRadioButtonHandler() {
 
         mRbNone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,60 +306,115 @@ public class TrainDetailsFragment extends Fragment {
     }
 
     @Subscribe
-    public void onEvent(AddFormsEvent e){
+    public void onEvent(AddFormsEvent e) {
 
         saveTrainInfo();
 
     }
 
-    public void saveTrainInfo()
-    {
-        TicketDetails ticket=new TicketDetails();
+    public void saveTrainInfo() {
+        TicketDetails ticket = new TicketDetails();
         ticket.setSource(mvStationSource.getText().toString());
         ticket.setDestination(mvStationDestination.getText().toString());
         ticket.setBoarding(mvStationBoarding.getText().toString());
         ticket.setJourneyDate(mvDateJourney.getText().toString());
         ticket.setTrainno(mvTrainNumber.getText().toString());
         ticket.setIrctcClass(mSpClassTrain.getSelectedItem().toString());
-        ticket.setQuota(mvGeneralButton.isChecked() ? "GN" : mvTatkalPremium.isChecked() ? "PT" : mvTatkal.isChecked() ? "CK" : mvHandicapped.isChecked() ? "HP" : "LD");
+        ticket.setQuota(mvGeneralButton.isChecked() ? "GENERAL" : mvTatkalPremium.isChecked() ? "PREMIUM TATKAL" : mvTatkal.isChecked() ? "TATKAL" : mvHandicapped.isChecked() ? "PHYSICALLY HANDICAPPED" : "LADIES");
         ticket.setMobileNumber(mvMobileNumber.getText().toString());
-        ticket.setCoach(mCbPreferredCoach.isChecked() ? mvPreferredCoachTxt.getText().toString() : "");
+        ticket.setCoach(mCbPreferredCoach.isChecked() ? mvPreferredCoachTxt.getText().toString() : " ");
         ticket.setAutoUpgrade(mCbAutoUpgrade.isChecked() ? "true" : "false");
         ticket.setBookOnConfirm(mCbBookCondition.isChecked() ? "true" : "false");
+        ticket.setConditionsOnBook(mRbNone.isChecked() ? "0" : mRbBookOnSameCoach.isChecked() ? "1" : mRbBookOneLower.isChecked() ? "2" : "3");
+
+
+        //For Storing JSON
+        //String tNumber=mvTrainNumber.getText().toString().substring(0, tNumber.indexOf(':')).trim();
+
 
         if (mnTrainID > 0)
             ticket.setId((long) mnTrainID);
-
         if (mnTrainID > 0)
             ticketDetails.update(ticket);
         else
             ticketDetails.insert(ticket);
 
+
     }
 
+    public void createJsonValues() {
 
-    public void GetTrainInfo(int trainId){
-       TicketDetails train = ticketDetails.load((long)trainId);
+    }
+
+    public void validation() {
+
+    }
+
+    public void GetTrainInfo(int trainId) {
+        TicketDetails train = ticketDetails.load((long) trainId);
         mvStationSource.setText(train.getSource());
         mvStationDestination.setText(train.getDestination());
         mvStationBoarding.setText(train.getBoarding());
         mvDateJourney.setText(train.getJourneyDate());
         mvTrainNumber.setText(train.getTrainno());
-        mSpClassTrain.setSelection(Integer.parseInt(train.getIrctcClass()));
+        ArrayAdapter<String> array_spinner = (ArrayAdapter<String>) mSpClassTrain.getAdapter();
+        mSpClassTrain.setSelection(array_spinner.getPosition(train.getIrctcClass()));
+
+        if (train.getQuota().equals("GENERAL")) {
+            mvGeneralButton.setChecked(true);
+            mvTatkal.setChecked(false);
+        } else if (train.getQuota().equals("TATKAL"))
+            mvTatkal.setChecked(true);
+        else if (train.getQuota().equals("PREMIUM TATKAL")) {
+            mvTatkalPremium.setChecked(true);
+            mvTatkal.setChecked(false);
+        } else if (train.getQuota().equals("PHYSICALLY HANDICAPPED")) {
+            mvHandicapped.setChecked(true);
+            mvTatkal.setChecked(false);
+        } else {
+            mvLadies.setChecked(true);
+            mvTatkal.setChecked(false);
+        }
+
 
         mvMobileNumber.setText(train.getMobileNumber());
-        mCbPreferredCoach.setText(train.getCoach());
-        mvPreferredCoachTxt.setText(train.getCoach());
-        mCbAutoUpgrade.setText(train.getAutoUpgrade());
-        mCbBookCondition.setText(train.getBookOnConfirm());
+        if (!(train.getCoach() == null || train.getCoach() == " ")) {
+            mCbPreferredCoach.setChecked(true);
+            mvPreferredCoachTxt.setText(train.getCoach());
+        }
+
+        if (train.getAutoUpgrade().equals("true"))
+            mCbAutoUpgrade.setChecked(true);
+
+        if (train.getBookOnConfirm().equals("true"))
+            mCbBookCondition.setChecked(true);
 
 
-
-
+        if (train.getConditionsOnBook().equals("0"))
+            mRbNone.setChecked(true);
+        else if (train.getConditionsOnBook().equals("1")) {
+            mRbBookOnSameCoach.setChecked(true);
+            mRbNone.setChecked(false);
+        } else if (train.getConditionsOnBook().equals("2")) {
+            mRbBookOneLower.setChecked(true);
+            mRbNone.setChecked(false);
+        } else {
+            mRbBookTwoLower.setChecked(true);
+            mRbNone.setChecked(false);
+        }
 
 
     }
-    public void onListUpdatedEvent(){
+
+    @OnClick(R.id.id_check_preferred_coach)
+    public void preferredCheck() {
+        if (mCbPreferredCoach.isChecked()) {
+            mvPreferredCoachTxt.setEnabled(true);
+        }
+
+    }
+
+    public void onListUpdatedEvent() {
         Cursor localCursor;
         localCursor = TicketConstants
                 .getReadableDatabase()
