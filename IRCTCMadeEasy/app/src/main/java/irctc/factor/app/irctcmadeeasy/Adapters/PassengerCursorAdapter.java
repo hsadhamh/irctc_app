@@ -18,11 +18,16 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerViewCursorAdapter;
 import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerViewCursorViewHolder;
 import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
+import irctc.factor.app.irctcmadeeasy.Events.SelectPassenger;
+import irctc.factor.app.irctcmadeeasy.Events.UnselectPassenger;
+import irctc.factor.app.irctcmadeeasy.Json.ChildJson;
+import irctc.factor.app.irctcmadeeasy.Json.PassengerJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
 import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
@@ -95,7 +100,6 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
             String passengerGender = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Gender.columnName));
             int passengerId = cursor.getInt(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Id.columnName));
             String passengerNationality = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Nationality.columnName));
-            int passengerTransaction = cursor.getInt(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.TransactionId.columnName));
 
             String sText1 = "<b>"+passengerName + "</b>, <b><i>" + (passengerGender.equals("MALE")? "M" : "F") + "</i></b>, <b>Age:</b> " + passengerAge;
             String sText2 = passengerChild + "; <b>Berth: </b>" + passengerBerth + "; <b>Food:</b> " + (passengerFood.equals("NonVeg")? "NonVeg" : "Veg");
@@ -117,6 +121,15 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
         @OnClick(R.id.btn_delete_info)
         public void onClickDeletePassenger(){
             EventBus.getDefault().post(new DeletePassengerEvent((int)txtView1.getTag()));
+        }
+
+        @OnCheckedChanged(R.id.chkbx_select_passenger)
+        public void checkChanged()
+        {
+            if(cbSelectPassenger.isChecked())
+                EventBus.getDefault().post(new SelectPassenger((int)txtView1.getTag()));
+            else
+                EventBus.getDefault().post(new UnselectPassenger((int)txtView1.getTag()));
         }
     }
 }

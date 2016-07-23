@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
+import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 
@@ -85,6 +86,7 @@ public class BookingPaymentFragment extends Fragment {
     int[] mArrDebitIDs = {0, 3, 5, 9, 15, 16, 19, 25, 26, 32, 41, 57, 66};
     int[] mArrCashIDs = {0,  23, 33, 55, 68, 70, 71};
     int[] mArrIrctIDs = {0,  59};
+    String mPaymentMode;
 
     @Override
     public void onDestroy(){
@@ -109,9 +111,6 @@ public class BookingPaymentFragment extends Fragment {
         mSpMonth.setAdapter(spMonths);
 
         showCardOrInternetBanking(R.id.id_radio_banking);
-
-
-
         return view;
     }
 
@@ -164,33 +163,77 @@ public class BookingPaymentFragment extends Fragment {
     public void showCardOrInternetBanking(int nRes){
         switch(nRes) {
             case R.id.id_radio_debit:
+                mPaymentMode = "DEBIT_CARD";
                 mvCardSection.setVisibility(View.VISIBLE);
                 mvAtmPinNo.setVisibility(View.VISIBLE);
                 mvInternetSection.setVisibility(View.GONE);
                 mvCardTypeSection.setVisibility(View.VISIBLE);
                 break;
             case R.id.id_radio_credit:
+                mPaymentMode = "CREDIT_CARD";
                 mvCardSection.setVisibility(View.VISIBLE);
                 mvAtmPinNo.setVisibility(View.GONE);
                 mvInternetSection.setVisibility(View.GONE);
                 mvCardTypeSection.setVisibility(View.VISIBLE);
                 break;
             case R.id.id_radio_banking:
+                mPaymentMode = "NETBANKING";
                 mvCardSection.setVisibility(View.GONE);
                 mvAtmPinNo.setVisibility(View.GONE);
                 mvInternetSection.setVisibility(View.VISIBLE);
                 mvCardTypeSection.setVisibility(View.GONE);
                 break;
             case R.id.id_radio_irctc:
+                mPaymentMode = "IRCTC_PREPAID";
                 mvCardSection.setVisibility(View.VISIBLE);
                 mvAtmPinNo.setVisibility(View.GONE);
                 mvInternetSection.setVisibility(View.GONE);
                 mvCardTypeSection.setVisibility(View.GONE);
                 break;
             case R.id.id_radio_cash:
+                mPaymentMode = "CASH_CARD";
+                mvCardSection.setVisibility(View.GONE);
+                mvInternetSection.setVisibility(View.GONE);
+                break;
             default:
+                mPaymentMode = "NETBANKING";
                 mvCardSection.setVisibility(View.GONE);
                 mvInternetSection.setVisibility(View.GONE);
         }
+        mvInternetSection.setVisibility(View.GONE);
+    }
+
+    public TicketJson GetJsonObjectFilled()
+    {
+        TicketJson oJsonTicket = new TicketJson();
+
+        oJsonTicket.setPaymentMode(mPaymentMode);
+        int nMode = 0;
+        if(mPaymentMode.equals("NETBANKING")){
+            nMode = mArrBankingIDs[mSpPaymentOptions.getSelectedItemPosition()];
+        }
+        else if(mPaymentMode.equals("IRCTC_PREPAID")){
+            nMode = mArrIrctIDs[mSpPaymentOptions.getSelectedItemPosition()];
+        }
+        else if(mPaymentMode.equals("CASH_CARD")){
+            nMode = mArrCashIDs[mSpPaymentOptions.getSelectedItemPosition()];
+        }
+        else if(mPaymentMode.equals("CREDIT_CARD")){
+            nMode = mArrCreditIDs[mSpPaymentOptions.getSelectedItemPosition()];
+        }
+        else if(mPaymentMode.equals("DEBIT_CARD")){
+            nMode = mArrDebitIDs[mSpPaymentOptions.getSelectedItemPosition()];
+        }
+        oJsonTicket.setPaymentModeOptionID(""+nMode);
+        oJsonTicket.setCardNumberValue(mvCardNumber.getText().toString());
+        String sCard = mSpCardType.getSelectedItem().toString();
+        sCard = sCard.equals("MASTER") ? "MC" : "VISA";
+        oJsonTicket.setCardType(sCard);
+        oJsonTicket.setExpiryMonth("" + mSpMonth.getSelectedItemPosition() + 1);
+        oJsonTicket.setExpiryYear(mvYear.getText().toString());
+        oJsonTicket.setCardCvvNumber(mvCVVNumber.getText().toString());
+        oJsonTicket.setNameOnCard(mvCardName.getText().toString());
+
+        return oJsonTicket;
     }
 }

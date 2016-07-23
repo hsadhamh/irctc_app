@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +23,9 @@ import com.github.clans.fab.FloatingActionMenu;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,6 +36,11 @@ import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 import irctc.factor.app.irctcmadeeasy.Events.PassengerListUpdated;
+import irctc.factor.app.irctcmadeeasy.Events.SelectPassenger;
+import irctc.factor.app.irctcmadeeasy.Events.UnselectPassenger;
+import irctc.factor.app.irctcmadeeasy.Json.ChildJson;
+import irctc.factor.app.irctcmadeeasy.Json.PassengerJson;
+import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.TicketConstants;
 import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
@@ -57,6 +66,8 @@ public class PassengerListFragment extends Fragment{
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
     private PassengerInfoDao mPassengerInfo;
+
+    List<Long> mSelectedPassengerList = new ArrayList();
 
     @Override
     public void onAttach(Context context) {
@@ -120,6 +131,45 @@ public class PassengerListFragment extends Fragment{
         PassengerInfo pass = mPassengerInfo.load((long)e.getPassengerID());
         mPassengerInfo.delete(pass);
         onListUpdatedEvent();
+    }
+
+    @Subscribe
+    public void onEventHandle(SelectPassenger e){ mSelectedPassengerList.add((long)e.getPassengerID()); }
+
+    @Subscribe
+    public void onEventHandle(UnselectPassenger e){ mSelectedPassengerList.remove((long)e.getPassengerID()); }
+
+    public TicketJson GetJsonObjectFilled() {
+        TicketJson oJsonTicket = new TicketJson();
+        if(!mSelectedPassengerList.isEmpty()){
+            for (Long i : mSelectedPassengerList)
+            {
+                PassengerInfo pass = mPassengerInfo.load(i);
+                if(pass.getChild().equals("CHILD"))
+                {
+                    ChildJson child = new ChildJson();
+                    child.setName(pass.getName());
+                    child.setAge(""+pass.getAge());
+                    child.setGender(pass.getGender());
+                    oJsonTicket.getChildInfo().add(child);
+                }
+                else
+                {
+                    PassengerJson passJson = new PassengerJson();
+                    passJson.setGender(pass.getGender());
+                    passJson.setAge(""+pass.getAge());
+                    passJson.setBerth(pass.getBerth());
+                    passJson.setName(pass.getName());
+                    passJson.setIDCard("" + pass.getAadharCardNo());
+                    passJson.setIDCardNumber("" + pass.getAadharCardNo());
+                    passJson.setNationality(pass.getNationality());
+                    passJson.setType(pass.getChild());
+                    oJsonTicket.getPassengerInfo().add(passJson);
+                }
+
+            }
+        }
+        return oJsonTicket;
     }
 
 }

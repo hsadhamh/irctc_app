@@ -40,7 +40,7 @@ public class TicketJson {
 
     @JsonProperty("train-no")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    long TrainNumber;
+    String TrainNumber;
 
     @JsonProperty("class")
     @JsonIgnoreProperties(ignoreUnknown=true)
@@ -108,6 +108,22 @@ public class TicketJson {
     @JsonIgnoreProperties(ignoreUnknown=true)
     String NameOnCard;
 
+    public List<ChildJson> getChildInfo() {
+        return ChildInfo;
+    }
+
+    public void setChildInfo(List<ChildJson> childInfo) {
+        ChildInfo = childInfo;
+    }
+
+    public List<PassengerJson> getPassengerInfo() {
+        return PassengerInfo;
+    }
+
+    public void setPassengerInfo(List<PassengerJson> passengerInfo) {
+        PassengerInfo = passengerInfo;
+    }
+
     /* Passenger Info */
     @JsonProperty("passenger-info")
     @JsonIgnoreProperties(ignoreUnknown=true)
@@ -165,11 +181,11 @@ public class TicketJson {
         DateOfJourney = dateOfJourney;
     }
 
-    public long getTrainNumber() {
+    public String getTrainNumber() {
         return TrainNumber;
     }
 
-    public void setTrainNumber(long trainNumber) {
+    public void setTrainNumber(String trainNumber) {
         TrainNumber = trainNumber;
     }
 

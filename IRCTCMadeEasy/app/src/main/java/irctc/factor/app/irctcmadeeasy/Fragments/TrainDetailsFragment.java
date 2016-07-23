@@ -3,7 +3,6 @@ package irctc.factor.app.irctcmadeeasy.Fragments;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -38,7 +37,6 @@ import irctc.factor.app.irctcmadeeasy.AddPassengerActivity;
 import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
-import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 import irctc.factor.app.irctcmadeeasy.TicketConstants;
@@ -116,13 +114,6 @@ public class TrainDetailsFragment extends Fragment {
     private TicketDetailsDao ticketDetails;
     private int mnTrainID = 0;
 
-    public static final String LOGINPREFERENCES = "LoginPrefs";
-    public static final String USERNAME = "usernameKey";
-    public static final String PASSWORD = "passwordKey";
-    public static final String CHECKBOXFLAG="loginFlag";
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-
     TicketDetailsCursorAdapter mAdapter = null;
 
     @Override
@@ -175,18 +166,6 @@ public class TrainDetailsFragment extends Fragment {
 
         // Toast.makeText(getContext().getApplicationContext(),Integer.toString(mnTrainID),Toast.LENGTH_SHORT).show();
 
-
-        pref = getContext().getSharedPreferences(LOGINPREFERENCES, Context.MODE_PRIVATE);
-
-
-        //Setting value in Userame and Password Field
-        mvUserName.setText(pref.getString(USERNAME,null));
-        mvPassword.setText(pref.getString(PASSWORD, null));
-
-        if(pref.getString(CHECKBOXFLAG,"").equals("1"))
-        {
-            mvCbSaveLogin.setChecked(true);
-        }
 
         mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
         mDaoSession = mDaoMaster.newSession();
@@ -348,18 +327,8 @@ public class TrainDetailsFragment extends Fragment {
         ticket.setBookOnConfirm(mCbBookCondition.isChecked() ? "true" : "false");
         ticket.setConditionsOnBook(mRbNone.isChecked() ? "0" : mRbBookOnSameCoach.isChecked() ? "1" : mRbBookOneLower.isChecked() ? "2" : "3");
 
-        //Setting JSON Values
-       /* TicketJson createJson=new TicketJson();
-        createJson.setSrcStation(mvStationSource.getText().toString());
-        createJson.setDestStation(mvStationDestination.getText().toString());
-        createJson.setBoardingStation(mvStationBoarding.getText().toString());
-        createJson.setDateOfJourney(mvDateJourney.getText().toString());
-        createJson.setTrainNumber(mvTrainNumber.getText().toString());
-        */
-
 
         //For Storing JSON
-        //Train Number
         //String tNumber=mvTrainNumber.getText().toString().substring(0, tNumber.indexOf(':')).trim();
 
 
@@ -390,7 +359,6 @@ public class TrainDetailsFragment extends Fragment {
         mvTrainNumber.setText(train.getTrainno());
         ArrayAdapter<String> array_spinner = (ArrayAdapter<String>) mSpClassTrain.getAdapter();
         mSpClassTrain.setSelection(array_spinner.getPosition(train.getIrctcClass()));
-
 
         if (train.getQuota().equals("GENERAL")) {
             mvGeneralButton.setChecked(true);
@@ -442,9 +410,6 @@ public class TrainDetailsFragment extends Fragment {
     public void preferredCheck() {
         if (mCbPreferredCoach.isChecked()) {
             mvPreferredCoachTxt.setEnabled(true);
-        } else {
-            mvPreferredCoachTxt.setEnabled(false);
-            mvPreferredCoachTxt.setText("");
         }
 
     }
@@ -456,40 +421,5 @@ public class TrainDetailsFragment extends Fragment {
                 .query(ticketDetails.getTablename(), ticketDetails.getAllColumns(), null, null, null, null, "");
         mAdapter.swapCursor(localCursor);
     }
-
-    @OnClick(R.id.check_box_save_login)
-    public void onChecked() {
-        if (mvCbSaveLogin.isChecked()) {
-            editor = pref.edit();
-            editor.putString(USERNAME, mvUserName.getText().toString());
-            editor.putString(PASSWORD, mvPassword.getText().toString());
-            editor.putString(CHECKBOXFLAG,"1");
-            editor.commit();
-            //mvUserName.setEnabled(false);
-            mvUserName.setFocusableInTouchMode(false);
-            mvUserName.setFocusable(false);
-            mvPassword.setFocusable(false);
-            mvPassword.setFocusableInTouchMode(false);
-            mvUserName.setClickable(false);
-            mvPassword.setClickable(false);
-        }
-        else
-        {
-            editor = pref.edit();
-           // editor.putString(USERNAME,"");
-            //editor.putString(PASSWORD, "");
-            editor.clear();
-            editor.commit();
-            mvUserName.setFocusableInTouchMode(true);
-            mvPassword.setFocusableInTouchMode(true);
-            mvUserName.setFocusable(true);
-            mvPassword.setFocusable(true);
-            mvUserName.setClickable(true);
-            mvPassword.setClickable(true);
-
-        }
-
-    }
-
 
 }
