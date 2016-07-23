@@ -37,6 +37,7 @@ import irctc.factor.app.irctcmadeeasy.AddPassengerActivity;
 import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
+import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 import irctc.factor.app.irctcmadeeasy.TicketConstants;
@@ -158,14 +159,6 @@ public class TrainDetailsFragment extends Fragment {
         quotaRadioButtonHandler();
         miscRadioButtonHandler();
         ShowDatePicker(container);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //mListPassengers.setLayoutManager(linearLayoutManager);
-
-
-        // Toast.makeText(getContext().getApplicationContext(),Integer.toString(mnTrainID),Toast.LENGTH_SHORT).show();
-
 
         mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
         mDaoSession = mDaoMaster.newSession();
@@ -306,11 +299,7 @@ public class TrainDetailsFragment extends Fragment {
     }
 
     @Subscribe
-    public void onEvent(AddFormsEvent e) {
-
-        saveTrainInfo();
-
-    }
+    public void onEvent(AddFormsEvent e) { saveTrainInfo(); }
 
     public void saveTrainInfo() {
         TicketDetails ticket = new TicketDetails();
@@ -320,7 +309,8 @@ public class TrainDetailsFragment extends Fragment {
         ticket.setJourneyDate(mvDateJourney.getText().toString());
         ticket.setTrainno(mvTrainNumber.getText().toString());
         ticket.setIrctcClass(mSpClassTrain.getSelectedItem().toString());
-        ticket.setQuota(mvGeneralButton.isChecked() ? "GENERAL" : mvTatkalPremium.isChecked() ? "PREMIUM TATKAL" : mvTatkal.isChecked() ? "TATKAL" : mvHandicapped.isChecked() ? "PHYSICALLY HANDICAPPED" : "LADIES");
+        ticket.setQuota(mvGeneralButton.isChecked() ? "GENERAL" : mvTatkalPremium.isChecked() ? "PREMIUM TATKAL" : mvTatkal.isChecked() ?
+                "TATKAL" : mvHandicapped.isChecked() ? "PHYSICALLY HANDICAPPED" : "LADIES");
         ticket.setMobileNumber(mvMobileNumber.getText().toString());
         ticket.setCoach(mCbPreferredCoach.isChecked() ? mvPreferredCoachTxt.getText().toString() : " ");
         ticket.setAutoUpgrade(mCbAutoUpgrade.isChecked() ? "true" : "false");
@@ -338,16 +328,60 @@ public class TrainDetailsFragment extends Fragment {
             ticketDetails.update(ticket);
         else
             ticketDetails.insert(ticket);
-
-
     }
 
-    public void createJsonValues() {
+    public TicketJson GetJsonObjectFilled() {
+        TicketJson oJsonTicket = new TicketJson();
 
-    }
+        oJsonTicket.setUserName(mvUserName.getText().toString());
+        oJsonTicket.setPassword(mvUserName.getText().toString());
+        oJsonTicket.setSrcStation(mvStationSource.getText().toString());
+        oJsonTicket.setDestStation(mvStationDestination.getText().toString());
+        oJsonTicket.setBoardingStation(mvStationBoarding.getText().toString());
+        oJsonTicket.setDateOfJourney(mvDateJourney.getText().toString());
 
-    public void validation() {
+        String sTrain  = mvTrainNumber.getText().toString();
+        int nIndex = sTrain.indexOf(':');
+        if(nIndex > 0)
+            sTrain = sTrain.substring(0, nIndex).trim();
+        oJsonTicket.setTrainNumber(sTrain);
 
+        String[] ClassXml = getContext().getResources().getStringArray(R.array.train_class);
+        int pos = mSpClassTrain.getSelectedItemPosition();
+        oJsonTicket.setClassSelection(ClassXml[pos].toString());
+
+        String sQuota = mvTatkalPremium.isChecked() ? "PREMIUM TATKAL" : mvTatkal.isChecked() ? "TATKAL" :
+                        mvHandicapped.isChecked() ? "PHYSICALLY HANDICAPPED" : mvLadies.isChecked() ? "LADIES" : "GENERAL";
+        oJsonTicket.setQuota(sQuota);
+
+        if(mCbPreferredCoach.isChecked()) {
+            oJsonTicket.setPreferredCoachSelection(true);
+            oJsonTicket.setPreferredCoachID(mvPreferredCoachTxt.getText().toString());
+        }
+        else {
+            oJsonTicket.setPreferredCoachSelection(false);
+            oJsonTicket.setPreferredCoachID("");
+        }
+
+        if(mCbAutoUpgrade.isChecked())
+            oJsonTicket.setAutoUpgrade(true);
+        else
+            oJsonTicket.setAutoUpgrade(false);
+
+        if(mCbBookCondition.isChecked())
+        {
+            oJsonTicket.setBookConfirmTickets(true);
+            int nCondition = mRbNone.isChecked()? 0 : mRbBookOneLower.isChecked()? 1 : mRbBookOnSameCoach.isChecked()? 2 : mRbBookTwoLower.isChecked()? 3 : 0;
+            oJsonTicket.setBookConfirmTicketOption("" + nCondition);
+        }
+        else
+        {
+            oJsonTicket.setBookConfirmTickets(false);
+            oJsonTicket.setBookConfirmTicketOption("0");
+        }
+        oJsonTicket.setMobileNumber(mvMobileNumber.getText().toString());
+
+        return oJsonTicket;
     }
 
     public void GetTrainInfo(int trainId) {
