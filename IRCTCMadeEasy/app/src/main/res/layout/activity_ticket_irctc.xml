@@ -62,7 +62,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
                     android:gravity="center|start"
-                    android:text="@string/login_save_text" />
+                    android:text="@string/login_save_text"
+                    android:onClick="onChecked"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -312,6 +313,7 @@
                 <com.rey.material.widget.EditText
                     android:id="@+id/txt_prefer_coach"
                     style="@style/Material.Widget.EditText"
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
