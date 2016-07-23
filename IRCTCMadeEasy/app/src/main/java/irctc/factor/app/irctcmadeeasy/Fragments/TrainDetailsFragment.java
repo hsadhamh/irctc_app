@@ -3,10 +3,13 @@ package irctc.factor.app.irctcmadeeasy.Fragments;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Adapters.AutoCompleteStringAdapter;
 import irctc.factor.app.irctcmadeeasy.Adapters.PassengerCursorAdapter;
@@ -37,6 +41,7 @@ import irctc.factor.app.irctcmadeeasy.AddPassengerActivity;
 import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
+import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 import irctc.factor.app.irctcmadeeasy.TicketConstants;
@@ -116,6 +121,13 @@ public class TrainDetailsFragment extends Fragment {
 
     TicketDetailsCursorAdapter mAdapter = null;
 
+    public static final String LOGINPREFERENCES = "LoginPrefs";
+        public static final String USERNAME = "usernameKey";
+        public static final String PASSWORD = "passwordKey";
+        public static final String CHECKBOXFLAG="loginFlag";
+        SharedPreferences pref;
+        SharedPreferences.Editor editor;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -165,6 +177,23 @@ public class TrainDetailsFragment extends Fragment {
 
 
         // Toast.makeText(getContext().getApplicationContext(),Integer.toString(mnTrainID),Toast.LENGTH_SHORT).show();
+
+        //Setting value in Userame and Password Field
+        pref = getContext().getSharedPreferences(LOGINPREFERENCES,1);
+        if(pref!=null) {
+            mvUserName.setText(pref.getString(USERNAME, ""));
+            mvPassword.setText(pref.getString(PASSWORD, ""));
+
+
+        if(pref.getString(CHECKBOXFLAG,"").equals("1"))
+        {
+            mvCbSaveLogin.setChecked(true);
+            //Disabling the textboxes
+            mvUserName.setEnabled(false);
+            mvPassword.setEnabled(false);
+            mvUserName.setBackgroundColor(Color.TRANSPARENT);
+        }
+        }
 
 
         mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
@@ -342,12 +371,60 @@ public class TrainDetailsFragment extends Fragment {
 
     }
 
-    public void createJsonValues() {
 
-    }
 
-    public void validation() {
+    public TicketJson GetJsonObjectFilled() {
+        TicketJson oJsonTicket = new TicketJson();
 
+        oJsonTicket.setUserName(mvUserName.getText().toString());
+        oJsonTicket.setPassword(mvUserName.getText().toString());
+        oJsonTicket.setSrcStation(mvStationSource.getText().toString());
+        oJsonTicket.setDestStation(mvStationDestination.getText().toString());
+        oJsonTicket.setBoardingStation(mvStationBoarding.getText().toString());
+        oJsonTicket.setDateOfJourney(mvDateJourney.getText().toString());
+
+        String sTrain  = mvTrainNumber.getText().toString();
+        int nIndex = sTrain.indexOf(':');
+        if(nIndex > 0)
+            sTrain = sTrain.substring(0, nIndex).trim();
+        oJsonTicket.setTrainNumber(sTrain);
+
+        String[] ClassXml = getContext().getResources().getStringArray(R.array.train_class);
+        int pos = mSpClassTrain.getSelectedItemPosition();
+        oJsonTicket.setClassSelection(ClassXml[pos].toString());
+
+        String sQuota = mvTatkalPremium.isChecked() ? "PREMIUM TATKAL" : mvTatkal.isChecked() ? "TATKAL" :
+                mvHandicapped.isChecked() ? "PHYSICALLY HANDICAPPED" : mvLadies.isChecked() ? "LADIES" : "GENERAL";
+        oJsonTicket.setQuota(sQuota);
+
+        if(mCbPreferredCoach.isChecked()) {
+            oJsonTicket.setPreferredCoachSelection(true);
+            oJsonTicket.setPreferredCoachID(mvPreferredCoachTxt.getText().toString());
+        }
+        else {
+            oJsonTicket.setPreferredCoachSelection(false);
+            oJsonTicket.setPreferredCoachID("");
+        }
+
+        if(mCbAutoUpgrade.isChecked())
+            oJsonTicket.setAutoUpgrade(true);
+        else
+            oJsonTicket.setAutoUpgrade(false);
+
+        if(mCbBookCondition.isChecked())
+        {
+            oJsonTicket.setBookConfirmTickets(true);
+            int nCondition = mRbNone.isChecked()? 0 : mRbBookOneLower.isChecked()? 1 : mRbBookOnSameCoach.isChecked()? 2 : mRbBookTwoLower.isChecked()? 3 : 0;
+            oJsonTicket.setBookConfirmTicketOption("" + nCondition);
+        }
+        else
+        {
+            oJsonTicket.setBookConfirmTickets(false);
+            oJsonTicket.setBookConfirmTicketOption("0");
+        }
+        oJsonTicket.setMobileNumber(mvMobileNumber.getText().toString());
+
+        return oJsonTicket;
     }
 
     public void GetTrainInfo(int trainId) {
@@ -411,8 +488,47 @@ public class TrainDetailsFragment extends Fragment {
         if (mCbPreferredCoach.isChecked()) {
             mvPreferredCoachTxt.setEnabled(true);
         }
+        else {
+            mvPreferredCoachTxt.setEnabled(false);
+            mvPreferredCoachTxt.setText("");
+        }
 
     }
+
+
+
+    @OnClick(R.id.check_box_save_login)
+    public void onChecked() {
+        if (mvCbSaveLogin.isChecked()) {
+            editor = pref.edit();
+            editor.putString(USERNAME, mvUserName.getText().toString());
+            editor.putString(PASSWORD, mvPassword.getText().toString());
+            editor.putString(CHECKBOXFLAG,"1");
+            editor.commit();
+
+            //Disabling the textboxes
+            mvUserName.setEnabled(false);
+            mvPassword.setEnabled(false);
+            mvUserName.setBackgroundColor(Color.TRANSPARENT);
+
+        }
+        else
+        {
+            editor = pref.edit();
+            editor.clear();
+            editor.commit();
+
+            //Enabling the Textboxes
+            mvUserName.setEnabled(true);
+            mvPassword.setEnabled(true);
+            mvUserName.setBackgroundColor(Color.TRANSPARENT);
+            mvPassword.setBackgroundColor(Color.TRANSPARENT);
+
+
+        }
+
+    }
+
 
     public void onListUpdatedEvent() {
         Cursor localCursor;

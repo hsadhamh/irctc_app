@@ -42,7 +42,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/username_text"
                     android:inputType="text"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    />
 
                 <irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText
                     android:id="@+id/txt_password"
