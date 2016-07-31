@@ -1,17 +1,23 @@
 package irctc.factor.app.irctcmadeeasy;
 
+
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+
+
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.rey.material.widget.Button;
+
 import com.rey.material.widget.TabPageIndicator;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,11 +33,14 @@ import butterknife.OnClick;
 import irctc.factor.app.irctcmadeeasy.Adapters.BookTicketAdapter;
 import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
 import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
+import irctc.factor.app.irctcmadeeasy.Events.BookingPaymentEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditFormInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 
 import irctc.factor.app.irctcmadeeasy.Fragments.BookingPaymentFragment;
+import irctc.factor.app.irctcmadeeasy.Fragments.IGetPaymentValue;
+import irctc.factor.app.irctcmadeeasy.Fragments.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
@@ -44,16 +53,15 @@ import irctc.factor.app.irctcmadeeasy.database.TicketDetailsDao;
 /**
  * Created by hassanhussain on 7/8/2016.
  */
-public class BookTicketsNowActivity extends AppCompatActivity {
+public class BookTicketsNowActivity extends AppCompatActivity implements IGetValue,IGetPaymentValue {
 
     @BindView(R.id.id_pager_indicator)
     TabPageIndicator mPagerIndicator;
     @BindView(R.id.id_pager_verses)
     ViewPager mPager;
-    @BindView(R.id.btn_book_now_info)
-    Button mBookNowButton;
     @BindView(R.id.btn_save_info)
     Button mSaveForLaterButton;
+
 
     String[] mPagerTitles = {"Train Details","Passengers","Payment"};
 
@@ -63,6 +71,8 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     /* 0 -> Nothing; 1 -> Save; 2 -> Book */
     int mAction = 0; /**/
     TicketJson mFinalJson = null;
+    BookTicketAdapter bookTicketAdapter;
+    TicketJson finalJson = new TicketJson();
 
 
 
@@ -77,11 +87,17 @@ public class BookTicketsNowActivity extends AppCompatActivity {
         mListUiFragments.add(new PassengerListFragment());
         mListUiFragments.add(new BookingPaymentFragment());
 
-        BookTicketAdapter bookTicketAdapter = new BookTicketAdapter(getSupportFragmentManager(), mListUiFragments, mPagerTitles);
+
+
+        bookTicketAdapter = new BookTicketAdapter(getSupportFragmentManager(), mListUiFragments, mPagerTitles);
         mPager.setAdapter(bookTicketAdapter);
 
         assert mPagerIndicator != null;
         mPagerIndicator.setViewPager(mPager);
+
+
+
+
 
         mWarnDialog = new MaterialDialog
                         .Builder(BookTicketsNowActivity.this)
@@ -156,15 +172,29 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     @OnClick(R.id.btn_save_info)
     public void saveAsForm(){
         EventBus.getDefault().post(new AddFormsEvent(""));
+        EventBus.getDefault().post(new BookingPaymentEvent(""));
+        EventBus.getDefault().post(new BookingPaymentEvent(""));
 
-        mFinalJson = GetJsonPopulated();
+
+
+
         /* Validate all values */
-        String msg = GetWarningsIfAny(mFinalJson);
+       String msg = GetWarningsIfAny(finalJson);
 
         if(!msg.isEmpty()){
             mWarnDialog.setContent(msg);
             mWarnDialog.show();
         }
+
+
+      // mFinalJson = GetJsonPopulated();
+        /* Validate all values */
+       /* String msg = GetWarningsIfAny(mFinalJson);
+
+        if(!msg.isEmpty()){
+            mWarnDialog.setContent(msg);
+            mWarnDialog.show();
+        }*/
     }
 
     String GetWarningsIfAny(TicketJson finalJson){
@@ -206,15 +236,24 @@ public class BookTicketsNowActivity extends AppCompatActivity {
     TicketJson GetJsonPopulated(){
         TicketJson finalJson = new TicketJson();
 
-        TrainDetailsFragment trainFrag = (TrainDetailsFragment)mListUiFragments.get(0);
-        PassengerListFragment pasFrag = (PassengerListFragment)mListUiFragments.get(1);
-        BookingPaymentFragment bookFrag = (BookingPaymentFragment)mListUiFragments.get(2);
+        FragmentManager frg=getSupportFragmentManager();
+
+       /* String trainTag=bookTicketAdapter.getItemTag(0);
+        String pasTag=bookTicketAdapter.getItemTag(1);
+        String bookTag=bookTicketAdapter.getItemTag(2);*/
+
+       TrainDetailsFragment trainFrag = (TrainDetailsFragment)bookTicketAdapter.getItem(0);
+       PassengerListFragment pasFrag = (PassengerListFragment)bookTicketAdapter.getItem(1);
+       BookingPaymentFragment bookFrag = (BookingPaymentFragment)bookTicketAdapter.getItem(2);
+
+
+
 
         TicketJson jsonTicket = trainFrag.GetJsonObjectFilled();
         TicketJson jsonPassenger = pasFrag.GetJsonObjectFilled();
-        TicketJson jsonPay = bookFrag.GetJsonObjectFilled();
+       TicketJson jsonPay = bookFrag.GetJsonObjectFilled();
 
-        /* TICKET */
+/*
         finalJson.setUserName(jsonTicket.getUserName());
         finalJson.setPassword(jsonTicket.getPassword());
         finalJson.setSrcStation(jsonTicket.getSrcStation());
@@ -230,6 +269,7 @@ public class BookTicketsNowActivity extends AppCompatActivity {
         finalJson.setBookConfirmTickets(jsonTicket.getBookConfirmTickets());
         finalJson.setBookConfirmTicketOption(jsonTicket.getBookConfirmTicketOption());
         finalJson.setMobileNumber(jsonTicket.getMobileNumber());
+*/
 
         /* PASSENGERS */
         finalJson.getPassengerInfo().addAll(jsonPassenger.getPassengerInfo());
@@ -256,4 +296,44 @@ public class BookTicketsNowActivity extends AppCompatActivity {
         /* Code for next activity after JSON string */
     }
 
+    @Override
+    public void getEditTextValue(TicketJson jsonTicket) {
+
+
+
+        finalJson.setUserName(jsonTicket.getUserName());
+
+        finalJson.setPassword(jsonTicket.getPassword());
+        finalJson.setSrcStation(jsonTicket.getSrcStation());
+        finalJson.setDestStation(jsonTicket.getDestStation());
+        finalJson.setBoardingStation(jsonTicket.getBoardingStation());
+        finalJson.setDateOfJourney(jsonTicket.getDateOfJourney());
+        finalJson.setTrainNumber(jsonTicket.getTrainNumber());
+        finalJson.setClassSelection(jsonTicket.getClassSelection());
+        finalJson.setQuota(jsonTicket.getQuota());
+        finalJson.setPreferredCoachSelection(jsonTicket.getPreferredCoachSelection());
+        finalJson.setPreferredCoachID(jsonTicket.getPreferredCoachID());
+        finalJson.setAutoUpgrade(jsonTicket.getAutoUpgrade());
+        finalJson.setBookConfirmTickets(jsonTicket.getBookConfirmTickets());
+        finalJson.setBookConfirmTicketOption(jsonTicket.getBookConfirmTicketOption());
+        finalJson.setMobileNumber(jsonTicket.getMobileNumber());
+
+        /* PASSENGERS */
+        finalJson.getPassengerInfo().addAll(jsonTicket.getPassengerInfo());
+        finalJson.getChildInfo().addAll(jsonTicket.getChildInfo());
+
+    }
+
+    @Override
+    public void getPaymentValue(TicketJson jsonPay)
+    {
+        finalJson.setPaymentMode(jsonPay.getPaymentMode());
+        finalJson.setPaymentModeOptionID(jsonPay.getPaymentModeOptionID());
+        finalJson.setCardNumberValue(jsonPay.getCardNumberValue());
+        finalJson.setCardType(jsonPay.getCardType());
+        finalJson.setExpiryMonth(jsonPay.getExpiryMonth());
+        finalJson.setExpiryYear(jsonPay.getExpiryYear());
+        finalJson.setCardCvvNumber(jsonPay.getCardCvvNumber());
+        finalJson.setNameOnCard(jsonPay.getNameOnCard());
+    }
 }

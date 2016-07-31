@@ -3,6 +3,8 @@ package irctc.factor.app.irctcmadeeasy.Fragments;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +16,19 @@ import com.rey.material.widget.EditText;
 import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.Spinner;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
+import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
+import irctc.factor.app.irctcmadeeasy.Events.BookingPaymentEvent;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
@@ -25,7 +36,7 @@ import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 /**
  * Created by hassanhussain on 7/8/2016.
  */
-public class BookingPaymentFragment extends Fragment {
+public final class BookingPaymentFragment extends Fragment  {
     @BindView(R.id.id_saved_card_list)
     public Spinner mSpSavedCards;
 
@@ -87,17 +98,34 @@ public class BookingPaymentFragment extends Fragment {
     int[] mArrCashIDs = {0,  23, 33, 55, 68, 70, 71};
     int[] mArrIrctIDs = {0,  59};
     String mPaymentMode;
+    TicketJson oJsonTicket;
+    IGetPaymentValue iGet;
 
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
+    List<String> arrayAdpaterList;
+    ArrayList<String> al;
+
+    public static BookingPaymentFragment newInstance()
+    {
+        return new BookingPaymentFragment();
     }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+    }
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_irctc_payment, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         mContext = container.getContext();
+
+        arrayAdpaterList=  Arrays.asList(getResources().getStringArray(R.array.net_banking_options));
+        al = new ArrayList<String>(arrayAdpaterList);
+        mSpPaymentOption = new ArrayAdapter<String>(mContext, R.layout.layout_spinner_item,al);
+        mSpPaymentOption.setDropDownViewResource(R.layout.layout_spinner_item);
+        mSpPaymentOptions.setAdapter(mSpPaymentOption);
         setAdapterSpinner(R.id.id_radio_banking);
 
         ArrayAdapter<String> spCardTypes = new ArrayAdapter<String>(mContext,
@@ -110,7 +138,13 @@ public class BookingPaymentFragment extends Fragment {
         spMonths.setDropDownViewResource(R.layout.layout_spinner_item);
         mSpMonth.setAdapter(spMonths);
 
+
+
+
         showCardOrInternetBanking(R.id.id_radio_banking);
+
+
+
         return view;
     }
 
@@ -153,11 +187,12 @@ public class BookingPaymentFragment extends Fragment {
                 nArrId = R.array.irctc_card_option;
                 break;
         }
+
+        arrayAdpaterList = Arrays.asList(getResources().getStringArray(nArrId));
+        al=new ArrayList<>(arrayAdpaterList);
+        mSpPaymentOption.notifyDataSetChanged();
         mSpPaymentOptions.setSelection(0);
-        mSpPaymentOption = new ArrayAdapter<String>(mContext, R.layout.layout_spinner_item,
-                getResources().getStringArray(nArrId));
-        mSpPaymentOption.setDropDownViewResource(R.layout.layout_spinner_item);
-        mSpPaymentOptions.setAdapter(mSpPaymentOption);
+
     }
 
     public void showCardOrInternetBanking(int nRes){
@@ -203,9 +238,13 @@ public class BookingPaymentFragment extends Fragment {
         mvInternetSection.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
     public TicketJson GetJsonObjectFilled()
     {
-        TicketJson oJsonTicket = new TicketJson();
+         oJsonTicket = new TicketJson();
 
         oJsonTicket.setPaymentMode(mPaymentMode);
         int nMode = 0;
@@ -236,4 +275,17 @@ public class BookingPaymentFragment extends Fragment {
 
         return oJsonTicket;
     }
+
+    @Subscribe
+    public void onEvent(BookingPaymentEvent e) {
+
+        savePaymentInfo();
+
+    }
+
+    public void savePaymentInfo()
+    {
+        iGet.getPaymentValue(GetJsonObjectFilled());
+    }
+
 }

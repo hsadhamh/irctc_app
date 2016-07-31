@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -20,8 +21,10 @@ import com.github.clans.fab.FloatingActionButton;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.ImageButton;
+
 import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.Spinner;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,6 +67,9 @@ public class FormsList extends AppCompatActivity {
     @BindView(R.id.fab_add_forms)
     public FloatingActionButton mListAddForm;
 
+
+    public LinearLayout lvEntrytext;
+
     private Unbinder unbinder;
 
     TicketDetailsCursorAdapter mAdapter = null;
@@ -99,6 +105,11 @@ public class FormsList extends AppCompatActivity {
                 .query(mTicketDetails.getTablename(), mTicketDetails.getAllColumns(), null, null, null, null, "");
         mAdapter = new TicketDetailsCursorAdapter(this, localCursor);
         mListForm.setAdapter(mAdapter);
+        if(localCursor!=null&&localCursor.getCount()>2)
+        {
+            lvEntrytext=(LinearLayout)this.findViewById(R.id.form_entry_text);
+           lvEntrytext.setVisibility(LinearLayout.GONE);
+        }
     }
     @Override
     protected void onPause() {

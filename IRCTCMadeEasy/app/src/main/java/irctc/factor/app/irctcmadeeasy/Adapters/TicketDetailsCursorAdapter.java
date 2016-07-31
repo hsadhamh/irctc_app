@@ -11,6 +11,10 @@ import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +25,8 @@ import irctc.factor.app.irctcmadeeasy.Events.DeleteFormInfo;
 import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditFormInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
+import irctc.factor.app.irctcmadeeasy.Events.SelectPassenger;
+import irctc.factor.app.irctcmadeeasy.Events.UnselectPassenger;
 import irctc.factor.app.irctcmadeeasy.R;
 
 import irctc.factor.app.irctcmadeeasy.database.TicketDetailsDao;
@@ -62,6 +68,8 @@ public class TicketDetailsCursorAdapter extends RecyclerViewCursorAdapter<Ticket
     }
 
     static class TicketDetailsViewHolder extends RecyclerViewCursorViewHolder{
+
+
         @BindView(R.id.btn_form_edit_info)
         Button btnEdit;
         @BindView(R.id.btn_form_delete_info)
@@ -70,6 +78,9 @@ public class TicketDetailsCursorAdapter extends RecyclerViewCursorAdapter<Ticket
         @BindView(R.id.txt_source_destination)
         TextView txtView1;
 
+        @BindView(R.id.txt_journey_date)
+        TextView txtDojView;
+
 
 
         public TicketDetailsViewHolder(View view) {
@@ -77,19 +88,30 @@ public class TicketDetailsCursorAdapter extends RecyclerViewCursorAdapter<Ticket
             ButterKnife.bind(this, view);
         }
 
+
+
         @Override
         public void bindCursor(Cursor cursor) {
 
             int trainId=cursor.getInt(cursor.getColumnIndexOrThrow(TicketDetailsDao.Properties.Id.columnName));
             String source = cursor.getString(cursor.getColumnIndexOrThrow(TicketDetailsDao.Properties.Source.columnName));
+            String destination=cursor.getString(cursor.getColumnIndexOrThrow(TicketDetailsDao.Properties.Destination.columnName));
+            String doj=cursor.getString(cursor.getColumnIndexOrThrow(TicketDetailsDao.Properties.JourneyDate.columnName));
+            String passengers=cursor.getString(cursor.getColumnIndexOrThrow(TicketDetailsDao.Properties.JourneyDate.columnName));
 
-            String sText1 = "<b>"+source + "</b>";
+            source=source.substring(0, source.indexOf(':')).trim();
+            destination=destination.substring(0, destination.indexOf(':')).trim();
+
+            String sText1 = "<b>"+source +"</b>"+"to "+"<b>"+destination +"</b>";
+            String sText2="<b>DOJ:</b> "+doj;
+
 
 
             // Populate fields with extracted properties
             txtView1.setText(Html.fromHtml(sText1));
-            txtView1.setTextSize(15.0f);
-            //txtView2.setText(Html.fromHtml(sText2));
+            txtView1.setTextSize(25.0f);
+            txtDojView.setText(Html.fromHtml(sText2));
+            txtDojView.setTextSize(20.0f);
             //txtView3.setText(Html.fromHtml(sText3));
             txtView1.setTag(trainId);
         }
@@ -103,6 +125,8 @@ public class TicketDetailsCursorAdapter extends RecyclerViewCursorAdapter<Ticket
         public void onClickDeleteForm(){
             EventBus.getDefault().post(new DeleteFormInfo((int)txtView1.getTag()));
         }
+
+
     }
 }
 

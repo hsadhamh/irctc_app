@@ -4,6 +4,33 @@
     android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/form_entry_text"
+         >
+    <TextView
+        android:id="@+id/textviewdatefornocallspage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="You don't have an item to book Now "
+        android:textSize="25sp"
+        android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/textviewdatefornocallspage1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="You don't have an item to book Now "
+            android:textSize="20sp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_list_forms"
         android:layout_width="match_parent"

@@ -25,6 +25,8 @@
                 android:padding="@dimen/padding_two"
                 android:layout_weight="1"
                 android:text="@string/saved_cards_label"/>
+
+
             <com.rey.material.widget.Spinner
                 android:id="@+id/id_saved_card_list"
                 style="@style/Material.Widget.Spinner"
@@ -109,12 +111,12 @@
                     android:layout_gravity="center" />
                 <com.rey.material.widget.Spinner
                     android:id="@+id/id_spinner_payment"
-                    style="@style/Material.Widget.Spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    style="@style/Material.Widget.Spinner"
                     android:gravity="center|start"
                     custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-                    android:layout_weight=".4"
+
                     android:layout_gravity="center" />
             </LinearLayout>
 

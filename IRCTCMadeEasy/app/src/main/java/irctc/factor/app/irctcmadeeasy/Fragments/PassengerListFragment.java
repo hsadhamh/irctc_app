@@ -51,7 +51,7 @@ import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 /**
  * Created by hassanhussain on 7/8/2016.
  */
-public class PassengerListFragment extends Fragment{
+public final class PassengerListFragment extends Fragment{
 
     @BindView(R.id.id_list_passengers)
     public RecyclerView mListPassengers;
@@ -68,6 +68,11 @@ public class PassengerListFragment extends Fragment{
     private PassengerInfoDao mPassengerInfo;
 
     List<Long> mSelectedPassengerList = new ArrayList();
+
+    public static PassengerListFragment newInstance()
+    {
+        return new PassengerListFragment();
+    }
 
     @Override
     public void onAttach(Context context) {

@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -17,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 
+import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.ImageButton;
@@ -53,7 +57,7 @@ import irctc.factor.app.irctcmadeeasy.database.TicketDetailsDao;
 /**
  * Created by hassanhussain on 7/8/2016.
  */
-public class TrainDetailsFragment extends Fragment {
+public final class TrainDetailsFragment extends Fragment  {
 
     @BindView(R.id.txt_username)
     public EditText mvUserName;
@@ -109,6 +113,8 @@ public class TrainDetailsFragment extends Fragment {
     @BindView(R.id.id_radio_book_at_two)
     public RadioButton mRbBookTwoLower;
 
+
+
     private Unbinder unbinder;
     AutoCompleteStringAdapter stationAdapter, trainAdapter;
 
@@ -121,6 +127,8 @@ public class TrainDetailsFragment extends Fragment {
 
     TicketDetailsCursorAdapter mAdapter = null;
 
+    IGetValue iGet;
+
     public static final String LOGINPREFERENCES = "LoginPrefs";
         public static final String USERNAME = "usernameKey";
         public static final String PASSWORD = "passwordKey";
@@ -128,9 +136,15 @@ public class TrainDetailsFragment extends Fragment {
         SharedPreferences pref;
         SharedPreferences.Editor editor;
 
+    public static TrainDetailsFragment newInstance()
+    {
+        return new TrainDetailsFragment();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        iGet=(IGetValue) context;
         EventBus.getDefault().register(this);
     }
 
@@ -148,6 +162,11 @@ public class TrainDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ticket_irctc, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+
+
+
+
 
         //Loading Soucre and Destination,Boarding
         stationAdapter = new AutoCompleteStringAdapter(container.getContext(), R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
@@ -206,13 +225,24 @@ public class TrainDetailsFragment extends Fragment {
         }
         if (mnTrainID > 0)
             GetTrainInfo(mnTrainID);
+
+        view.findViewById(R.id.page_train_details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.page_train_details, new BookingPaymentFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+       unbinder.unbind();
     }
 
     public void quotaRadioButtonHandler() {
@@ -334,6 +364,10 @@ public class TrainDetailsFragment extends Fragment {
 
     }
 
+
+
+
+
     @Subscribe
     public void onEvent(AddFormsEvent e) {
 
@@ -341,7 +375,10 @@ public class TrainDetailsFragment extends Fragment {
 
     }
 
+
     public void saveTrainInfo() {
+
+        iGet.getEditTextValue(GetJsonObjectFilled());
         TicketDetails ticket = new TicketDetails();
         ticket.setSource(mvStationSource.getText().toString());
         ticket.setDestination(mvStationDestination.getText().toString());
@@ -377,7 +414,7 @@ public class TrainDetailsFragment extends Fragment {
         TicketJson oJsonTicket = new TicketJson();
 
         oJsonTicket.setUserName(mvUserName.getText().toString());
-        oJsonTicket.setPassword(mvUserName.getText().toString());
+        oJsonTicket.setPassword(mvPassword.getText().toString());
         oJsonTicket.setSrcStation(mvStationSource.getText().toString());
         oJsonTicket.setDestStation(mvStationDestination.getText().toString());
         oJsonTicket.setBoardingStation(mvStationBoarding.getText().toString());
@@ -537,5 +574,13 @@ public class TrainDetailsFragment extends Fragment {
                 .query(ticketDetails.getTablename(), ticketDetails.getAllColumns(), null, null, null, null, "");
         mAdapter.swapCursor(localCursor);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //TicketJson jsonTicket = GetJsonObjectFilled();
+
+    }
+
 
 }
