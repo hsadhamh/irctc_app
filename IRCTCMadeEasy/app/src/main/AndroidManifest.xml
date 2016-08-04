@@ -30,6 +30,7 @@
         <activity android:name=".DummyActivity"/>
         <activity android:name=".AddPassengerActivity"/>
         <activity android:name=".FormsList"/>
+        <activity android:name=".IntroSlideActivity"/>
 
 
     </application>

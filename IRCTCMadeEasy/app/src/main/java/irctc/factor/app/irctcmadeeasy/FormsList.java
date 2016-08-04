@@ -11,17 +11,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
+import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.ImageButton;
 
+
+import com.rey.material.widget.ImageView;
 import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.Spinner;
 
@@ -66,6 +71,10 @@ public class FormsList extends AppCompatActivity {
     public RecyclerView mListForm;
     @BindView(R.id.fab_add_forms)
     public FloatingActionButton mListAddForm;
+    @BindView(R.id.center_button)
+    public ImageView centerButton;
+    @BindView(R.id.id_discover_btn)
+    public Button discoverButton;
 
 
     public LinearLayout lvEntrytext;
@@ -77,7 +86,8 @@ public class FormsList extends AppCompatActivity {
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
     private TicketDetailsDao mTicketDetails;
-    List<Fragment> mListUiFragments = new ArrayList<>();
+    public Button newButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +96,31 @@ public class FormsList extends AppCompatActivity {
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
 
+        //LinearLayout mainLayout=(LinearLayout)this.findViewById(R.id.form_entry_text);
+        LinearLayout entryLayout=(LinearLayout)this.findViewById(R.id.entry_view);
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mListForm.setLayoutManager(linearLayoutManager);
-        mListUiFragments.add(new TrainDetailsFragment());
 
        /*  Forms List Initialize   */
         mDaoMaster = new DaoMaster(TicketConstants.getReadableDatabase());
         mDaoSession = mDaoMaster.newSession();
         mTicketDetails = mDaoSession.getTicketDetailsDao();
+
+        Toast.makeText(getApplicationContext(),mTicketDetails.count()+"",Toast.LENGTH_LONG);
+        if(mTicketDetails==null ||mTicketDetails.count()<1)
+        {
+           //mainLayout.setVisibility(LinearLayout.GONE);
+           mListAddForm.setVisibility(View.GONE);
+           getSupportActionBar().hide();
+        }
+        else
+        {
+            entryLayout.setVisibility(LinearLayout.GONE);
+        }
+
 
         setCursorAdapterToList();
     }
@@ -105,11 +131,7 @@ public class FormsList extends AppCompatActivity {
                 .query(mTicketDetails.getTablename(), mTicketDetails.getAllColumns(), null, null, null, null, "");
         mAdapter = new TicketDetailsCursorAdapter(this, localCursor);
         mListForm.setAdapter(mAdapter);
-        if(localCursor!=null&&localCursor.getCount()>2)
-        {
-            lvEntrytext=(LinearLayout)this.findViewById(R.id.form_entry_text);
-           lvEntrytext.setVisibility(LinearLayout.GONE);
-        }
+
     }
     @Override
     protected void onPause() {
@@ -123,12 +145,32 @@ public class FormsList extends AppCompatActivity {
         EventBus.getDefault().register(this);
     }
 
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
     @OnClick(R.id.fab_add_forms)
-    public void addFormsOnclick(){
+    public void addFormsOnclick1(){
         Intent i = new Intent(FormsList.this,BookTicketsNowActivity.class);
         startActivity(i);
     }
 
+    @OnClick(R.id.center_button)
+    public void addFormsOnclick(){
+        Intent i = new Intent(FormsList.this,BookTicketsNowActivity.class);
+        startActivity(i);
+    }
+@OnClick(R.id.id_discover_btn)
+public void discoverClick(){
+
+    Intent i = new Intent(FormsList.this,IntroSlideActivity.class);
+    startActivity(i);
+
+}
 
 
     @Subscribe

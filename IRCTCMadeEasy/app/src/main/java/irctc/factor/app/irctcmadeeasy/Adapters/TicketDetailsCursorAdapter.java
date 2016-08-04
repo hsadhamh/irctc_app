@@ -99,8 +99,8 @@ public class TicketDetailsCursorAdapter extends RecyclerViewCursorAdapter<Ticket
             String doj=cursor.getString(cursor.getColumnIndexOrThrow(TicketDetailsDao.Properties.JourneyDate.columnName));
             String passengers=cursor.getString(cursor.getColumnIndexOrThrow(TicketDetailsDao.Properties.JourneyDate.columnName));
 
-            source=source.substring(0, source.indexOf(':')).trim();
-            destination=destination.substring(0, destination.indexOf(':')).trim();
+           // source=source.substring(1, source.indexOf(':')).trim();
+            //destination=destination.substring(0, destination.indexOf(':')).trim();
 
             String sText1 = "<b>"+source +"</b>"+"to "+"<b>"+destination +"</b>";
             String sText2="<b>DOJ:</b> "+doj;

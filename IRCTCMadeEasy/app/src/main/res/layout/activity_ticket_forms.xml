@@ -4,38 +4,86 @@
     android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:id="@+id/form_entry_text"
-         >
-    <TextView
-        android:id="@+id/textviewdatefornocallspage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="You don't have an item to book Now "
-        android:textSize="25sp"
-        android:layout_gravity="center"/>
-        <TextView
-            android:id="@+id/textviewdatefornocallspage1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="You don't have an item to book Now "
-            android:textSize="20sp"
-            android:layout_gravity="center"/>
-    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_list_forms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1.0"
+        android:id="@+id/entry_view"
+        android:minHeight="400dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
+            android:layout_gravity="center">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/no_information_found"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Welcome! "
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorWhite"/>
+                <com.rey.material.widget.Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dip"
+                    android:id="@+id/id_discover_btn"
+                    android:text="Discover App"
+                    android:clickable="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.3"
+            android:background="@drawable/screen_background">
+
+            <com.rey.material.widget.ImageView
+                android:src="@drawable/circular_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="20dp"
+                android:id="@+id/center_button"/>
+            <TextView
+                android:id="@+id/add_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Add Deatils "
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:textColor="@color/colorAccent"/>
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
     <com.github.clans.fab.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
