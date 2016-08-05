@@ -35,7 +35,7 @@
 
 
 
-  <item android:top="80dp" android:left="80dp" android:right="80dp" android:bottom="80dp" android:drawable="@drawable/plus_button">
+  <item android:top="80dp" android:left="80dp" android:right="80dp" android:bottom="80dp" android:drawable="@drawable/add_ticket_details">
 
   </item>
 

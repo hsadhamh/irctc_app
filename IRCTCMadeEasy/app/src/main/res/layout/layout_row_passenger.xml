@@ -12,7 +12,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/add_passenger_page"
-                android:padding="@dimen/padding_eight">
+                android:padding="@dimen/padding_eight"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="60dp"
+                android:background="@drawable/screen_background">
 
                 <TextView
                     android:id="@+id/lbl_view_passenger"
@@ -20,45 +24,59 @@
                     android:layout_height="wrap_content"
                     android:text="@string/add_passenger_text"
                     android:gravity="center"
+                    android:textColor="@color/colorAccent"
                     android:textStyle="bold|normal"
-                    android:textSize="@dimen/header_text_size"
-                    android:typeface="serif"
+                    android:textSize="22sp"
+                    android:paddingBottom="5dp"
                     android:layout_gravity="center" />
+
 
                 <com.rey.material.widget.EditText
                     android:id="@+id/txt_passenger_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
+                    style="@style/Material.Widget.EditText"
                     android:hint="@string/add_passenger_name"
-                    android:padding="@dimen/padding_two"/>
+                    android:inputType="textCapWords|textPersonName"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="3dp"
+                    android:padding="3dp"/>
                 <com.rey.material.widget.EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Material.Widget.EditText"
                     android:hint="@string/add_passenger_age"
                     android:padding="@dimen/padding_two"
                     android:inputType="number"
+                    android:textSize="18sp"
                     android:id="@+id/txt_passenger_age"
-                    android:paddingTop="@dimen/padding_three" />
+                    android:paddingTop="@dimen/padding_three"
+                    android:layout_marginBottom="3dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_two"
-                    android:paddingTop="@dimen/padding_three">
-                    <com.rey.material.widget.TextView
+                    android:paddingTop="5dp">
+                    <RelativeLayout
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <com.rey.material.widget.TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/add_gender_text"
-                        android:padding="5dp"
                         android:layout_gravity="center"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:gravity="center|start"
                         android:textStyle="bold|normal"
                         android:textSize="@dimen/header_text_size" />
 
                     <com.google.android.flexbox.FlexboxLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:id="@+id/layout_radio_group">
 
                         <com.rey.material.widget.RadioButton
@@ -78,6 +96,7 @@
                             android:text="@string/add_passenger_female"/>
 
                     </com.google.android.flexbox.FlexboxLayout>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout

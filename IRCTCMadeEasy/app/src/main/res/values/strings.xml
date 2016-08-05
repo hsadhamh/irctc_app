@@ -25,7 +25,7 @@
     <string name="specify_name_save">Specify name to save</string>
 
     <string name="add_passenger_text">Passenger Details</string>
-    <string name="add_passenger_name">  Name</string>
+    <string name="add_passenger_name">Passenger Name</string>
     <string name="add_passenger_age"> Age</string>
     <string name="add_gender_text">Gender : </string>
     <string name="add_passenger_male">MALE</string>
