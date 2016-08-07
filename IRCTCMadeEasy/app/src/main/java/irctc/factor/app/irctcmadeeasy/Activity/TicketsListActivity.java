@@ -33,6 +33,7 @@ import butterknife.OnClick;
 import irctc.factor.app.irctcmadeeasy.Adapters.TicketDetailsCursorAdapter;
 import irctc.factor.app.irctcmadeeasy.Events.DeleteFormInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EditFormInfo;
+import irctc.factor.app.irctcmadeeasy.Events.StartBookingEvent;
 import irctc.factor.app.irctcmadeeasy.Events.UpdateJsonValues;
 import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;
 import irctc.factor.app.irctcmadeeasy.R;
@@ -187,6 +188,14 @@ public class TicketsListActivity extends AppCompatActivity {
         TicketDetails train = getTicketsDao().load((long)e.getTrainID());
         getTicketsDao().delete(train);
         onListUpdatedEvent();
+    }
+
+    @Subscribe
+    public void onEventHandle(StartBookingEvent o){
+        TicketDetails train = getTicketsDao().load((long)o.id);
+        Intent i = new Intent(TicketsListActivity.this, IrctcMainActivity.class);
+        i.putExtra("JSON_String",  train.getJson());
+        startActivity(i);
     }
 
     public TicketDetailsDao getTicketsDao(){

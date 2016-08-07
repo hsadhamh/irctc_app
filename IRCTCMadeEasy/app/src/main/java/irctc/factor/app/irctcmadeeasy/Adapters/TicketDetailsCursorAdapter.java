@@ -22,6 +22,7 @@ import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerView
 import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerViewCursorViewHolder;
 import irctc.factor.app.irctcmadeeasy.Events.DeleteFormInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EditFormInfo;
+import irctc.factor.app.irctcmadeeasy.Events.StartBookingEvent;
 import irctc.factor.app.irctcmadeeasy.Json.ChildJson;
 import irctc.factor.app.irctcmadeeasy.Json.PassengerJson;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
@@ -215,6 +216,11 @@ public class TicketDetailsCursorAdapter extends RecyclerViewCursorAdapter<Ticket
         @OnClick(R.id.btn_form_delete_info)
         public void onClickDeleteForm(){
             EventBus.getDefault().post(new DeleteFormInfo((int)txtView1.getTag()));
+        }
+
+        @OnClick(R.id.btn_book_now)
+        public void startBookNow(){
+            EventBus.getDefault().post(new StartBookingEvent((int)txtView1.getTag()));
         }
     }
 }
