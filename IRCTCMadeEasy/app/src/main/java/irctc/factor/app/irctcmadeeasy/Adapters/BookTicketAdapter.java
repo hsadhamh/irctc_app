@@ -19,32 +19,21 @@ import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;
  */
 public class BookTicketAdapter extends FragmentStatePagerAdapter {
     List<Fragment> moTriViews = new ArrayList<>();
-
-
-
-
     String[] mTitles;
-
-
 
     public BookTicketAdapter(FragmentManager fm, List<Fragment> listViews, String[] names) {
         super(fm);
         mTitles = names;
         moTriViews.addAll(listViews);
-
     }
 
     @Override
     public int getItemPosition(Object object) { return POSITION_NONE; }
 
-
-
-
     @Override
     public Fragment getItem(int position) {
-        //return moTriViews.get(position);
-
-        switch (position) {
+        return moTriViews.get(position);
+        /*switch (position) {
             case 0:
                 return TrainDetailsFragment.newInstance();
             case 1:
@@ -53,7 +42,7 @@ public class BookTicketAdapter extends FragmentStatePagerAdapter {
                 return BookingPaymentFragment.newInstance();
             default:
                 return null;
-        }
+        }*/
     }
 
     @Override
@@ -65,6 +54,8 @@ public class BookTicketAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mTitles[position];
     }
+
+
 }
 
 

@@ -1,24 +1,18 @@
 package irctc.factor.app.irctcmadeeasy.Fragments;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,18 +25,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Adapters.PassengerCursorAdapter;
-import irctc.factor.app.irctcmadeeasy.AddPassengerActivity;
 import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
-import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
-import irctc.factor.app.irctcmadeeasy.Events.PassengerListUpdated;
+import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
 import irctc.factor.app.irctcmadeeasy.Events.SelectPassenger;
-import irctc.factor.app.irctcmadeeasy.Events.UnselectPassenger;
+import irctc.factor.app.irctcmadeeasy.Events.UnSelectPassenger;
+import irctc.factor.app.irctcmadeeasy.Events.UpdateJsonValues;
+import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.ChildJson;
 import irctc.factor.app.irctcmadeeasy.Json.PassengerJson;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
-import irctc.factor.app.irctcmadeeasy.TicketConstants;
+import irctc.factor.app.irctcmadeeasy.Utils.TicketConstants;
 import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
 import irctc.factor.app.irctcmadeeasy.database.DaoSession;
 import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
@@ -59,29 +53,31 @@ public final class PassengerListFragment extends Fragment{
     public FloatingActionButton mListAddPassenger;
 
     private Unbinder unbinder;
-
     PassengerCursorAdapter mAdapter = null;
-
 
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
-    private PassengerInfoDao mPassengerInfo;
 
-    List<Long> mSelectedPassengerList = new ArrayList();
 
-    public static PassengerListFragment newInstance()
-    {
-        return new PassengerListFragment();
-    }
+    IGetValue mCallback;
 
-    @Override
-    public void onAttach(Context context) {
+    boolean mbCreateApproved = false;
+    TicketJson mPassedJson = null;
+
+    public TicketJson getPassedJson() { return mPassedJson; }
+    public void setPassedJson(TicketJson mPassedJson) { this.mPassedJson = mPassedJson; }
+    public boolean isCreateApproved() { return mbCreateApproved; }
+    public void setCreateApproved(boolean mLoadGivenValue) { this.mbCreateApproved = mLoadGivenValue; }
+
+    public static PassengerListFragment newInstance() { return new PassengerListFragment(); }
+
+    @Override public void onAttach(Context context) {
         super.onAttach(context);
         EventBus.getDefault().register(this);
+        mCallback = (IGetValue) context;
     }
 
-    @Override
-    public void onDetach() {
+    @Override public void onDetach() {
         super.onDetach();
         EventBus.getDefault().unregister(this);
     }
@@ -97,59 +93,65 @@ public final class PassengerListFragment extends Fragment{
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mListPassengers.setLayoutManager(linearLayoutManager);
 
-        /*  Passenger List Initialize   */
-        mDaoMaster = new DaoMaster(TicketConstants.getReadableDatabase());
-        mDaoSession = mDaoMaster.newSession();
-        mPassengerInfo = mDaoSession.getPassengerInfoDao();
-
         setCursorAdapterToList();
+
+        if(mPassedJson != null)
+            LoadValue();
+
         return view;
+    }
+
+    public PassengerInfoDao getPassengerInfo(){
+        if(mDaoMaster == null)
+            mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase(this.getContext()));
+        if(mDaoSession == null)
+            mDaoSession = mDaoMaster.newSession();
+        return mDaoSession.getPassengerInfoDao();
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        Log.d("PassengerListFragment", "onDestroyView: ");
     }
 
-    public void setCursorAdapterToList(){
-        Cursor localCursor;
-        localCursor = TicketConstants
-                    .getReadableDatabase()
-                    .query(mPassengerInfo.getTablename(), mPassengerInfo.getAllColumns(), null, null, null, null, "");
-        mAdapter = new PassengerCursorAdapter(getActivity().getApplicationContext(), localCursor);
-        mListPassengers.setAdapter(mAdapter);
-    }
+    public void setCursorAdapterToList(){ onListUpdatedEvent(); }
 
     @OnClick(R.id.fab_add_passenger)
     public void onAddPassengerClick(){ EventBus.getDefault().post(new AddPassengerEvent("")); }
 
     public void onListUpdatedEvent(){
-        Cursor localCursor;
-        localCursor = TicketConstants
-                .getReadableDatabase()
-                .query(mPassengerInfo.getTablename(), mPassengerInfo.getAllColumns(), null, null, null, null, "");
-        mAdapter.swapCursor(localCursor);
+        Cursor localCursor = TicketConstants
+                .getReadableDatabase(this.getContext())
+                .query(getPassengerInfo().getTablename(), getPassengerInfo().getAllColumns(), null, null, null, null, "");
+        getAdapter(localCursor).swapCursor(localCursor);
+        mListPassengers.setAdapter(getAdapter(localCursor));
+    }
+
+    PassengerCursorAdapter getAdapter(Cursor localCursor){
+        if(mAdapter == null)
+            mAdapter = new PassengerCursorAdapter(this.getContext(), localCursor);
+        return mAdapter;
     }
 
     @Subscribe
     public void onEventHandle(DeletePassengerEvent e){
-        PassengerInfo pass = mPassengerInfo.load((long)e.getPassengerID());
-        mPassengerInfo.delete(pass);
+        PassengerInfo pass = getPassengerInfo().load((long)e.getPassengerID());
+        getPassengerInfo().delete(pass);
         onListUpdatedEvent();
     }
 
     @Subscribe
-    public void onEventHandle(SelectPassenger e){ mSelectedPassengerList.add((long)e.getPassengerID()); }
+    public void onEventHandle(SelectPassenger e){ mAdapter.getSelectedPassengerList().add((long)e.getPassengerID()); }
 
     @Subscribe
-    public void onEventHandle(UnselectPassenger e){ mSelectedPassengerList.remove((long)e.getPassengerID()); }
+    public void onEventHandle(UnSelectPassenger e){ mAdapter.getSelectedPassengerList().remove((long)e.getPassengerID()); }
 
     public TicketJson GetJsonObjectFilled() {
         TicketJson oJsonTicket = new TicketJson();
-        if(!mSelectedPassengerList.isEmpty()){
-            for (Long i : mSelectedPassengerList)
-            {
-                PassengerInfo pass = mPassengerInfo.load(i);
+        if(!mAdapter.getSelectedPassengerList().isEmpty()){
+            for (Long i : mAdapter.getSelectedPassengerList()){
+                PassengerInfo pass = getPassengerInfo().load(i);
                 if(pass.getChild().equals("CHILD"))
                 {
                     ChildJson child = new ChildJson();
@@ -171,10 +173,47 @@ public final class PassengerListFragment extends Fragment{
                     passJson.setType(pass.getChild());
                     oJsonTicket.getPassengerInfo().add(passJson);
                 }
-
             }
         }
         return oJsonTicket;
+    }
+
+    @Subscribe
+    public void onEvent(GetMeJsonValues e) { mCallback.getPassengerJsonValue(GetJsonObjectFilled()); }
+
+    public void LoadValue(){
+        TicketJson oJson = mPassedJson;
+        List<PassengerInfo> listPass = getPassengerInfo().loadAll();
+        for(PassengerJson oPass : oJson.getPassengerInfo()){
+            boolean bAdd = CheckIfPassengerInfoFound(listPass, oPass);
+            if(!bAdd && isCreateApproved()){
+                /* Add to DB */
+                PassengerInfo passenger = new PassengerInfo();
+                passenger.setAadharCardNo(1234);
+                passenger.setAge(Integer.parseInt(oPass.getAge()));
+                passenger.setChild((passenger.getAge()<=5? "CHILD" : passenger.getAge()>=60? "SENIOR" : "ADULT"));
+                passenger.setBerth(oPass.getBerth());
+                passenger.setFood("Veg");
+                passenger.setGender(oPass.getGender());
+                passenger.setName(oPass.getName());
+                passenger.setNationality("Indian");
+                passenger.setTransactionId(256);
+                mAdapter.getSelectedPassengerList().add(getPassengerInfo().insert(passenger));
+            }
+        }
+        onListUpdatedEvent();
+    }
+
+    boolean CheckIfPassengerInfoFound(List<PassengerInfo> listPass, PassengerJson info){
+        for(PassengerInfo pass : listPass){
+            if( info.getName().equalsIgnoreCase(pass.getName())
+                    && info.getGender().equalsIgnoreCase(pass.getGender() == null ? "MALE" : pass.getGender())
+                    && pass.getAge() == Integer.parseInt(info.getAge())){
+                mAdapter.getSelectedPassengerList().add(pass.getId());
+                return true;
+            }
+        }
+        return false;
     }
 
 }

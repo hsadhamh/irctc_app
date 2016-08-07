@@ -3,8 +3,8 @@ package irctc.factor.app.irctcmadeeasy.Events;
 /**
  * Created by shussain on 23/7 023.
  */
-public class UnselectPassenger {
+public class UnSelectPassenger {
     int passengerID;
-    public UnselectPassenger(int n){ passengerID = n; }
+    public UnSelectPassenger(int n){ passengerID = n; }
     public int getPassengerID(){ return passengerID; }
 }

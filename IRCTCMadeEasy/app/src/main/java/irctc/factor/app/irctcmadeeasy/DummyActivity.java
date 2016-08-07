@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.rey.material.widget.Button;
 
 import org.json.JSONException;
@@ -15,6 +14,10 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import irctc.factor.app.irctcmadeeasy.Activity.AddPassengerActivity;
+import irctc.factor.app.irctcmadeeasy.Activity.BookTicketsNowActivity;
+import irctc.factor.app.irctcmadeeasy.Activity.TicketsListActivity;
+import irctc.factor.app.irctcmadeeasy.Activity.IrctcMainActivity;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.Json.flJsonParser;
 
@@ -45,7 +48,7 @@ public class DummyActivity extends AppCompatActivity {
 
     @OnClick(R.id.id_forms)
     public void Allforms(){
-        Intent i=new Intent(DummyActivity.this,FormsList.class);
+        Intent i=new Intent(DummyActivity.this,TicketsListActivity.class);
         startActivity(i);
 
     }

@@ -3,8 +3,6 @@ package irctc.factor.app.irctcmadeeasy.Fragments;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +25,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
-import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
-import irctc.factor.app.irctcmadeeasy.Events.BookingPaymentEvent;
+import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
+import irctc.factor.app.irctcmadeeasy.Events.UpdateJsonValues;
+import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
@@ -92,28 +91,43 @@ public final class BookingPaymentFragment extends Fragment  {
     private Unbinder unbinder;
     ArrayAdapter<String> mSpPaymentOption;
     Context mContext;
+
     int[] mArrBankingIDs = {0,1,10,22,29,28,31,34,35,38,39,36,37,42,43,40,46,44,45,50,48,54,53,52,56,60,64,67};
     int[] mArrCreditIDs = {0, 4, 17, 21, 27, 30, 58, 72,};
     int[] mArrDebitIDs = {0, 3, 5, 9, 15, 16, 19, 25, 26, 32, 41, 57, 66};
     int[] mArrCashIDs = {0,  23, 33, 55, 68, 70, 71};
     int[] mArrIrctIDs = {0,  59};
     String mPaymentMode;
-    TicketJson oJsonTicket;
-    IGetPaymentValue iGet;
 
-    List<String> arrayAdpaterList;
+    IGetValue mCallback;
+
+    List<String> arrayAdapterList;
     ArrayList<String> al;
+
+    boolean mLoadGivenValue = false;
+    TicketJson mPassedJson = null;
+
+    public TicketJson getPassedJson() { return mPassedJson; }
+    public void setPassedJson(TicketJson mPassedJson) { this.mPassedJson = mPassedJson; }
+    public boolean isLoadGivenValue() { return mLoadGivenValue; }
+    public void setLoadGivenValue(boolean mLoadGivenValue) { this.mLoadGivenValue = mLoadGivenValue; }
 
     public static BookingPaymentFragment newInstance()
     {
         return new BookingPaymentFragment();
     }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
 
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
+        mCallback = (IGetValue) context;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        EventBus.getDefault().unregister(this);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_irctc_payment, container, false);
@@ -121,8 +135,8 @@ public final class BookingPaymentFragment extends Fragment  {
 
         mContext = container.getContext();
 
-        arrayAdpaterList=  Arrays.asList(getResources().getStringArray(R.array.net_banking_options));
-        al = new ArrayList<String>(arrayAdpaterList);
+        arrayAdapterList =  Arrays.asList(getResources().getStringArray(R.array.net_banking_options));
+        al = new ArrayList<String>(arrayAdapterList);
         mSpPaymentOption = new ArrayAdapter<String>(mContext, R.layout.layout_spinner_item,al);
         mSpPaymentOption.setDropDownViewResource(R.layout.layout_spinner_item);
         mSpPaymentOptions.setAdapter(mSpPaymentOption);
@@ -138,12 +152,9 @@ public final class BookingPaymentFragment extends Fragment  {
         spMonths.setDropDownViewResource(R.layout.layout_spinner_item);
         mSpMonth.setAdapter(spMonths);
 
-
-
-
         showCardOrInternetBanking(R.id.id_radio_banking);
 
-
+        if(mPassedJson != null){ LoadValue(); }
 
         return view;
     }
@@ -188,8 +199,8 @@ public final class BookingPaymentFragment extends Fragment  {
                 break;
         }
 
-        arrayAdpaterList = Arrays.asList(getResources().getStringArray(nArrId));
-        al=new ArrayList<>(arrayAdpaterList);
+        arrayAdapterList = Arrays.asList(getResources().getStringArray(nArrId));
+        al=new ArrayList<>(arrayAdapterList);
         mSpPaymentOption.notifyDataSetChanged();
         mSpPaymentOptions.setSelection(0);
 
@@ -242,9 +253,9 @@ public final class BookingPaymentFragment extends Fragment  {
     public void onDestroy(){
         super.onDestroy();
     }
-    public TicketJson GetJsonObjectFilled()
-    {
-         oJsonTicket = new TicketJson();
+
+    public TicketJson GetJsonObjectFilled() {
+        TicketJson oJsonTicket = new TicketJson();
 
         oJsonTicket.setPaymentMode(mPaymentMode);
         int nMode = 0;
@@ -272,20 +283,57 @@ public final class BookingPaymentFragment extends Fragment  {
         oJsonTicket.setExpiryYear(mvYear.getText().toString());
         oJsonTicket.setCardCvvNumber(mvCVVNumber.getText().toString());
         oJsonTicket.setNameOnCard(mvCardName.getText().toString());
-
         return oJsonTicket;
     }
 
     @Subscribe
-    public void onEvent(BookingPaymentEvent e) {
+    public void onEvent(GetMeJsonValues e) { mCallback.getPassengerJsonValue(GetJsonObjectFilled()); }
 
-        savePaymentInfo();
+    public void LoadValue(){
+        TicketJson oJson = mPassedJson;
+        int idVal = 0, modeVal = 0, modeValIndex = 0;
+        switch (mPaymentMode) {
+            case "NETBANKING":
+                idVal = R.id.id_radio_banking;
+                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID() == null ? "0" : oJson.getPaymentModeOptionID());
+                modeValIndex = Arrays.asList(mArrBankingIDs).indexOf(modeVal);
 
+                break;
+            case "IRCTC_PREPAID":
+                idVal = R.id.id_radio_irctc;
+                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
+                modeValIndex = Arrays.asList(mArrIrctIDs).indexOf(modeVal);
+                break;
+            case "CASH_CARD":
+                idVal = R.id.id_radio_cash;
+                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
+                modeValIndex = Arrays.asList(mArrCashIDs).indexOf(modeVal);
+                break;
+            case "CREDIT_CARD":
+                idVal = R.id.id_radio_credit;
+                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
+                modeValIndex = Arrays.asList(mArrCreditIDs).indexOf(modeVal);
+                break;
+            case "DEBIT_CARD":
+                idVal = R.id.id_radio_debit;
+                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
+                modeValIndex = Arrays.asList(mArrDebitIDs).indexOf(modeVal);
+                break;
+        }
+
+        mRbDebitCard.setChecked(idVal == R.id.id_radio_debit);
+        mRbCreditCard.setChecked(idVal == R.id.id_radio_credit);
+        mRbBanking.setChecked(idVal == R.id.id_radio_banking);
+        mRbCashCards.setChecked(idVal == R.id.id_radio_cash);
+        mRbIrctcCard.setChecked(idVal == R.id.id_radio_irctc);
+        mSpPaymentOptions.setSelection(modeValIndex);
+        mvCardNumber.setText(oJson.getCardNumberValue());
+        mSpCardType.setSelection(oJson.getCardType()== null?
+                0 : (oJson.getCardType().equals("MC") ? 1 : 0));
+        int index = Integer.parseInt(oJson.getExpiryMonth() == null ? "1" : oJson.getExpiryMonth()) - 1;
+        mSpMonth.setSelection(index);
+        mvYear.setText(oJson.getExpiryYear());
+        mvCVVNumber.setText(oJson.getCardCvvNumber());
+        mvCardName.setText(oJson.getNameOnCard());
     }
-
-    public void savePaymentInfo()
-    {
-        iGet.getPaymentValue(GetJsonObjectFilled());
-    }
-
 }

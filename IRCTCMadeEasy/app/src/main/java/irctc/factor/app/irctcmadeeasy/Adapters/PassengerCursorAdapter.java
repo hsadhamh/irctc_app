@@ -2,11 +2,7 @@ package irctc.factor.app.irctcmadeeasy.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.SpannableString;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,6 +11,9 @@ import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,11 +24,8 @@ import irctc.factor.app.irctcmadeeasy.Adapters.RecycleCursorAdapter.RecyclerView
 import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.SelectPassenger;
-import irctc.factor.app.irctcmadeeasy.Events.UnselectPassenger;
-import irctc.factor.app.irctcmadeeasy.Json.ChildJson;
-import irctc.factor.app.irctcmadeeasy.Json.PassengerJson;
+import irctc.factor.app.irctcmadeeasy.Events.UnSelectPassenger;
 import irctc.factor.app.irctcmadeeasy.R;
-import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
 import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 
 /**
@@ -43,6 +39,9 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
     // for us.
     Cursor mCursor;
     Context mContext;
+
+    public List<Long> mSelectedPassengerList = new ArrayList();
+    public List<Long> getSelectedPassengerList(){ return mSelectedPassengerList; }
 
     public PassengerCursorAdapter(Context context, Cursor c) {
         super(context);
@@ -65,7 +64,7 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
     public PassengerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Passing the inflater job to the cursor-adapter
         View v = mCursorAdapter.newView(mContext, mCursorAdapter.getCursor(), parent);
-        return new PassengerViewHolder(v);
+        return new PassengerViewHolder(v, this);
     }
 
     static class PassengerViewHolder extends RecyclerViewCursorViewHolder{
@@ -84,9 +83,12 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
         @BindView(R.id.chkbx_select_passenger)
         CheckBox cbSelectPassenger;
 
-        public PassengerViewHolder(View view) {
+        PassengerCursorAdapter mAdpater;
+
+        public PassengerViewHolder(View view, PassengerCursorAdapter adpater) {
             super(view);
             ButterKnife.bind(this, view);
+            mAdpater = adpater;
         }
 
         @Override
@@ -111,6 +113,13 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
             txtView2.setText(Html.fromHtml(sText2));
             txtView3.setText(Html.fromHtml(sText3));
             txtView1.setTag(passengerId);
+
+            for(long i : mAdpater.getSelectedPassengerList()) {
+                if (i == passengerId) {
+                    cbSelectPassenger.setChecked(true);
+                    break;
+                }
+            }
         }
 
         @OnClick(R.id.btn_edit_info)
@@ -124,12 +133,11 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
         }
 
         @OnCheckedChanged(R.id.chkbx_select_passenger)
-        public void checkChanged()
-        {
+        public void checkChanged(){
             if(cbSelectPassenger.isChecked())
                 EventBus.getDefault().post(new SelectPassenger((int)txtView1.getTag()));
             else
-                EventBus.getDefault().post(new UnselectPassenger((int)txtView1.getTag()));
+                EventBus.getDefault().post(new UnSelectPassenger((int)txtView1.getTag()));
         }
     }
 }

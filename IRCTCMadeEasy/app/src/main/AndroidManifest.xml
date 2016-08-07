@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".FactorSplashScreen"
+            android:name=".Activity.FactorSplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,12 +25,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".IrctcMainActivity"/>
-        <activity android:name=".BookTicketsNowActivity"/>
+        <activity android:name=".Activity.IrctcMainActivity"/>
+        <activity android:name=".Activity.BookTicketsNowActivity"/>
         <activity android:name=".DummyActivity"/>
-        <activity android:name=".AddPassengerActivity"/>
-        <activity android:name=".FormsList"/>
-        <activity android:name=".IntroSlideActivity"/>
+        <activity android:name=".Activity.AddPassengerActivity"/>
+        <activity android:name=".Activity.TicketsListActivity"/>
+        <activity android:name=".Activity.IntroSlideActivity"/>
 
 
     </application>

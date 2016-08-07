@@ -199,4 +199,6 @@
         <item>VISA</item>
         <item>MASTER</item>
     </string-array>
+
+    <string name="form_entry_text">Welcome</string>
 </resources>

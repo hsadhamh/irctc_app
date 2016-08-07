@@ -6,13 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 
-import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.ImageButton;
@@ -36,19 +30,16 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Adapters.AutoCompleteStringAdapter;
-import irctc.factor.app.irctcmadeeasy.Adapters.PassengerCursorAdapter;
 import irctc.factor.app.irctcmadeeasy.Adapters.TicketDetailsCursorAdapter;
-import irctc.factor.app.irctcmadeeasy.AddPassengerActivity;
-import irctc.factor.app.irctcmadeeasy.Events.AddFormsEvent;
-import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
-import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
+import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
+import irctc.factor.app.irctcmadeeasy.Events.UpdateJsonValues;
+import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
-import irctc.factor.app.irctcmadeeasy.TicketConstants;
+import irctc.factor.app.irctcmadeeasy.Utils.TicketConstants;
 import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
 import irctc.factor.app.irctcmadeeasy.database.DaoSession;
 import irctc.factor.app.irctcmadeeasy.database.TicketDetails;
@@ -113,38 +104,29 @@ public final class TrainDetailsFragment extends Fragment  {
     @BindView(R.id.id_radio_book_at_two)
     public RadioButton mRbBookTwoLower;
 
-
-
     private Unbinder unbinder;
     AutoCompleteStringAdapter stationAdapter, trainAdapter;
 
     private int mYear, mMonth, mDay;
-
-    private DaoMaster mDaoMaster;
-    private DaoSession mDaoSession;
-    private TicketDetailsDao ticketDetails;
-    private int mnTrainID = 0;
-
-    TicketDetailsCursorAdapter mAdapter = null;
-
-    IGetValue iGet;
+    IGetValue mCallback;
 
     public static final String LOGINPREFERENCES = "LoginPrefs";
-        public static final String USERNAME = "usernameKey";
-        public static final String PASSWORD = "passwordKey";
-        public static final String CHECKBOXFLAG="loginFlag";
-        SharedPreferences pref;
-        SharedPreferences.Editor editor;
+    public static final String USERNAME = "usernameKey";
+    public static final String PASSWORD = "passwordKey";
+    public static final String CHECKBOXFLAG="loginFlag";
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
-    public static TrainDetailsFragment newInstance()
-    {
-        return new TrainDetailsFragment();
-    }
+    TicketJson mPassedJson = null;
+    public TicketJson getPassedJson() { return mPassedJson; }
+    public void setPassedJson(TicketJson mPassedJson) { this.mPassedJson = mPassedJson; }
+
+    public static TrainDetailsFragment newInstance() { return new TrainDetailsFragment(); }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        iGet=(IGetValue) context;
+        mCallback = (IGetValue) context;
         EventBus.getDefault().register(this);
     }
 
@@ -162,11 +144,6 @@ public final class TrainDetailsFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ticket_irctc, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-
-
-
-
 
         //Loading Soucre and Destination,Boarding
         stationAdapter = new AutoCompleteStringAdapter(container.getContext(), R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
@@ -190,42 +167,20 @@ public final class TrainDetailsFragment extends Fragment  {
         miscRadioButtonHandler();
         ShowDatePicker(container);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //mListPassengers.setLayoutManager(linearLayoutManager);
-
-
-        // Toast.makeText(getContext().getApplicationContext(),Integer.toString(mnTrainID),Toast.LENGTH_SHORT).show();
-
-        //Setting value in Userame and Password Field
+        //Setting value in Username and Password Field
         pref = getContext().getSharedPreferences(LOGINPREFERENCES,1);
         if(pref!=null) {
             mvUserName.setText(pref.getString(USERNAME, ""));
             mvPassword.setText(pref.getString(PASSWORD, ""));
-
-
-        if(pref.getString(CHECKBOXFLAG,"").equals("1"))
-        {
-            mvCbSaveLogin.setChecked(true);
-            //Disabling the textboxes
-            mvUserName.setEnabled(false);
-            mvPassword.setEnabled(false);
-            mvUserName.setBackgroundColor(Color.TRANSPARENT);
+            if(pref.getString(CHECKBOXFLAG,"").equals("1"))
+            {
+                mvCbSaveLogin.setChecked(true);
+                //Disabling the textboxes
+                mvUserName.setEnabled(false);
+                mvPassword.setEnabled(false);
+                mvUserName.setBackgroundColor(Color.TRANSPARENT);
+            }
         }
-        }
-
-
-        mDaoMaster = new DaoMaster(TicketConstants.getWritableDatabase());
-        mDaoSession = mDaoMaster.newSession();
-        ticketDetails = mDaoSession.getTicketDetailsDao();
-
-        Intent intent = getActivity().getIntent();
-        if (intent != null) {
-            mnTrainID = intent.getIntExtra("form", 0);
-        }
-        if (mnTrainID > 0)
-            GetTrainInfo(mnTrainID);
-
         view.findViewById(R.id.page_train_details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,12 +191,15 @@ public final class TrainDetailsFragment extends Fragment  {
                         .commit();
             }
         });
+
+        if(mPassedJson != null) { LoadValue(); }
+
         return view;
     }
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+       super.onDestroyView();
        unbinder.unbind();
     }
 
@@ -294,11 +252,9 @@ public final class TrainDetailsFragment extends Fragment  {
                 mvHandicapped.setChecked(false);
             }
         });
-
     }
 
     public void ShowDatePicker(final ViewGroup container) {
-
         mvDateCalButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -308,16 +264,12 @@ public final class TrainDetailsFragment extends Fragment  {
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH) + 1;
-
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(container.getContext(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(android.widget.DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-
                                 mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
-
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -364,58 +316,17 @@ public final class TrainDetailsFragment extends Fragment  {
 
     }
 
-
-
-
-
     @Subscribe
-    public void onEvent(AddFormsEvent e) {
-
-        saveTrainInfo();
-
+    public void saveTrainInfo(GetMeJsonValues e) {
+        mCallback.getTicketJsonValue(GetJsonObjectFilled());
     }
-
-
-    public void saveTrainInfo() {
-
-        iGet.getEditTextValue(GetJsonObjectFilled());
-        TicketDetails ticket = new TicketDetails();
-        ticket.setSource(mvStationSource.getText().toString());
-        ticket.setDestination(mvStationDestination.getText().toString());
-        ticket.setBoarding(mvStationBoarding.getText().toString());
-        ticket.setJourneyDate(mvDateJourney.getText().toString());
-        ticket.setTrainno(mvTrainNumber.getText().toString());
-        ticket.setIrctcClass(mSpClassTrain.getSelectedItem().toString());
-        ticket.setQuota(mvGeneralButton.isChecked() ? "GENERAL" : mvTatkalPremium.isChecked() ? "PREMIUM TATKAL" : mvTatkal.isChecked() ? "TATKAL" : mvHandicapped.isChecked() ? "PHYSICALLY HANDICAPPED" : "LADIES");
-        ticket.setMobileNumber(mvMobileNumber.getText().toString());
-        ticket.setCoach(mCbPreferredCoach.isChecked() ? mvPreferredCoachTxt.getText().toString() : " ");
-        ticket.setAutoUpgrade(mCbAutoUpgrade.isChecked() ? "true" : "false");
-        ticket.setBookOnConfirm(mCbBookCondition.isChecked() ? "true" : "false");
-        ticket.setConditionsOnBook(mRbNone.isChecked() ? "0" : mRbBookOnSameCoach.isChecked() ? "1" : mRbBookOneLower.isChecked() ? "2" : "3");
-
-
-        //For Storing JSON
-        //String tNumber=mvTrainNumber.getText().toString().substring(0, tNumber.indexOf(':')).trim();
-
-
-        if (mnTrainID > 0)
-            ticket.setId((long) mnTrainID);
-        if (mnTrainID > 0)
-            ticketDetails.update(ticket);
-        else
-            ticketDetails.insert(ticket);
-
-
-    }
-
-
 
     public TicketJson GetJsonObjectFilled() {
         TicketJson oJsonTicket = new TicketJson();
 
-        oJsonTicket.setUserName(mvUserName.getText().toString());
-        oJsonTicket.setPassword(mvPassword.getText().toString());
-        oJsonTicket.setSrcStation(mvStationSource.getText().toString());
+        oJsonTicket.setUserName(mvUserName.getText() != null ? mvUserName.getText().toString() : "");
+        oJsonTicket.setPassword(mvPassword.getText() != null ? mvPassword.getText().toString() : "");
+        oJsonTicket.setSrcStation(mvStationSource.getText() != null ? mvStationSource.getText().toString() : "");
         oJsonTicket.setDestStation(mvStationDestination.getText().toString());
         oJsonTicket.setBoardingStation(mvStationBoarding.getText().toString());
         oJsonTicket.setDateOfJourney(mvDateJourney.getText().toString());
@@ -428,7 +339,7 @@ public final class TrainDetailsFragment extends Fragment  {
 
         String[] ClassXml = getContext().getResources().getStringArray(R.array.train_class);
         int pos = mSpClassTrain.getSelectedItemPosition();
-        oJsonTicket.setClassSelection(ClassXml[pos].toString());
+        oJsonTicket.setClassSelection(ClassXml[pos]);
 
         String sQuota = mvTatkalPremium.isChecked() ? "PREMIUM TATKAL" : mvTatkal.isChecked() ? "TATKAL" :
                 mvHandicapped.isChecked() ? "PHYSICALLY HANDICAPPED" : mvLadies.isChecked() ? "LADIES" : "GENERAL";
@@ -448,31 +359,68 @@ public final class TrainDetailsFragment extends Fragment  {
         else
             oJsonTicket.setAutoUpgrade(false);
 
-        if(mCbBookCondition.isChecked())
-        {
+        if(mCbBookCondition.isChecked()){
             oJsonTicket.setBookConfirmTickets(true);
             int nCondition = mRbNone.isChecked()? 0 : mRbBookOneLower.isChecked()? 1 : mRbBookOnSameCoach.isChecked()? 2 : mRbBookTwoLower.isChecked()? 3 : 0;
             oJsonTicket.setBookConfirmTicketOption("" + nCondition);
         }
-        else
-        {
+        else{
             oJsonTicket.setBookConfirmTickets(false);
             oJsonTicket.setBookConfirmTicketOption("0");
         }
         oJsonTicket.setMobileNumber(mvMobileNumber.getText().toString());
-
         return oJsonTicket;
     }
 
-    public void GetTrainInfo(int trainId) {
-        TicketDetails train = ticketDetails.load((long) trainId);
-        mvStationSource.setText(train.getSource());
-        mvStationDestination.setText(train.getDestination());
-        mvStationBoarding.setText(train.getBoarding());
-        mvDateJourney.setText(train.getJourneyDate());
-        mvTrainNumber.setText(train.getTrainno());
+    @OnClick(R.id.id_check_preferred_coach)
+    public void preferredCheck() {
+        if (mCbPreferredCoach.isChecked()) {
+            mvPreferredCoachTxt.setEnabled(true);
+        }
+        else {
+            mvPreferredCoachTxt.setEnabled(false);
+            mvPreferredCoachTxt.setText("");
+        }
+    }
+
+    @OnClick(R.id.check_box_save_login)
+    public void onChecked() {
+        if (mvCbSaveLogin.isChecked()) {
+            editor = pref.edit();
+            editor.putString(USERNAME, mvUserName.getText().toString());
+            editor.putString(PASSWORD, mvPassword.getText().toString());
+            editor.putString(CHECKBOXFLAG,"1");
+            editor.commit();
+            //Disabling the textboxes
+            mvUserName.setEnabled(false);
+            mvPassword.setEnabled(false);
+            mvUserName.setBackgroundColor(Color.TRANSPARENT);
+        }
+        else{
+            editor = pref.edit();
+            editor.clear();
+            editor.commit();
+            //Enabling the Textboxes
+            mvUserName.setEnabled(true);
+            mvPassword.setEnabled(true);
+            mvUserName.setBackgroundColor(Color.TRANSPARENT);
+            mvPassword.setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    public void LoadValue(){
+        TicketJson train = mPassedJson;
+
+        mvUserName.setText(train.getUserName());
+        mvPassword.setText(train.getPassword());
+
+        mvStationSource.setText(train.getSrcStation());
+        mvStationDestination.setText(train.getDestStation());
+        mvStationBoarding.setText(train.getBoardingStation());
+        mvDateJourney.setText(train.getDateOfJourney());
+        mvTrainNumber.setText(train.getTrainNumber());
         ArrayAdapter<String> array_spinner = (ArrayAdapter<String>) mSpClassTrain.getAdapter();
-        mSpClassTrain.setSelection(array_spinner.getPosition(train.getIrctcClass()));
+        mSpClassTrain.setSelection(array_spinner.getPosition(train.getClassSelection()));
 
         if (train.getQuota().equals("GENERAL")) {
             mvGeneralButton.setChecked(true);
@@ -489,98 +437,34 @@ public final class TrainDetailsFragment extends Fragment  {
             mvLadies.setChecked(true);
             mvTatkal.setChecked(false);
         }
-
-
         mvMobileNumber.setText(train.getMobileNumber());
-        if (!(train.getCoach() == null || train.getCoach() == " ")) {
-            mCbPreferredCoach.setChecked(true);
-            mvPreferredCoachTxt.setText(train.getCoach());
+        mCbPreferredCoach.setChecked(train.getPreferredCoachSelection());
+        if (train.getPreferredCoachSelection() && !(train.getPreferredCoachID() == null
+                || train.getPreferredCoachID().equals(" "))) {
+            mvPreferredCoachTxt.setText(train.getPreferredCoachID());
         }
 
-        if (train.getAutoUpgrade().equals("true"))
+        if (train.getAutoUpgrade())
             mCbAutoUpgrade.setChecked(true);
 
-        if (train.getBookOnConfirm().equals("true"))
+        if (train.getBookConfirmTickets())
             mCbBookCondition.setChecked(true);
 
-
-        if (train.getConditionsOnBook().equals("0"))
-            mRbNone.setChecked(true);
-        else if (train.getConditionsOnBook().equals("1")) {
-            mRbBookOnSameCoach.setChecked(true);
-            mRbNone.setChecked(false);
-        } else if (train.getConditionsOnBook().equals("2")) {
-            mRbBookOneLower.setChecked(true);
-            mRbNone.setChecked(false);
-        } else {
-            mRbBookTwoLower.setChecked(true);
-            mRbNone.setChecked(false);
+        switch(train.getBookConfirmTicketOption()) {
+            case "0":
+                mRbNone.setChecked(true);
+                break;
+            case "1":
+                mRbBookOnSameCoach.setChecked(true);
+                mRbNone.setChecked(false);
+                break;
+            case "2":
+                mRbBookOneLower.setChecked(true);
+                mRbNone.setChecked(false);
+                break;
+            default:
+                mRbBookTwoLower.setChecked(true);
+                mRbNone.setChecked(false);
         }
-
-
     }
-
-    @OnClick(R.id.id_check_preferred_coach)
-    public void preferredCheck() {
-        if (mCbPreferredCoach.isChecked()) {
-            mvPreferredCoachTxt.setEnabled(true);
-        }
-        else {
-            mvPreferredCoachTxt.setEnabled(false);
-            mvPreferredCoachTxt.setText("");
-        }
-
-    }
-
-
-
-    @OnClick(R.id.check_box_save_login)
-    public void onChecked() {
-        if (mvCbSaveLogin.isChecked()) {
-            editor = pref.edit();
-            editor.putString(USERNAME, mvUserName.getText().toString());
-            editor.putString(PASSWORD, mvPassword.getText().toString());
-            editor.putString(CHECKBOXFLAG,"1");
-            editor.commit();
-
-            //Disabling the textboxes
-            mvUserName.setEnabled(false);
-            mvPassword.setEnabled(false);
-            mvUserName.setBackgroundColor(Color.TRANSPARENT);
-
-        }
-        else
-        {
-            editor = pref.edit();
-            editor.clear();
-            editor.commit();
-
-            //Enabling the Textboxes
-            mvUserName.setEnabled(true);
-            mvPassword.setEnabled(true);
-            mvUserName.setBackgroundColor(Color.TRANSPARENT);
-            mvPassword.setBackgroundColor(Color.TRANSPARENT);
-
-
-        }
-
-    }
-
-
-    public void onListUpdatedEvent() {
-        Cursor localCursor;
-        localCursor = TicketConstants
-                .getReadableDatabase()
-                .query(ticketDetails.getTablename(), ticketDetails.getAllColumns(), null, null, null, null, "");
-        mAdapter.swapCursor(localCursor);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //TicketJson jsonTicket = GetJsonObjectFilled();
-
-    }
-
-
 }

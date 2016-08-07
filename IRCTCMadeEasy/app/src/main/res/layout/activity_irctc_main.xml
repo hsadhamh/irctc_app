@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    tools:context="irctc.factor.app.irctcmadeeasy.IrctcMainActivity">
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progress_linear_page"
@@ -15,7 +14,7 @@
         custom:pv_circular="false"
         custom:pv_progressStyle="@style/LightDeterminateLinearProgressDrawable"/>
 
-    <irctc.factor.app.irctcmadeeasy.WebView.LxWebView
+    <irctc.factor.app.irctcmadeeasy.View.WebView.LxWebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/irctc_web_view_id"
