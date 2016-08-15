@@ -104,15 +104,21 @@ public class PassengerCursorAdapter extends RecyclerViewCursorAdapter<PassengerC
             String passengerNationality = cursor.getString(cursor.getColumnIndexOrThrow(PassengerInfoDao.Properties.Nationality.columnName));
 
             String sText1 = "<b>"+passengerName + "</b>, <b><i>" + (passengerGender.equals("MALE")? "M" : "F") + "</i></b>, <b>Age:</b> " + passengerAge;
+            String sName=passengerName;
             String sText2 = passengerChild + "; <b>Berth: </b>" + passengerBerth + "; <b>Food:</b> " + (passengerFood.equals("NonVeg")? "NonVeg" : "Veg");
             String sText3 =  "<b>Nationality:</b> INDIAN; <b>ID Proof :</b> " + passengerProof;
 
+            String sInfo="Age-"+passengerAge+"\n"+passengerBerth;
+
             // Populate fields with extracted properties
-            txtView1.setText(Html.fromHtml(sText1));
+            /*txtView1.setText(Html.fromHtml(sText1));
             txtView1.setTextSize(15.0f);
             txtView2.setText(Html.fromHtml(sText2));
             txtView3.setText(Html.fromHtml(sText3));
-            txtView1.setTag(passengerId);
+            txtView1.setTag(passengerId);*/
+
+            txtView1.setText(sName);
+            txtView2.setText(sInfo);
 
             for(long i : mAdpater.getSelectedPassengerList()) {
                 if (i == passengerId) {

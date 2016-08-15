@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="340dp"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_fifteen"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/shadow"
+    android:orientation="vertical"
+    android:layout_marginBottom="30dp"
+    android:padding="20dp"
     android:id="@+id/row_passenger_info"
-    android:background="@drawable/rectangle_group_box">
+    >
 
     <LinearLayout
         android:orientation="horizontal"
@@ -28,10 +34,25 @@
             <com.rey.material.widget.TextView
                 android:id="@+id/txt_name_age_gender"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:drawableLeft="@drawable/user24"
+                android:drawablePadding="10dp"
+                android:layout_marginLeft="-22dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold|normal"
+                android:typeface="serif"
+                android:textSize="18sp"
+                android:text=""/>
+            <com.rey.material.widget.TextView
+                android:id="@+id/txt_age"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center|start"
-                android:textColor="@android:color/black"
+
+                android:textSize="18sp"
                 android:text=""/>
             <com.rey.material.widget.TextView
                 android:id="@+id/txt_berth_food"
@@ -54,30 +75,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@id/section_passenger_info">
         <com.rey.material.widget.Button
             android:id="@+id/btn_edit_info"
-            android:layout_width="@dimen/no_width_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:minHeight="@dimen/min_height_button"
+            android:layout_weight="1"
             android:gravity="center"
+            android:singleLine="true"
+            android:textSize="12sp"
             android:textColor="@android:color/black"
             android:text="@string/view_passenger_edit_text"
-            android:background="@color/buttonColor"
-            android:paddingStart="@dimen/padding_two"
-            android:paddingEnd="@dimen/padding_two" />
+            android:drawableLeft="@drawable/edit_user24"
+            android:paddingRight="10dp"
+             />
         <com.rey.material.widget.Button
             android:id="@+id/btn_delete_info"
-            android:layout_width="@dimen/no_width_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".5"
+            android:layout_weight="1"
             android:gravity="center"
-            android:minHeight="@dimen/min_height_button"
+            android:singleLine="true"
+            android:textSize="12sp"
             android:textColor="@android:color/black"
-            android:background="@color/buttonColor"
             android:text="@string/view_passenger_delete_text"
-            android:paddingStart="@dimen/padding_two"
-            android:paddingEnd="@dimen/padding_two"/>
+            android:drawableLeft="@drawable/delete24"
+            android:paddingRight="10dp"
+            />
     </LinearLayout>
 </RelativeLayout>
