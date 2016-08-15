@@ -48,7 +48,7 @@
     <string name="station_search_destination">Search Destination</string>
     <string name="station_search_boarding">Search Boarding</string>
     <string name="date_journey_text">  dd-mm-yyyy</string>
-    <string name="type_train_number">Type Train Number</string>
+    <string name="type_train_number">Train Number</string>
     <string name="train_class">Class : </string>
     <string name="set_journey_date">Set Journey Date</string>
     <string name="quota_text">Quota : </string>

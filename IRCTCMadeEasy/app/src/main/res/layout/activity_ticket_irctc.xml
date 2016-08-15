@@ -10,16 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_two"
+        android:background="#1c3c4d"
         android:id="@+id/ticket_container">
 
         <LinearLayout
             android:id="@+id/layout_login_details"
-            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_group_box"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shadow"
             android:orientation="vertical"
-            android:padding="@dimen/padding_eight"
-            >
+            android:layout_marginBottom="30dp"
+            android:padding="20dp">
 
 
             <LinearLayout
@@ -32,16 +37,21 @@
                     android:id="@+id/lbl_view_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/login24"
+                    android:drawablePadding="10dp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/login_detail_text"
                     android:textSize="@dimen/header_text_size"
                     android:textStyle="bold|normal"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:textColor="#e74c3c" />
 
                 <com.rey.material.widget.EditText
                     android:id="@+id/txt_username"
                     style="@style/Material.Widget.EditText"
+                    android:drawableLeft="@drawable/user24"
+                    android:drawablePadding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/username_text"
@@ -56,6 +66,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|start"
                     android:layout_marginLeft="-4dp"
+                    android:drawableLeft="@drawable/password24"
+                    android:drawablePadding="10dp"
                     android:hint="@string/password_text"
                     custom:drawable_hide="@drawable/ic_visibility_off_grey_900_24dp"
                     custom:drawable_show="@drawable/ic_visibility_grey_900_24dp" />
@@ -75,12 +87,17 @@
 
         <LinearLayout
             android:id="@+id/layout_train_details"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shadow"
             android:layout_below="@id/layout_login_details"
-            android:background="@drawable/rectangle_group_box"
+            android:layout_marginBottom="30dp"
             android:orientation="vertical"
-            android:padding="@dimen/padding_eight">
+            android:padding="20dp">
 
 
             <com.rey.material.widget.TextView
@@ -89,16 +106,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:drawableLeft="@drawable/train24"
+                android:drawablePadding="10dp"
                 android:text="@string/train_details_text"
                 android:textSize="@dimen/header_text_size"
                 android:textStyle="bold|normal"
-                android:typeface="serif" />
+                android:typeface="serif"
+                android:textColor="#e74c3c" />
 
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:dropDownWidth="match_parent"
+                android:drawableLeft="@drawable/soruce_destination24"
+                android:drawablePadding="10dp"
                 android:hint="@string/station_search_source"
                 android:inputType="textCapCharacters" />
 
@@ -107,6 +129,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:dropDownWidth="match_parent"
+                android:drawableLeft="@drawable/soruce_destination24"
+                android:drawablePadding="10dp"
                 android:hint="@string/station_search_destination"
                 android:inputType="textCapCharacters" />
 
@@ -115,6 +139,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:dropDownWidth="match_parent"
+                android:drawableLeft="@drawable/soruce_destination24"
+                android:drawablePadding="10dp"
                 android:hint="@string/station_search_boarding"
                 android:inputType="textCapCharacters" />
 
@@ -128,59 +154,49 @@
                     style="@style/Material.Widget.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/datepicker24"
+                    android:drawablePadding="10dp"
                     android:layout_weight="6"
-                    android:clickable="false"
+                    android:focusable="false"
                     android:gravity="center|start"
                     android:hint="@string/date_journey_text"
-                    android:inputType="text"
+                    android:inputType="none"
                     android:paddingStart="@dimen/padding_three"
                     android:textSize="18sp" />
-
-                <com.rey.material.widget.ImageButton
-                    android:id="@+id/btn_calendar_click"
-                    android:layout_width="@dimen/width_image_button"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/set_journey_date"
-                    android:src="@drawable/ic_calendar_grey600_24dp" />
             </LinearLayout>
 
             <AutoCompleteTextView
                 android:id="@+id/auto_complete_trains"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:dropDownWidth="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/train24"
                 android:hint="@string/type_train_number"
                 android:inputType="textCapCharacters" />
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <com.rey.material.widget.TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/berth24"
+                android:drawablePadding="10dp"/>
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_class_berth"
+                style="@style/Material.Widget.Spinner"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spinner_view_height"
-                android:orientation="horizontal">
-
-                <com.rey.material.widget.TextView
-                    android:layout_width="@dimen/heading_width_size"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_five"
-                    android:text="@string/train_class"
-                    android:textSize="18sp"
-                    android:textStyle="bold|normal" />
-
-                <com.rey.material.widget.Spinner
-                    android:id="@+id/spinner_class_berth"
-                    style="@style/Material.Widget.Spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:entries="@array/train_class"
-                    android:gravity="center|start"
-                    android:prompt="@string/train_class_prompt"
-                    android:spinnerMode="dialog"
-                    custom:rd_style="@style/Material.Drawable.Ripple.Wave" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:entries="@array/train_class"
+                android:gravity="center|start"
+                android:prompt="@string/train_class_prompt"
+                android:textSize="18sp"
+                android:spinnerMode="dialog"
+                custom:rd_style="@style/Material.Drawable.Ripple.Wave" />
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -195,7 +211,8 @@
                     android:padding="@dimen/padding_five"
                     android:text="@string/quota_text"
                     android:textSize="@dimen/header_text_size"
-                    android:textStyle="bold|normal" />
+                    android:textStyle="bold|normal"
+                    android:layout_marginTop="10dp" />
 
                 <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
@@ -257,12 +274,17 @@
 
         <LinearLayout
             android:id="@+id/layout_book_details"
-            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shadow"
             android:layout_below="@id/layout_train_details"
-            android:background="@drawable/rectangle_group_box"
+            android:layout_marginBottom="30dp"
             android:orientation="vertical"
-            android:padding="@dimen/padding_eight">
+            android:padding="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -274,12 +296,15 @@
                     android:id="@+id/lbl_view_book"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/booking24"
+                    android:drawablePadding="10dp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/booking_option_text"
                     android:textSize="@dimen/header_text_size"
                     android:textStyle="bold|normal"
-                    android:typeface="serif" />
+                    android:typeface="serif"
+                    android:textColor="#e74c3c"/>
             </LinearLayout>
 
             <com.rey.material.widget.EditText
@@ -287,12 +312,12 @@
                 style="@style/Material.Widget.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/phone24"
+                android:drawablePadding="10dp"
                 android:hint="Mobile Number"
                 android:inputType="phone"
                 android:textSize="18sp"
-                custom:et_labelEnable="true"
-                custom:et_labelPadding="@dimen/padding_two"
-                custom:et_supportMode="helper" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"

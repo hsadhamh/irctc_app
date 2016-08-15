@@ -65,8 +65,7 @@ public final class TrainDetailsFragment extends Fragment  {
     public AutoCompleteTextView mvStationBoarding;
     @BindView(R.id.txt_journey_date)
     public EditText mvDateJourney;
-    @BindView(R.id.btn_calendar_click)
-    public ImageButton mvDateCalButton;
+
 
     @BindView(R.id.auto_complete_trains)
     public AutoCompleteTextView mvTrainNumber;
@@ -255,7 +254,7 @@ public final class TrainDetailsFragment extends Fragment  {
     }
 
     public void ShowDatePicker(final ViewGroup container) {
-        mvDateCalButton.setOnClickListener(new View.OnClickListener() {
+        mvDateJourney.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

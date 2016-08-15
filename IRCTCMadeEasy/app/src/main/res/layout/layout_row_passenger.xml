@@ -1,192 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ScrollView
-        android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1c3c4d">
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-            <LinearLayout android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Add Passenger"
+        android:textColor="#ffffff"
+        android:textSize="30dp" />
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/shadow"
+        android:id="@+id/add_passenger_page"
+        android:orientation="vertical"
+        android:padding="40dp"
+        android:layout_marginBottom="30dp">
+        <com.rey.material.widget.EditText
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/user24"
+            android:drawablePadding="10dp"
+            android:gravity="fill"
+            android:id="@+id/txt_passenger_name"
+            android:hint="Passenger Name"
+            android:paddingLeft="15dp" />
+        <com.rey.material.widget.EditText
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:drawableLeft="@drawable/user24"
+            android:drawablePadding="10dp"
+            android:gravity="fill"
+            android:id="@+id/txt_passenger_age"
+            android:hint="Passenger Age"
+            android:inputType="number"
+            android:paddingLeft="15dp" />
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+
+            android:id="@+id/layout_radio_group1">
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/add_passenger_page"
-                android:padding="@dimen/padding_eight"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="60dp"
-                android:background="@drawable/screen_background">
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/gender24"
+                android:drawablePadding="10dp"
+                android:paddingLeft="15dp"/>
 
-                <TextView
-                    android:id="@+id/lbl_view_passenger"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_passenger_text"
-                    android:gravity="center"
-                    android:textColor="@color/colorAccent"
-                    android:textStyle="bold|normal"
-                    android:textSize="22sp"
-                    android:paddingBottom="5dp"
-                    android:layout_gravity="center" />
+            <com.rey.material.widget.RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/id_radio_male"
+                android:text="@string/add_passenger_male"
+                android:padding="@dimen/padding_two"
+                android:checked="true"
+                android:gravity="center"
+                android:paddingLeft="15dp"/>
+            <com.rey.material.widget.RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/id_radio_female"
+                android:padding="@dimen/padding_two"
+                android:gravity="center"
+                android:text="@string/add_passenger_female"
+                android:paddingLeft="15dp"/>
 
+        </com.google.android.flexbox.FlexboxLayout>
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/berth24"
+                android:drawablePadding="10dp"
+                android:paddingLeft="15dp"/>
+        <com.rey.material.widget.Spinner
+            android:id="@+id/spinner_berth"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            style="@style/SpinnerStyle"
+            android:layout_width="match_parent"
+            android:gravity="center|start"
+            custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+            android:layout_gravity="center"
+            android:entries="@array/passenger_berth"
+            android:spinnerMode="dialog"
+            android:paddingLeft="15dp"/>
+        </com.google.android.flexbox.FlexboxLayout>
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/txt_passenger_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Material.Widget.EditText"
-                    android:hint="@string/add_passenger_name"
-                    android:inputType="textCapWords|textPersonName"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="3dp"
-                    android:padding="3dp"/>
-                <com.rey.material.widget.EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Material.Widget.EditText"
-                    android:hint="@string/add_passenger_age"
-                    android:padding="@dimen/padding_two"
-                    android:inputType="number"
-                    android:textSize="18sp"
-                    android:id="@+id/txt_passenger_age"
-                    android:paddingTop="@dimen/padding_three"
-                    android:layout_marginBottom="3dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_two"
-                    android:paddingTop="5dp">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                    <com.rey.material.widget.TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_gender_text"
-                        android:layout_gravity="center"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center|start"
-                        android:textStyle="bold|normal"
-                        android:textSize="@dimen/header_text_size" />
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/food24"
+                android:drawablePadding="10dp"
+                android:paddingLeft="15dp"/>
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_food"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                style="@style/SpinnerStyle"
+                android:layout_width="match_parent"
 
-                    <com.google.android.flexbox.FlexboxLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/layout_radio_group">
+                custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                android:gravity="center|start"
+                android:layout_gravity="center"
+                android:entries="@array/passenger_food"
+                android:spinnerMode="dialog"
+                android:paddingLeft="15dp"/>
+        </com.google.android.flexbox.FlexboxLayout>
 
-                        <com.rey.material.widget.RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/id_radio_male"
-                            android:text="@string/add_passenger_male"
-                            android:padding="@dimen/padding_two"
-                            android:checked="true"
-                            android:gravity="center" />
-                        <com.rey.material.widget.RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/id_radio_female"
-                            android:padding="@dimen/padding_two"
-                            android:gravity="center"
-                            android:text="@string/add_passenger_female"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/check_box_child"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/add_passenger_child_text"
+            android:gravity="center|start"
+            android:enabled="false" />
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/check_box_senior"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/add_passenger_senior_text"
+            android:gravity="center|start"
+            android:enabled="false"
+            android:padding="@dimen/padding_two"
+            />
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/check_box_bed_roll"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/add_passenger_bed_roll_text"
+            android:enabled="true"
+            android:padding="@dimen/padding_two"
+            android:gravity="center|start"
+           />
 
-                    </com.google.android.flexbox.FlexboxLayout>
-                    </RelativeLayout>
-                </LinearLayout>
+</LinearLayout>
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/check_box_opt_berth"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/add_passenger_opt_berth_text"
+            android:enabled="false"
+            android:padding="@dimen/padding_two"
+            android:checked="true"
+            android:gravity="center|start" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/spinner_view_height_lower"
-                    android:orientation="horizontal"
-                    android:id="@+id/id_holder_berth"
-                    android:paddingTop="@dimen/padding_three">
-                    <com.rey.material.widget.TextView
-                        android:layout_width="@dimen/heading_width_size"
-                        android:layout_height="match_parent"
-                        android:text="@string/add_passenger_berth_text"
-                        android:padding="@dimen/padding_five"
-                        android:layout_gravity="center"
-                        android:gravity="center|start"
-                        android:textStyle="bold|normal" />
-                    <com.rey.material.widget.Spinner
-                        android:id="@+id/spinner_berth"
-                        style="@style/SpinnerStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center|start"
-                        custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-                        android:layout_gravity="center"
-                        android:entries="@array/passenger_berth"
-                        android:spinnerMode="dialog"/>
-                </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/spinner_view_height_lower"
-                    android:orientation="horizontal"
-                    android:id="@+id/id_holder_food">
-                    <com.rey.material.widget.TextView
-                        android:layout_width="@dimen/heading_width_size"
-                        android:layout_height="match_parent"
-                        android:text="@string/add_passenger_food_text"
-                        android:padding="@dimen/padding_five"
-                        android:layout_gravity="center"
-                        android:gravity="center|start"
-                        android:textStyle="bold|normal"
-                        android:paddingTop="@dimen/padding_two" />
-                    <com.rey.material.widget.Spinner
-                        android:id="@+id/spinner_food"
-                        style="@style/SpinnerStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-                        android:gravity="center|start"
-                        android:layout_gravity="center"
-                        android:entries="@array/passenger_food"
-                        android:spinnerMode="dialog"/>
-                </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
-                <com.rey.material.widget.CheckBox
-                    android:id="@+id/check_box_child"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_passenger_child_text"
-                    android:gravity="center|start"
-                    android:enabled="false"
-                    android:padding="@dimen/padding_two"
-                    android:paddingTop="@dimen/padding_two" />
-                <com.rey.material.widget.CheckBox
-                    android:id="@+id/check_box_senior"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_passenger_senior_text"
-                    android:gravity="center|start"
-                    android:enabled="false"
-                    android:padding="@dimen/padding_two"/>
-                <com.rey.material.widget.CheckBox
-                    android:id="@+id/check_box_bed_roll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_passenger_bed_roll_text"
-                    android:enabled="true"
-                    android:padding="@dimen/padding_two"
-                    android:gravity="center|start"/>
-                <com.rey.material.widget.CheckBox
-                    android:id="@+id/check_box_opt_berth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_passenger_opt_berth_text"
-                    android:enabled="false"
-                    android:padding="@dimen/padding_two"
-                    android:checked="true"
-                    android:gravity="center|start"/>
-            </LinearLayout>
-    </ScrollView>
     <com.github.clans.fab.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -204,6 +216,11 @@
         custom:fab_size="normal"
         custom:fab_showAnimation="@anim/fab_scale_up"
         custom:fab_hideAnimation="@anim/fab_scale_down"
-        android:visibility="visible"
+
         android:id="@+id/fab_save_passenger" />
 </FrameLayout>
+
+
+
+
+</ScrollView>

@@ -53,10 +53,7 @@ public class AddPassengerActivity extends AppCompatActivity{
     @BindView(R.id.check_box_opt_berth)
     public CheckBox mCbOptBerth;
 
-    @BindView(R.id.id_holder_berth)
-    public LinearLayout mHolderBerth;
-    @BindView(R.id.id_holder_food)
-    public LinearLayout mHolderFood;
+
 
     @BindView(R.id.fab_save_passenger)
     public FloatingActionButton mSaveButton;
