@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -64,7 +65,7 @@ public final class TrainDetailsFragment extends Fragment  {
     @BindView(R.id.auto_complete_boarding)
     public AutoCompleteTextView mvStationBoarding;
     @BindView(R.id.txt_journey_date)
-    public EditText mvDateJourney;
+    public android.widget.EditText mvDateJourney;
 
 
     @BindView(R.id.auto_complete_trains)
@@ -254,27 +255,35 @@ public final class TrainDetailsFragment extends Fragment  {
     }
 
     public void ShowDatePicker(final ViewGroup container) {
-        mvDateJourney.setOnClickListener(new View.OnClickListener() {
 
+
+        mvDateJourney.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                // Get Current Date
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH) + 1;
-                DatePickerDialog datePickerDialog = new DatePickerDialog(container.getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(android.widget.DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(MotionEvent.ACTION_UP == event.getAction()) {
+                    final Calendar c = Calendar.getInstance();
+                    mYear = c.get(Calendar.YEAR);
+                    mMonth = c.get(Calendar.MONTH);
+                    mDay = c.get(Calendar.DAY_OF_MONTH) ;
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(container.getContext(),
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(android.widget.DatePicker view, int year,
+                                                      int monthOfYear, int dayOfMonth) {
+                                    mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
+                                }
+                            }, mYear, mMonth, mDay);
+                    datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+                    datePickerDialog.show();
+                }
+
+                return true;
             }
 
         });
+
+
 
     }
 

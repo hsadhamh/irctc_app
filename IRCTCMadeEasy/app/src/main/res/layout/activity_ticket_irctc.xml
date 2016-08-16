@@ -149,20 +149,21 @@
                 android:layout_height="@dimen/spinner_view_height"
                 android:orientation="horizontal">
 
-                <com.rey.material.widget.EditText
+                <EditText
                     android:id="@+id/txt_journey_date"
                     style="@style/Material.Widget.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/datepicker24"
                     android:drawablePadding="10dp"
+                    android:focusableInTouchMode="false"
                     android:layout_weight="6"
-                    android:clickable="true"
                     android:gravity="center|start"
                     android:hint="@string/date_journey_text"
-                    android:inputType="none"
-                    android:paddingStart="@dimen/padding_three"
-                    android:textSize="18sp" />
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/padding_three"
+                    android:textSize="18sp"
+                    />
             </LinearLayout>
 
             <AutoCompleteTextView
