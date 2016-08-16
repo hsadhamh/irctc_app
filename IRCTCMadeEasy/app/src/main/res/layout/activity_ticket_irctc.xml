@@ -157,7 +157,7 @@
                     android:drawableLeft="@drawable/datepicker24"
                     android:drawablePadding="10dp"
                     android:layout_weight="6"
-                    android:focusable="false"
+                    android:clickable="true"
                     android:gravity="center|start"
                     android:hint="@string/date_journey_text"
                     android:inputType="none"
