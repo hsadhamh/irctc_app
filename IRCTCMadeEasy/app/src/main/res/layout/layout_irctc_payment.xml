@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1c3c4d">
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,7 +29,6 @@
                 android:padding="@dimen/padding_two"
                 android:layout_weight="1"
                 android:text="@string/saved_cards_label"/>
-
 
             <com.rey.material.widget.Spinner
                 android:id="@+id/id_saved_card_list"
@@ -103,7 +105,6 @@
                     android:text="@string/credit_card"/>
             </com.google.android.flexbox.FlexboxLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,12 +126,9 @@
                     style="@style/Material.Widget.Spinner"
                     android:gravity="center|start"
                     custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-
                     android:layout_gravity="center" />
             </LinearLayout>
-
         </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="340dp"
@@ -156,49 +154,59 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:id="@+id/section_id_card_type">
                 <com.rey.material.widget.TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center|start"
-                    android:gravity="center|start"
-                    android:layout_weight="2"
-                    android:text="@string/card_type_text"
-                    android:layout_marginLeft="-1dp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/train24"
+                    android:drawablePadding="10dp" />
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_card_type"
                     style="@style/Material.Widget.Spinner"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:entries="@array/train_class"
                     android:gravity="center|start"
-                    custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-                    android:layout_weight="1"
-                    android:layout_gravity="center" />
+                    android:prompt="@string/train_class_prompt"
+                    android:textSize="18sp"
+                    android:spinnerMode="dialog"
+                    custom:rd_style="@style/Material.Drawable.Ripple.Wave" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/section_id_card_details"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/section_id_card_details">
 
                 <com.rey.material.widget.EditText
                     android:id="@+id/specify_card_number"
+                    style="@style/Material.Widget.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/datepicker24"
+                    android:drawablePadding="10dp"
+                    android:gravity="center|start"
                     android:hint="@string/card_number"
                     android:inputType="number"
-                    custom:et_supportMode="charCounter"
-                    custom:et_supportMaxChars="16"/>
-                <com.rey.material.widget.EditText
-                    android:id="@+id/specify_card_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/name_on_card"
-                    custom:et_supportMode="none"/>
+                    android:textSize="18sp"/>
+                    <com.rey.material.widget.EditText
+                        android:id="@+id/specify_card_name"
+                        style="@style/Material.Widget.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/datepicker24"
+                        android:drawablePadding="10dp"
+                        android:gravity="center|start"
+                        android:hint="@string/name_on_card"
+                        android:inputType="text"
+                        android:textSize="18sp"/>
+
 
                 <LinearLayout
                     android:id="@+id/card_details_month_yr"
@@ -209,6 +217,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
+                        android:visibility="gone"
                         android:gravity="center|start"
                         android:layout_weight="1.2"
                         android:text="@string/expiry_date"
@@ -220,14 +229,14 @@
                         android:layout_height="wrap_content"
                         android:gravity="center|start"
                         custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-                        android:layout_weight="1.2"
+                        android:layout_weight="0.5"
                         android:layout_gravity="center" />
                     <EditText
                         android:id="@+id/txt_year_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/year_text"
-                        android:layout_weight="1.4"
+                        android:layout_weight="0.5"
                         android:layout_gravity="center"
                         android:inputType="number"/>
                 </LinearLayout>
@@ -316,3 +325,4 @@
         </com.google.android.flexbox.FlexboxLayout>
     </LinearLayout>
 </ScrollView>
+</LinearLayout>

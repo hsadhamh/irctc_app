@@ -57,6 +57,7 @@
                     android:hint="@string/username_text"
                     android:inputType="text"
                     android:textSize="18sp"
+                    custom:et_dividerHeight="2dp"
                     />
 
                 <irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText
