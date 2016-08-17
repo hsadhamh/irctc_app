@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:drawableLeft="@drawable/train24"
+                    android:drawableLeft="@drawable/visa24"
                     android:drawablePadding="10dp" />
                 <com.rey.material.widget.Spinner
                     android:id="@+id/spinner_card_type"
@@ -189,7 +189,7 @@
                     style="@style/Material.Widget.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/datepicker24"
+                    android:drawableLeft="@drawable/bankcard24"
                     android:drawablePadding="10dp"
                     android:gravity="center|start"
                     android:hint="@string/card_number"
@@ -200,7 +200,7 @@
                         style="@style/Material.Widget.EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/datepicker24"
+                        android:drawableLeft="@drawable/user24"
                         android:drawablePadding="10dp"
                         android:gravity="center|start"
                         android:hint="@string/name_on_card"
@@ -212,16 +212,19 @@
                     android:id="@+id/card_details_month_yr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:weightSum="1"
                     android:orientation="horizontal">
                     <com.rey.material.widget.TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
-                        android:visibility="gone"
+                        android:drawableLeft="@drawable/expiry24"
+                        android:drawablePadding="10dp"
                         android:gravity="center|start"
-                        android:layout_weight="1.2"
+                        android:layout_weight="0.2"
+                        android:textSize="18sp"
                         android:text="@string/expiry_date"
-                        android:layout_marginLeft="-1dp" />
+                         />
                     <com.rey.material.widget.Spinner
                         android:id="@+id/spn_month"
                         style="@style/Material.Widget.Spinner"
@@ -229,15 +232,15 @@
                         android:layout_height="wrap_content"
                         android:gravity="center|start"
                         custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-                        android:layout_weight="0.5"
+                        android:layout_weight="0.4"
                         android:layout_gravity="center" />
                     <EditText
                         android:id="@+id/txt_year_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/year_text"
-                        android:layout_weight="0.5"
-                        android:layout_gravity="center"
+                        android:layout_weight="0.4"
+                        android:layout_gravity="center|start"
                         android:inputType="number"/>
                 </LinearLayout>
                 <com.google.android.flexbox.FlexboxLayout
@@ -245,8 +248,12 @@
                     android:layout_height="wrap_content">
                     <com.rey.material.widget.EditText
                         android:id="@+id/txt_cvv_no"
+                        style="@style/Material.Widget.EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/cvv24"
+                        android:drawablePadding="10dp"
+                        android:gravity="center|start"
                         android:hint="@string/cvv_text"
                         android:inputType="number"
                         custom:et_supportMode="charCounter"
@@ -254,8 +261,12 @@
                         android:padding="@dimen/padding_two" />
                     <com.rey.material.widget.EditText
                         android:id="@+id/txt_atm_pin"
+                        style="@style/Material.Widget.EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/password24"
+                        android:drawablePadding="10dp"
+                        android:gravity="center|start"
                         android:hint="@string/atm_pin_text"
                         android:inputType="number"
                         custom:et_supportMode="charCounter"
