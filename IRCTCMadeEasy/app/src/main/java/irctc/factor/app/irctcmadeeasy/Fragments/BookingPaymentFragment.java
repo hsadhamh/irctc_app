@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
-import irctc.factor.app.irctcmadeeasy.Events.UpdateJsonValues;
 import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
@@ -92,11 +91,11 @@ public final class BookingPaymentFragment extends Fragment  {
     ArrayAdapter<String> mSpPaymentOption;
     Context mContext;
 
-    int[] mArrBankingIDs = {0,1,10,22,29,28,31,34,35,38,39,36,37,42,43,40,46,44,45,50,48,54,53,52,56,60,64,67};
-    int[] mArrCreditIDs = {0, 4, 17, 21, 27, 30, 58, 72,};
-    int[] mArrDebitIDs = {0, 3, 5, 9, 15, 16, 19, 25, 26, 32, 41, 57, 66};
-    int[] mArrCashIDs = {0,  23, 33, 55, 68, 70, 71};
-    int[] mArrIrctIDs = {0,  59};
+    Integer[] mArrBankingIDs = {0,1,10,22,29,28,31,34,35,38,39,36,37,42,43,40,46,44,45,50,48,54,53,52,56,60,64,67};
+    Integer[] mArrCreditIDs = {0, 4, 17, 21, 27, 30, 58, 72,};
+    Integer[] mArrDebitIDs = {0, 3, 5, 9, 15, 16, 19, 25, 26, 32, 41, 57, 66};
+    Integer[] mArrCashIDs = {0,  23, 33, 55, 68, 70, 71};
+    Integer[] mArrIrctIDs = {0,  59};
     String mPaymentMode;
 
     IGetValue mCallback;
@@ -287,37 +286,52 @@ public final class BookingPaymentFragment extends Fragment  {
     }
 
     @Subscribe
-    public void onEvent(GetMeJsonValues e) { mCallback.getPassengerJsonValue(GetJsonObjectFilled()); }
+    public void onEvent(GetMeJsonValues e) { mCallback.getPaymentJsonValue(GetJsonObjectFilled()); }
 
     public void LoadValue(){
         TicketJson oJson = mPassedJson;
+        List<Integer> tempList = new ArrayList<>();
         int idVal = 0, modeVal = 0, modeValIndex = 0;
+        mPaymentMode = oJson.getPaymentMode();
         switch (mPaymentMode) {
             case "NETBANKING":
                 idVal = R.id.id_radio_banking;
                 modeVal = Integer.parseInt(oJson.getPaymentModeOptionID() == null ? "0" : oJson.getPaymentModeOptionID());
-                modeValIndex = Arrays.asList(mArrBankingIDs).indexOf(modeVal);
-
+                tempList.clear();
+                tempList.addAll(Arrays.asList(mArrBankingIDs));
+                modeValIndex = tempList.indexOf(modeVal);
                 break;
+
             case "IRCTC_PREPAID":
                 idVal = R.id.id_radio_irctc;
                 modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
-                modeValIndex = Arrays.asList(mArrIrctIDs).indexOf(modeVal);
+                tempList.clear();
+                tempList.addAll(Arrays.asList(mArrIrctIDs));
+                modeValIndex = tempList.indexOf(modeVal);
                 break;
+
             case "CASH_CARD":
                 idVal = R.id.id_radio_cash;
                 modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
-                modeValIndex = Arrays.asList(mArrCashIDs).indexOf(modeVal);
+                tempList.clear();
+                tempList.addAll(Arrays.asList(mArrCashIDs));
+                modeValIndex = tempList.indexOf(modeVal);
                 break;
+
             case "CREDIT_CARD":
                 idVal = R.id.id_radio_credit;
                 modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
-                modeValIndex = Arrays.asList(mArrCreditIDs).indexOf(modeVal);
+                tempList.clear();
+                tempList.addAll(Arrays.asList(mArrCreditIDs));
+                modeValIndex = tempList.indexOf(modeVal);
                 break;
+
             case "DEBIT_CARD":
                 idVal = R.id.id_radio_debit;
                 modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
-                modeValIndex = Arrays.asList(mArrDebitIDs).indexOf(modeVal);
+                tempList.clear();
+                tempList.addAll(Arrays.asList(mArrDebitIDs));
+                modeValIndex = tempList.indexOf(modeVal);
                 break;
         }
 

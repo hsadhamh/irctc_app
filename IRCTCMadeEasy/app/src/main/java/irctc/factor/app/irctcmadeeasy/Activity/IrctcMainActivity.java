@@ -65,9 +65,9 @@ public class IrctcMainActivity extends AppCompatActivity {
     public boolean isPassengerListPage(String url){ return isMatch(url, mPassengerListPage); }
 
     public boolean isMatch(String text, String pattern){
-        Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-        Matcher m = p.matcher(text);
-        return m.find();
+        /*Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Matcher m = p.matcher(text);*/
+        return false;
     }
 
     public boolean isGoogleAds(String url){ return (isMatch(url, mGoogleAdsPattern) || isMatch(url, mGoogleAdContainerPattern) || isMatch(url, mGoogleAdsPattern2)); }

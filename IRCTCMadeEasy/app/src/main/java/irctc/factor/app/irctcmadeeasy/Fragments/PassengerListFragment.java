@@ -198,7 +198,10 @@ public final class PassengerListFragment extends Fragment{
                 passenger.setName(oPass.getName());
                 passenger.setNationality("Indian");
                 passenger.setTransactionId(256);
-                mAdapter.getSelectedPassengerList().add(getPassengerInfo().insert(passenger));
+
+                long nInsertedPassId = getPassengerInfo().insert(passenger);
+                if(!mAdapter.getSelectedPassengerList().contains(nInsertedPassId))
+                    mAdapter.getSelectedPassengerList().add(nInsertedPassId);
             }
         }
         onListUpdatedEvent();
@@ -209,7 +212,8 @@ public final class PassengerListFragment extends Fragment{
             if( info.getName().equalsIgnoreCase(pass.getName())
                     && info.getGender().equalsIgnoreCase(pass.getGender() == null ? "MALE" : pass.getGender())
                     && pass.getAge() == Integer.parseInt(info.getAge())){
-                mAdapter.getSelectedPassengerList().add(pass.getId());
+                if(!mAdapter.getSelectedPassengerList().contains(pass.getId()))
+                    mAdapter.getSelectedPassengerList().add(pass.getId());
                 return true;
             }
         }

@@ -13,11 +13,26 @@
     android:id="@+id/row_passenger_info"
     >
 
+    <com.rey.material.widget.TextView
+        android:id="@+id/txt_name_age_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center|start"
+        android:drawableLeft="@drawable/user24"
+        android:drawablePadding="5dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold|normal"
+        android:typeface="serif"
+        android:textSize="18sp"
+        android:text=""/>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/section_passenger_info"
+        android:layout_below="@id/txt_name_age_gender"
         android:padding="@dimen/padding_three">
         <com.rey.material.widget.CheckBox
             android:layout_width="@dimen/width_checkbox"
@@ -30,30 +45,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <com.rey.material.widget.TextView
-                android:id="@+id/txt_name_age_gender"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:drawableLeft="@drawable/user24"
-                android:drawablePadding="10dp"
-                android:layout_marginLeft="-22dp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold|normal"
-                android:typeface="serif"
-                android:textSize="18sp"
-                android:text=""/>
-            <com.rey.material.widget.TextView
-                android:id="@+id/txt_age"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center|start"
-
-                android:textSize="18sp"
-                android:text=""/>
             <com.rey.material.widget.TextView
                 android:id="@+id/txt_berth_food"
                 android:layout_width="match_parent"
@@ -71,6 +62,7 @@
                 android:textColor="@android:color/black"
                 android:text=""/>
         </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -104,4 +96,6 @@
             android:paddingRight="10dp"
             />
     </LinearLayout>
+
+
 </RelativeLayout>

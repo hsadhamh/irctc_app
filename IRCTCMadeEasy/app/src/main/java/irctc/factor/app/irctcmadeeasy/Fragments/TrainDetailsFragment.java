@@ -264,14 +264,14 @@ public final class TrainDetailsFragment extends Fragment  {
                 if(MotionEvent.ACTION_UP == event.getAction()) {
                     final Calendar c = Calendar.getInstance();
                     mYear = c.get(Calendar.YEAR);
-                    mMonth = c.get(Calendar.MONTH);
+                    mMonth = c.get(Calendar.MONTH) ;
                     mDay = c.get(Calendar.DAY_OF_MONTH) ;
                     DatePickerDialog datePickerDialog = new DatePickerDialog(container.getContext(),
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(android.widget.DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
-                                    mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
+                                    mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear +1 < 10 ? ("0" + (monthOfYear+1)) : (monthOfYear)) + "-" + year);
                                 }
                             }, mYear, mMonth, mDay);
                     datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
