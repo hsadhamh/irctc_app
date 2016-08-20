@@ -71,7 +71,6 @@ public class TicketsListActivity extends AppCompatActivity {
         ButterKnife.setDebug(true);
         InitializeView();
 
-        Toast.makeText(getApplicationContext(),getTicketsDao().count()+"", Toast.LENGTH_LONG);
         if(getTicketsDao() == null || getTicketsDao().count() < 1) {
             mListAddForm.setVisibility(View.GONE);
             getSupportActionBar().hide();

@@ -5,18 +5,21 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_centerInParent="true"
+        android:padding="50dp"
         android:src="@mipmap/ic_launcher" />
 
     <com.rey.material.widget.TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_ten"
-        android:textSize="@dimen/text_default_size"
+        android:textSize="18sp"
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:text="@string/CompanyName" />
+        android:text="@string/CompanyName"
+        android:textStyle="normal|bold|italic"
+        android:paddingBottom="10dp"
+        android:textColor="@color/colorPrimaryDark" />
 
 </RelativeLayout>
