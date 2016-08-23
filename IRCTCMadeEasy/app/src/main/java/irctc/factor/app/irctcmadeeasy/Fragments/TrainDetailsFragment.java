@@ -2,12 +2,10 @@ package irctc.factor.app.irctcmadeeasy.Fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,13 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
-import com.rey.material.widget.ImageButton;
 import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.Spinner;
-
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,18 +28,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Adapters.AutoCompleteStringAdapter;
-import irctc.factor.app.irctcmadeeasy.Adapters.TicketDetailsCursorAdapter;
+import irctc.factor.app.irctcmadeeasy.Adapters.StationAutoCompleteAdapter;
 import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
-import irctc.factor.app.irctcmadeeasy.Events.UpdateJsonValues;
 import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
-import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 import irctc.factor.app.irctcmadeeasy.Utils.TicketConstants;
-import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
-import irctc.factor.app.irctcmadeeasy.database.DaoSession;
-import irctc.factor.app.irctcmadeeasy.database.TicketDetails;
-import irctc.factor.app.irctcmadeeasy.database.TicketDetailsDao;
+import irctc.factor.app.irctcmadeeasy.View.ShowHidePasswordEditText;
 
 /**
  * Created by hassanhussain on 7/8/2016.
@@ -105,7 +95,8 @@ public final class TrainDetailsFragment extends Fragment  {
     public RadioButton mRbBookTwoLower;
 
     private Unbinder unbinder;
-    AutoCompleteStringAdapter stationAdapter, trainAdapter;
+    AutoCompleteStringAdapter trainAdapter;
+    StationAutoCompleteAdapter stationAdapter, stationAdapter1, stationAdapter2;
 
     private int mYear, mMonth, mDay;
     IGetValue mCallback;
@@ -146,15 +137,19 @@ public final class TrainDetailsFragment extends Fragment  {
         unbinder = ButterKnife.bind(this, view);
 
         //Loading Soucre and Destination,Boarding
-        stationAdapter = new AutoCompleteStringAdapter(container.getContext(), R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.STATION_CONST_LIST);
+        stationAdapter = new StationAutoCompleteAdapter(container.getContext(), TicketConstants.STATION_CONST_LIST);
+        stationAdapter1 = new StationAutoCompleteAdapter(container.getContext(), TicketConstants.STATION_CONST_LIST);
+        stationAdapter2 = new StationAutoCompleteAdapter(container.getContext(), TicketConstants.STATION_CONST_LIST);
+        mvStationSource.setAdapter(stationAdapter);
+        mvStationDestination.setAdapter(stationAdapter1);
+        mvStationBoarding.setAdapter(stationAdapter2);
         mvStationSource.setThreshold(3);
         mvStationDestination.setThreshold(3);
-        mvStationSource.setAdapter(stationAdapter);
-        mvStationDestination.setAdapter(stationAdapter);
-        mvStationBoarding.setAdapter(stationAdapter);
+        mvStationBoarding.setThreshold(3);
 
         //Loading Train Details
-        trainAdapter = new AutoCompleteStringAdapter(container.getContext(), R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.TRAIN_CONST_LIST);
+        trainAdapter = new AutoCompleteStringAdapter(container.getContext(),
+                R.layout.activity_ticket_irctc, R.id.lbl_name, TicketConstants.TRAIN_CONST_LIST);
         mvTrainNumber.setThreshold(3);
         mvTrainNumber.setAdapter(trainAdapter);
 

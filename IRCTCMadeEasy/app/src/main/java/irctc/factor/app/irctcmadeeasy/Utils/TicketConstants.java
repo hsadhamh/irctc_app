@@ -2,11 +2,9 @@ package irctc.factor.app.irctcmadeeasy.Utils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Base64;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,7 +18,7 @@ import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
  */
 public class TicketConstants {
     public static List<String> TRAIN_CONST_LIST = new ArrayList<>();
-    public static List<String> STATION_CONST_LIST = new ArrayList<>();
+    public static List<StationDetails> STATION_CONST_LIST = new ArrayList<>();
     public static SQLiteDatabase mWriteDatabase = null;
     static DaoMaster.DevOpenHelper mDbHelper = null;
 
@@ -42,13 +40,17 @@ public class TicketConstants {
                 String[] list_arr = line.split(cvsSplitBy);
                 for (String s: list_arr) {
                     s = s.substring(1, s.length()-1);
-                    if(station_trains)
-                        STATION_CONST_LIST.add(s);
+                    if(station_trains) {
+                        StationDetails station = new StationDetails();
+                        station.StationCode = s.substring(s.indexOf("-") + 1).trim();
+                        station.StationName = s.substring(0, s.indexOf("-")).trim();
+                        station.StationFullName = s;
+                       STATION_CONST_LIST.add(station);
+                    }
                     else
                         TRAIN_CONST_LIST.add(s);
                 }
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -63,6 +65,7 @@ public class TicketConstants {
             }
         }
     }
+
     public static boolean Initialize(Context context) {
         LoadDataFromFile(context, true);
         LoadDataFromFile(context, false);

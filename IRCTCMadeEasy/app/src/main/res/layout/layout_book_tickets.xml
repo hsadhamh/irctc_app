@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <com.rey.material.widget.TextView
-        android:id="@+id/lbl_view_book_tickets"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="@string/book_tickets_now_text"
-        android:gravity="center"
-        android:textStyle="bold|normal"
-        android:paddingTop="@dimen/padding_three"
-        android:textSize="@dimen/header_text_size"
-        android:typeface="serif"
-        android:layout_gravity="center"
-        android:background="@color/colorPrimary"
-        android:padding="@dimen/padding_four"
-        android:textColor="@color/abc_primary_text_material_dark" />
-
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <com.rey.material.widget.TabPageIndicator
         android:id="@+id/id_pager_indicator"
         style="@style/Material.Widget.TabPageIndicator"
         android:layout_width="match_parent"
         android:background="@color/colorPrimary"
         android:layout_height="@dimen/width_image_button"/>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/id_pager_verses"
         android:layout_width="match_parent"
