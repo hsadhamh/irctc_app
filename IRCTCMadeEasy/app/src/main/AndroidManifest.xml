@@ -26,7 +26,8 @@
         </activity>
 
         <activity android:name=".Activity.IrctcMainActivity"/>
-        <activity android:name=".Activity.BookTicketsNowActivity"/>
+        <activity android:name=".Activity.BookTicketsNowActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".DummyActivity"/>
         <activity android:name=".Activity.AddPassengerActivity"/>
         <activity android:name=".Activity.TicketsListActivity"/>
