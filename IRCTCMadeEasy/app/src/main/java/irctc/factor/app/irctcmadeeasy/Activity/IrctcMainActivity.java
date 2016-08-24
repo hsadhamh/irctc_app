@@ -1,5 +1,6 @@
 package irctc.factor.app.irctcmadeeasy.Activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.rey.material.widget.ProgressView;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +56,7 @@ public class IrctcMainActivity extends AppCompatActivity {
         GetJsString(sJson);
 
         assert mWebIrctc != null;
+        AdBlocker.init(this);
 
         mWebIrctc.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 6.1; rv:13.0) Gecko/20100101 Firefox/12");
         setChromeClientProgress();
@@ -92,10 +96,28 @@ public class IrctcMainActivity extends AppCompatActivity {
     public void setWebViewClient() {
         mWebIrctc.setWebViewClient(new WebViewClient() {
 
+
+            private Map<String, Boolean> loadedUrls = new HashMap<>();
+
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
             @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                boolean ad;
+
+                if (!loadedUrls.containsKey(url)) {
+                    ad = AdBlocker.isAd(url);
+                    loadedUrls.put(url, ad);
+                } else {
+                    ad = loadedUrls.get(url);
+                }
+                return ad ? AdBlocker.createEmptyResource() :
+                        super.shouldInterceptRequest(view, url);
+            }
+
+         /*   @Override
             public WebResourceResponse shouldInterceptRequest (WebView view, String url){
                 return super.shouldInterceptRequest(view, url);
-            }
+            }*/
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

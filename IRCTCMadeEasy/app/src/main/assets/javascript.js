@@ -418,7 +418,8 @@ function doAutomation() {
     }
     else if(isTrainsListed()) {
     	scrollToGivenId($("table[id='avlAndFareForm:trainbtwnstns']"));
-
+var frame = document.getElementById("randomid");
+ frame.parentNode.removeChild(frame);
         var quota = ticketDetails["Quota"];
         var quotaRadioButtons = $("input[name='quota']").get();
         var quota_txt = getQuotaText(quota);
