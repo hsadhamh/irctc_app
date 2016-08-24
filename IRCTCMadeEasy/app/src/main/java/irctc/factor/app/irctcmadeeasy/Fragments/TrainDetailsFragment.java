@@ -140,9 +140,11 @@ public final class TrainDetailsFragment extends Fragment  {
         stationAdapter = new StationAutoCompleteAdapter(container.getContext(), TicketConstants.STATION_CONST_LIST);
         stationAdapter1 = new StationAutoCompleteAdapter(container.getContext(), TicketConstants.STATION_CONST_LIST);
         stationAdapter2 = new StationAutoCompleteAdapter(container.getContext(), TicketConstants.STATION_CONST_LIST);
+
         mvStationSource.setAdapter(stationAdapter);
         mvStationDestination.setAdapter(stationAdapter1);
         mvStationBoarding.setAdapter(stationAdapter2);
+
         mvStationSource.setThreshold(3);
         mvStationDestination.setThreshold(3);
         mvStationBoarding.setThreshold(3);
