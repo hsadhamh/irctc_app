@@ -35,6 +35,7 @@ import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
 import irctc.factor.app.irctcmadeeasy.Fragments.BookingPaymentFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragment;
+import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragmentV2;
 import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;
 import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
@@ -86,7 +87,7 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
         }
 
         mListUiFragments.add(new TrainDetailsFragment());
-        mListUiFragments.add(new PassengerListFragment());
+        mListUiFragments.add(new PassengerListFragmentV2());
         mListUiFragments.add(new BookingPaymentFragment());
 
         InitializeView();
@@ -157,11 +158,6 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == EventConstants.EVENT_REQUEST_ADD_PASSENGER) {
-            if(resultCode == EventConstants.EVENT_RESP_ADD_PASSENGER_OK){
-                ((PassengerListFragment)mListUiFragments.get(1)).onListUpdatedEvent();
-            }
-        }
     }//onActivityResult
 
     @OnClick({ R.id.btn_save_info, R.id.btn_book_now_info })
@@ -334,8 +330,8 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
             if(sJson.length() > 0) {
                 mFinalJson = flJsonParser.getTicketDetailObject(sJson);
                 ((TrainDetailsFragment)mListUiFragments.get(0)).setPassedJson(mFinalJson);
-                ((PassengerListFragment)mListUiFragments.get(1)).setPassedJson(mFinalJson);
-                ((PassengerListFragment)mListUiFragments.get(1)).setCreateApproved(mCreateNotExists);
+                ((PassengerListFragmentV2)mListUiFragments.get(1)).setPassedJson(mFinalJson);
+                //((PassengerListFragment)mListUiFragments.get(1)).setCreateApproved(mCreateNotExists);
                 ((BookingPaymentFragment)mListUiFragments.get(2)).setPassedJson(mFinalJson);
             }
         } catch (JSONException | IOException e) {
