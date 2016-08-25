@@ -200,6 +200,8 @@ public final class BookingPaymentFragment extends Fragment  {
 
         arrayAdapterList = Arrays.asList(getResources().getStringArray(nArrId));
         al=new ArrayList<>(arrayAdapterList);
+        mSpPaymentOption.clear();
+        mSpPaymentOption.addAll(al);
         mSpPaymentOption.notifyDataSetChanged();
         mSpPaymentOptions.setSelection(0);
 
@@ -256,7 +258,7 @@ public final class BookingPaymentFragment extends Fragment  {
     public TicketJson GetJsonObjectFilled() {
         TicketJson oJsonTicket = new TicketJson();
 
-        oJsonTicket.setPaymentMode(mPaymentMode);
+        oJsonTicket.setPaymentmode(mPaymentMode);
         int nMode = 0;
         if(mPaymentMode.equals("NETBANKING")){
             nMode = mArrBankingIDs[mSpPaymentOptions.getSelectedItemPosition()];
@@ -273,15 +275,15 @@ public final class BookingPaymentFragment extends Fragment  {
         else if(mPaymentMode.equals("DEBIT_CARD")){
             nMode = mArrDebitIDs[mSpPaymentOptions.getSelectedItemPosition()];
         }
-        oJsonTicket.setPaymentModeOptionID(""+nMode);
-        oJsonTicket.setCardNumberValue(mvCardNumber.getText().toString());
+        oJsonTicket.setPaymentmodeid(""+nMode);
+        oJsonTicket.setCardnovalue(mvCardNumber.getText().toString());
         String sCard = mSpCardType.getSelectedItem().toString();
         sCard = sCard.equals("MASTER") ? "MC" : "VISA";
-        oJsonTicket.setCardType(sCard);
-        oJsonTicket.setExpiryMonth("" + mSpMonth.getSelectedItemPosition() + 1);
-        oJsonTicket.setExpiryYear(mvYear.getText().toString());
-        oJsonTicket.setCardCvvNumber(mvCVVNumber.getText().toString());
-        oJsonTicket.setNameOnCard(mvCardName.getText().toString());
+        oJsonTicket.setCardtype(sCard);
+        oJsonTicket.setExpirymon("" + mSpMonth.getSelectedItemPosition() + 1);
+        oJsonTicket.setExpiryyear(mvYear.getText().toString());
+        oJsonTicket.setCardcvv(mvCVVNumber.getText().toString());
+        oJsonTicket.setNamecard(mvCardName.getText().toString());
         return oJsonTicket;
     }
 
@@ -292,11 +294,11 @@ public final class BookingPaymentFragment extends Fragment  {
         TicketJson oJson = mPassedJson;
         List<Integer> tempList = new ArrayList<>();
         int idVal = 0, modeVal = 0, modeValIndex = 0;
-        mPaymentMode = oJson.getPaymentMode();
+        mPaymentMode = oJson.getPaymentmode();
         switch (mPaymentMode) {
             case "NETBANKING":
                 idVal = R.id.id_radio_banking;
-                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID() == null ? "0" : oJson.getPaymentModeOptionID());
+                modeVal = Integer.parseInt(oJson.getPaymentmodeid() == null ? "0" : oJson.getPaymentmodeid());
                 tempList.clear();
                 tempList.addAll(Arrays.asList(mArrBankingIDs));
                 modeValIndex = tempList.indexOf(modeVal);
@@ -304,7 +306,7 @@ public final class BookingPaymentFragment extends Fragment  {
 
             case "IRCTC_PREPAID":
                 idVal = R.id.id_radio_irctc;
-                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
+                modeVal = Integer.parseInt(oJson.getPaymentmodeid());
                 tempList.clear();
                 tempList.addAll(Arrays.asList(mArrIrctIDs));
                 modeValIndex = tempList.indexOf(modeVal);
@@ -312,7 +314,7 @@ public final class BookingPaymentFragment extends Fragment  {
 
             case "CASH_CARD":
                 idVal = R.id.id_radio_cash;
-                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
+                modeVal = Integer.parseInt(oJson.getPaymentmodeid());
                 tempList.clear();
                 tempList.addAll(Arrays.asList(mArrCashIDs));
                 modeValIndex = tempList.indexOf(modeVal);
@@ -320,7 +322,7 @@ public final class BookingPaymentFragment extends Fragment  {
 
             case "CREDIT_CARD":
                 idVal = R.id.id_radio_credit;
-                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
+                modeVal = Integer.parseInt(oJson.getPaymentmodeid());
                 tempList.clear();
                 tempList.addAll(Arrays.asList(mArrCreditIDs));
                 modeValIndex = tempList.indexOf(modeVal);
@@ -328,7 +330,7 @@ public final class BookingPaymentFragment extends Fragment  {
 
             case "DEBIT_CARD":
                 idVal = R.id.id_radio_debit;
-                modeVal = Integer.parseInt(oJson.getPaymentModeOptionID());
+                modeVal = Integer.parseInt(oJson.getPaymentmodeid());
                 tempList.clear();
                 tempList.addAll(Arrays.asList(mArrDebitIDs));
                 modeValIndex = tempList.indexOf(modeVal);
@@ -341,13 +343,13 @@ public final class BookingPaymentFragment extends Fragment  {
         mRbCashCards.setChecked(idVal == R.id.id_radio_cash);
         mRbIrctcCard.setChecked(idVal == R.id.id_radio_irctc);
         mSpPaymentOptions.setSelection(modeValIndex);
-        mvCardNumber.setText(oJson.getCardNumberValue());
-        mSpCardType.setSelection(oJson.getCardType()== null?
-                0 : (oJson.getCardType().equals("MC") ? 1 : 0));
-        int index = Integer.parseInt(oJson.getExpiryMonth() == null ? "1" : oJson.getExpiryMonth()) - 1;
+        mvCardNumber.setText(oJson.getCardnovalue());
+        mSpCardType.setSelection(oJson.getCardtype()== null?
+                0 : (oJson.getCardtype().equals("MC") ? 1 : 0));
+        int index = Integer.parseInt(oJson.getExpirymon() == null ? "1" : oJson.getExpirymon()) - 1;
         mSpMonth.setSelection(index);
-        mvYear.setText(oJson.getExpiryYear());
-        mvCVVNumber.setText(oJson.getCardCvvNumber());
-        mvCardName.setText(oJson.getNameOnCard());
+        mvYear.setText(oJson.getExpiryyear());
+        mvCVVNumber.setText(oJson.getCardcvv());
+        mvCardName.setText(oJson.getNamecard());
     }
 }

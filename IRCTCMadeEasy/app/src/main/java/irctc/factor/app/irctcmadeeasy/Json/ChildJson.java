@@ -1,7 +1,6 @@
 package irctc.factor.app.irctcmadeeasy.Json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by hassanhussain on 7/14/2016.
@@ -10,39 +9,36 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class ChildJson {
-    @JsonProperty("name")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Name;
+    String name;
 
-    @JsonProperty("age")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Age;
+    String age;
 
-    @JsonProperty("gender")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Gender;
-
-    public String getGender() {
-        return Gender;
-    }
-
-    public void setGender(String gender) {
-        Gender = gender;
-    }
+    String gender;
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getAge() {
-        return Age;
+        return age;
     }
 
     public void setAge(String age) {
-        Age = age;
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

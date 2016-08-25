@@ -161,7 +161,7 @@ public final class PassengerListFragment extends Fragment{
                     child.setName(pass.getName());
                     child.setAge(""+pass.getAge());
                     child.setGender(pass.getGender());
-                    oJsonTicket.getChildInfo().add(child);
+                    oJsonTicket.getChildinfo().add(child);
                 }
                 else
                 {
@@ -170,11 +170,11 @@ public final class PassengerListFragment extends Fragment{
                     passJson.setAge(""+pass.getAge());
                     passJson.setBerth(pass.getBerth());
                     passJson.setName(pass.getName());
-                    passJson.setIDCard("" + pass.getAadharCardNo());
-                    passJson.setIDCardNumber("" + pass.getAadharCardNo());
+                    passJson.setIdcard("" + pass.getAadharCardNo());
+                    passJson.setIdcardno("" + pass.getAadharCardNo());
                     passJson.setNationality(pass.getNationality());
                     passJson.setType(pass.getChild());
-                    oJsonTicket.getPassengerInfo().add(passJson);
+                    oJsonTicket.getPassengerinfo().add(passJson);
                 }
             }
         }
@@ -187,7 +187,7 @@ public final class PassengerListFragment extends Fragment{
     public void LoadValue(){
         TicketJson oJson = mPassedJson;
         List<PassengerInfo> listPass = getPassengerInfo().loadAll();
-        for(PassengerJson oPass : oJson.getPassengerInfo()){
+        for(PassengerJson oPass : oJson.getPassengerinfo()){
             boolean bAdd = CheckIfPassengerInfoFound(listPass, oPass);
             if(!bAdd && isCreateApproved()){
                 /* Add to DB */

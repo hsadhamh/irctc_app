@@ -166,11 +166,11 @@ public class DummyActivity extends AppCompatActivity {
             TicketJson jsonTicket = flJsonParser.getTicketDetailObject(json);
             new MaterialDialog
                     .Builder(this)
-                    .content("Convert successful - " + jsonTicket.getTrainNumber() + " : " + jsonTicket.getBoardingStation())
-                    .title("From : " + jsonTicket.getSrcStation() + " - To: " + jsonTicket.getDestStation())
+                    .content("Convert successful - " + jsonTicket.getTrainno() + " : " + jsonTicket.getBoarding())
+                    .title("From : " + jsonTicket.getSource() + " - To: " + jsonTicket.getDestination())
                     .show();
 
-            jsonTicket.setAutoUpgrade(true);
+            jsonTicket.setAutoupgrade(true);
             String sConvertJson = flJsonParser.getTicketDetailString(jsonTicket);
             new MaterialDialog
                     .Builder(this)

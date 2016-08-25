@@ -28,8 +28,6 @@ import irctc.factor.app.irctcmadeeasy.Json.PassengerJson;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.Json.flJsonParser;
 import irctc.factor.app.irctcmadeeasy.R;
-
-import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
 import irctc.factor.app.irctcmadeeasy.database.TicketDetailsDao;
 
 /**
@@ -97,22 +95,22 @@ public class TicketDetailsCursorAdapter extends RecyclerViewCursorAdapter<Ticket
                 TicketJson oJson = GetJsonObject(sJsonTicket);
                 if (oJson != null) {
                     String sText = "";
-                    if(oJson.getTrainNumber() != null && oJson.getTrainNumber().length() > 0)
-                        sText += "<br> Train Number: <b>" + oJson.getTrainNumber() + "</b>";
-                    if (oJson.getSrcStation() != null && oJson.getSrcStation().length() > 0)
-                        sText += "<br> From <b>" + oJson.getSrcStation() + "</b>";
-                    if (oJson.getDestStation() != null && oJson.getDestStation().length() > 0)
-                        sText += " To <b>" + oJson.getDestStation() + "</b>";
-                    if (oJson.getBoardingStation() != null && oJson.getBoardingStation().length() > 0)
-                        sText += "<br> Boarding at <b>" + oJson.getBoardingStation() + "</b>";
-                    if (oJson.getDateOfJourney() != null && oJson.getDateOfJourney().length() > 0)
-                        sText += "<br> On <b>" + oJson.getDateOfJourney() + "</b>";
+                    if(oJson.getTrainno() != null && oJson.getTrainno().length() > 0)
+                        sText += "<br> Train Number: <b>" + oJson.getTrainno() + "</b>";
+                    if (oJson.getSource() != null && oJson.getSource().length() > 0)
+                        sText += "<br> From <b>" + oJson.getSource() + "</b>";
+                    if (oJson.getDestination() != null && oJson.getDestination().length() > 0)
+                        sText += " To <b>" + oJson.getDestination() + "</b>";
+                    if (oJson.getBoarding() != null && oJson.getBoarding().length() > 0)
+                        sText += "<br> Boarding at <b>" + oJson.getBoarding() + "</b>";
+                    if (oJson.getDatejourney() != null && oJson.getDatejourney().length() > 0)
+                        sText += "<br> On <b>" + oJson.getDatejourney() + "</b>";
 
                     sText += "<br> No of Adult Passengers : " +
-                            (oJson.getPassengerInfo() == null ? 0 : oJson.getPassengerInfo().size());
+                            (oJson.getPassengerinfo() == null ? 0 : oJson.getPassengerinfo().size());
 
                     sText += "<br> No of Child Passengers : " +
-                            (oJson.getChildInfo() == null ? 0 : oJson.getChildInfo().size());
+                            (oJson.getChildinfo() == null ? 0 : oJson.getChildinfo().size());
                     // Populate fields with extracted properties
                     txtView1.setText(Html.fromHtml(sText));
                     txtView1.setTextSize(16.0f);
@@ -130,57 +128,57 @@ public class TicketDetailsCursorAdapter extends RecyclerViewCursorAdapter<Ticket
 
         public String getJsonMessage(TicketJson oJson){
             String sText = "<i>Journey Info:</i><br>";
-            if(oJson.getTrainNumber() != null && oJson.getTrainNumber().length() > 0)
-                sText += "<br> Train Number: <b>" + oJson.getTrainNumber() + "</b>";
-            if(oJson.getSrcStation() != null && oJson.getSrcStation().length() > 0)
-                sText += " From <b>"+ oJson.getSrcStation() +"</b>";
-            if(oJson.getDestStation() != null && oJson.getDestStation().length() > 0)
-                sText += " To <b>"+ oJson.getDestStation() +"</b>";
-            if(oJson.getBoardingStation() != null && oJson.getBoardingStation().length() > 0)
-                sText += "<br> Boarding at <b>"+ oJson.getBoardingStation() +"</b>";
-            if(oJson.getDateOfJourney() != null && oJson.getDateOfJourney().length() > 0)
-                sText += "<br> On <b>"+ oJson.getDateOfJourney() +"</b>";
-            if(oJson.getMobileNumber() != null && oJson.getMobileNumber().length() > 0)
-                sText += "<br> Mobile: <b>" + oJson.getMobileNumber() + "</b>";
-            if(oJson.getClassSelection() != null && oJson.getClassSelection().length() > 0)
-                sText += "<br> Class: <b>" + oJson.getClassSelection() + "</b>";
+            if(oJson.getTrainno() != null && oJson.getTrainno().length() > 0)
+                sText += "<br> Train Number: <b>" + oJson.getTrainno() + "</b>";
+            if(oJson.getSource() != null && oJson.getSource().length() > 0)
+                sText += " From <b>"+ oJson.getSource() +"</b>";
+            if(oJson.getDestination() != null && oJson.getDestination().length() > 0)
+                sText += " To <b>"+ oJson.getDestination() +"</b>";
+            if(oJson.getBoarding() != null && oJson.getBoarding().length() > 0)
+                sText += "<br> Boarding at <b>"+ oJson.getBoarding() +"</b>";
+            if(oJson.getDatejourney() != null && oJson.getDatejourney().length() > 0)
+                sText += "<br> On <b>"+ oJson.getDatejourney() +"</b>";
+            if(oJson.getMobile() != null && oJson.getMobile().length() > 0)
+                sText += "<br> Mobile: <b>" + oJson.getMobile() + "</b>";
+            if(oJson.getBclass() != null && oJson.getBclass().length() > 0)
+                sText += "<br> Class: <b>" + oJson.getBclass() + "</b>";
 
             sText += "<br> Preferred Coach set: " +
-                    (oJson.getPreferredCoachSelection() ? "YES " : "NO ")+
-                    (oJson.getPreferredCoachID() == null? "" : oJson.getPreferredCoachID());
+                    (oJson.isPrefercoach() ? "YES " : "NO ")+
+                    (oJson.getCoachid() == null? "" : oJson.getCoachid());
             sText += "<br> Quota: " + oJson.getQuota();
 
-            if(oJson.getUserName() != null && oJson.getUserName().length() > 0) {
-                sText += "<br> UserName: " + oJson.getUserName();
+            if(oJson.getUsername() != null && oJson.getUsername().length() > 0) {
+                sText += "<br> UserName: " + oJson.getUsername();
                 sText += " & Password : " + (oJson.getPassword().length() > 0 ? "" : "*****");
             }
 
-            sText += "<br> Payment: " + oJson.getPaymentMode();
-            sText += "<br> Payment Option: " + oJson.getPaymentModeOptionID();
+            sText += "<br> Payment: " + oJson.getPaymentmode();
+            sText += "<br> Payment Option: " + oJson.getPaymentmodeid();
 
-            sText += ("\nAuto-Upgrade: " + (oJson.getAutoUpgrade() ? "Yes" : "No"));
-            sText += "\nConfirm Ticket Option: " + (oJson.getBookConfirmTickets() ? "YES - " : "NO - ")
-                    + oJson.getBookConfirmTicketOption();
+            sText += ("\nAuto-Upgrade: " + (oJson.isAutoupgrade() ? "Yes" : "No"));
+            sText += "\nConfirm Ticket Option: " + (oJson.isBookconfirm() ? "YES - " : "NO - ")
+                    + oJson.getBookidcond();
 
-            if(oJson.getCardNumberValue() != null && oJson.getCardNumberValue().length() > 0) {
-                sText += "<br> Card#: " + oJson.getCardNumberValue();
-                sText += " Card Type: " + oJson.getCardType();
-                sText += " Exp Mon: " + oJson.getExpiryMonth();
-                sText += " Exp Yr: " + oJson.getExpiryYear();
-                sText += " Card Name: " + oJson.getNameOnCard();
-                sText += " CCV : " + (oJson.getCardCvvNumber().length() > 0 ? "***" : "");
+            if(oJson.getCardnovalue() != null && oJson.getCardnovalue().length() > 0) {
+                sText += "<br> Card#: " + oJson.getCardnovalue();
+                sText += " Card Type: " + oJson.getCardtype();
+                sText += " Exp Mon: " + oJson.getExpirymon();
+                sText += " Exp Yr: " + oJson.getExpiryyear();
+                sText += " Card Name: " + oJson.getNamecard();
+                sText += " CCV : " + (oJson.getCardcvv().length() > 0 ? "***" : "");
             }
 
             int n = 0;
-            if(oJson.getPassengerInfo() != null && oJson.getPassengerInfo().size()>0) {
-                for(PassengerJson p : oJson.getPassengerInfo()) {
+            if(oJson.getPassengerinfo() != null && oJson.getPassengerinfo().size()>0) {
+                for(PassengerJson p : oJson.getPassengerinfo()) {
                     n++;
                     sText += ("<br> Passenger " + n + ": " + p.getName());
                 }
             }
             n = 0;
-            if(oJson.getChildInfo() != null && oJson.getChildInfo().size()>0) {
-                for(ChildJson p : oJson.getChildInfo()) {
+            if(oJson.getChildinfo() != null && oJson.getChildinfo().size()>0) {
+                for(ChildJson p : oJson.getChildinfo()) {
                     n++;
                     sText += ("<br> Child " + n + ": " + p.getName());
                 }

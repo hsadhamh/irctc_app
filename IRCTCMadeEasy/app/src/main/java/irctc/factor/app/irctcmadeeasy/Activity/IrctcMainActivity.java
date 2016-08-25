@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.ValueCallback;
@@ -32,8 +33,8 @@ public class IrctcMainActivity extends AppCompatActivity {
 
     String mJsAutoFile = TicketConstants.JavaScriptForAutoFill;
 
-    String mLoginUrlPattern =".*?(\\/www\\.irctc\\.co\\.in\\/eticketing\\/loginHome\\.jsf)";
-    String mPassengerListPage = ".*?(\\/www\\.irctc\\.co\\.in\\/eticketing\\/trainbetweenstns\\.jsf)";
+    String mLoginUrlPattern =".*?(www\\.irctc\\.co\\.in\\/eticketing\\/loginHome\\.jsf)";
+    String mPassengerListPage = ".*?(www\\.irctc\\.co\\.in\\/eticketing\\/trainbetweenstns\\.jsf)";
     String mHomeURL = "http://www.irctc.co.in/eticketing/loginHome.jsf";
 
     @BindView(R.id.irctc_web_view_id)
@@ -54,6 +55,7 @@ public class IrctcMainActivity extends AppCompatActivity {
         assert mWebIrctc != null;
 
         mWebIrctc.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 6.1; rv:13.0) Gecko/20100101 Firefox/12");
+        mWebIrctc.getSettings().setLoadWithOverviewMode(true);
         setChromeClientProgress();
         setWebViewClient();
         mWebIrctc.loadUrl(mHomeURL);
@@ -66,7 +68,7 @@ public class IrctcMainActivity extends AppCompatActivity {
     public boolean isMatch(String text, String pattern){
         Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
         Matcher m = p.matcher(text);
-        return false;
+        return m.matches();
     }
 
     public void setChromeClientProgress(){
@@ -98,8 +100,8 @@ public class IrctcMainActivity extends AppCompatActivity {
                 if (!loadedUrls.containsKey(url)) {
                     loadedUrls.put(url, AdBlocker.isAd(url));
                 }
-                return loadedUrls.get(url) ? AdBlocker.createEmptyResource() :
-                        super.shouldInterceptRequest(view, url);
+                return loadedUrls.get(url) ?
+                        AdBlocker.createEmptyResource() : super.shouldInterceptRequest(view, url);
             }
 
             @Override
@@ -135,7 +137,6 @@ public class IrctcMainActivity extends AppCompatActivity {
                         "URL : " + failingUrl +"; ErrorCode : " + errorCode + "; Description : " + description, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public void showSoftKeyBoard() {
@@ -146,5 +147,6 @@ public class IrctcMainActivity extends AppCompatActivity {
     public void GetJsString(String sJson){
         String JsPrefix = String.format("%s='%s';", TicketConstants.mJsAutoPrefix, sJson);
         mJsAutoFile = JsPrefix + mJsAutoFile;
+        Log.d("GetJS", sJson);
     }
 }

@@ -1,12 +1,9 @@
 package irctc.factor.app.irctcmadeeasy.Json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
 
 /**
  * Created by hassanhussain on 7/14/2016.
@@ -14,307 +11,281 @@ import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
 public class TicketJson {
     /* USER DETAILS */
     @JsonIgnoreProperties(ignoreUnknown=true)
-    @JsonProperty("username")
-    String UserName;
+    String username;
 
-    @JsonProperty("password")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Password;
+    String password;
 
     /* TRAIN DETAILS */
-    @JsonProperty("source")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String SrcStation;
+    String source;
 
-    @JsonProperty("destination")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String DestStation;
+    String destination;
 
-    @JsonProperty("boarding")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String BoardingStation;
+    String boarding;
 
-    @JsonProperty("date-journey")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String DateOfJourney;
+    String datejourney;
 
-    @JsonProperty("train-no")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String TrainNumber;
+    String trainno;
 
-    @JsonProperty("class")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String ClassSelection;
+    String bclass;
 
-    @JsonProperty("Quota")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Quota;
+    String quota;
 
     /*  MISC OPTIONS   */
-    @JsonProperty("Auto-Upgrade")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    boolean AutoUpgrade;
+    boolean autoupgrade;
 
-    @JsonProperty("book-confirm")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    boolean BookConfirmTickets;
+    boolean bookconfirm;
 
-    @JsonProperty("book-id-cond")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String BookConfirmTicketOption;
+    String bookidcond;
 
-    @JsonProperty("preferred-coach")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    boolean PreferredCoachSelection;
+    boolean prefercoach;
 
-    @JsonProperty("coachID")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String PreferredCoachID;
+    String coachid;
 
-    @JsonProperty("mobile")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String MobileNumber;
+    String mobile;
 
     /*  PAYMENT OPTIONS   */
-    @JsonProperty("payment-mode")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String PaymentMode;
+    String paymentmode;
 
-    @JsonProperty("payment-mode-id")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String PaymentModeOptionID;
+    String paymentmodeid;
 
-    @JsonProperty("card-no-value")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String CardNumberValue;
+    String cardnovalue;
 
-    @JsonProperty("card-type")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String CardType;
+    String cardtype;
 
-    @JsonProperty("expiry-mon")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String ExpiryMonth;
+    String expirymon;
 
-    @JsonProperty("expiry-year")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String ExpiryYear;
+    String expiryyear;
 
-    @JsonProperty("Card-CVV")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String CardCvvNumber;
+    String cardcvv;
 
-    @JsonProperty("name-card")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String NameOnCard;
-
-    public List<ChildJson> getChildInfo() {
-        return ChildInfo;
-    }
-
-    public void setChildInfo(List<ChildJson> childInfo) {
-        ChildInfo = childInfo;
-    }
-
-    public List<PassengerJson> getPassengerInfo() {
-        return PassengerInfo;
-    }
-
-    public void setPassengerInfo(List<PassengerJson> passengerInfo) {
-        PassengerInfo = passengerInfo;
-    }
+    String namecard;
 
     /* Passenger Info */
-    @JsonProperty("passenger-info")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    List<PassengerJson> PassengerInfo = new ArrayList<>();
+    List<PassengerJson> passengerinfo = new ArrayList<>();
 
-    @JsonProperty("child-passenger-info")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    List<ChildJson> ChildInfo = new ArrayList<>();
+    List<ChildJson> childinfo = new ArrayList<>();
 
-    public String getUserName() {
-        return UserName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        UserName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
-    public String getSrcStation() {
-        return SrcStation;
+    public String getSource() {
+        return source;
     }
 
-    public void setSrcStation(String srcStation) {
-        SrcStation = srcStation;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public String getDestStation() {
-        return DestStation;
+    public String getDestination() {
+        return destination;
     }
 
-    public void setDestStation(String destStation) {
-        DestStation = destStation;
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
-    public String getBoardingStation() {
-        return BoardingStation;
+    public String getBoarding() {
+        return boarding;
     }
 
-    public void setBoardingStation(String boardingStation) {
-        BoardingStation = boardingStation;
+    public void setBoarding(String boarding) {
+        this.boarding = boarding;
     }
 
-    public String getDateOfJourney() {
-        return DateOfJourney;
+    public String getDatejourney() {
+        return datejourney;
     }
 
-    public void setDateOfJourney(String dateOfJourney) {
-        DateOfJourney = dateOfJourney;
+    public void setDatejourney(String datejourney) {
+        this.datejourney = datejourney;
     }
 
-    public String getTrainNumber() {
-        return TrainNumber;
+    public String getTrainno() {
+        return trainno;
     }
 
-    public void setTrainNumber(String trainNumber) {
-        TrainNumber = trainNumber;
+    public void setTrainno(String trainno) {
+        this.trainno = trainno;
     }
 
-    public String getClassSelection() {
-        return ClassSelection;
+    public String getBclass() {
+        return bclass;
     }
 
-    public void setClassSelection(String classSelection) {
-        ClassSelection = classSelection;
+    public void setBclass(String bclass) {
+        this.bclass = bclass;
     }
 
     public String getQuota() {
-        return Quota;
+        return quota;
     }
 
     public void setQuota(String quota) {
-        Quota = quota;
+        this.quota = quota;
     }
 
-    public boolean getAutoUpgrade() {
-        return AutoUpgrade;
+    public boolean isAutoupgrade() {
+        return autoupgrade;
     }
 
-    public void setAutoUpgrade(boolean autoUpgrade) {
-        AutoUpgrade = autoUpgrade;
+    public void setAutoupgrade(boolean autoupgrade) {
+        this.autoupgrade = autoupgrade;
     }
 
-    public boolean getBookConfirmTickets() {
-        return BookConfirmTickets;
+    public boolean isBookconfirm() {
+        return bookconfirm;
     }
 
-    public void setBookConfirmTickets(boolean bookConfirmTickets) {
-        BookConfirmTickets = bookConfirmTickets;
+    public void setBookconfirm(boolean bookconfirm) {
+        this.bookconfirm = bookconfirm;
     }
 
-    public String getBookConfirmTicketOption() {
-        return BookConfirmTicketOption;
+    public String getBookidcond() {
+        return bookidcond;
     }
 
-    public void setBookConfirmTicketOption(String bookConfirmTicketOption) {
-        BookConfirmTicketOption = bookConfirmTicketOption;
+    public void setBookidcond(String bookidcond) {
+        this.bookidcond = bookidcond;
     }
 
-    public boolean getPreferredCoachSelection() {
-        return PreferredCoachSelection;
+    public boolean isPrefercoach() {
+        return prefercoach;
     }
 
-    public void setPreferredCoachSelection(boolean preferredCoachSelection) {
-        PreferredCoachSelection = preferredCoachSelection;
+    public void setPrefercoach(boolean prefercoach) {
+        this.prefercoach = prefercoach;
     }
 
-    public String getPreferredCoachID() {
-        return PreferredCoachID;
+    public String getCoachid() {
+        return coachid;
     }
 
-    public void setPreferredCoachID(String preferredCoachID) {
-        PreferredCoachID = preferredCoachID;
+    public void setCoachid(String coachid) {
+        this.coachid = coachid;
     }
 
-    public String getMobileNumber() {
-        return MobileNumber;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        MobileNumber = mobileNumber;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getPaymentMode() {
-        return PaymentMode;
+    public String getPaymentmode() {
+        return paymentmode;
     }
 
-    public void setPaymentMode(String paymentMode) {
-        PaymentMode = paymentMode;
+    public void setPaymentmode(String paymentmode) {
+        this.paymentmode = paymentmode;
     }
 
-    public String getPaymentModeOptionID() {
-        return PaymentModeOptionID;
+    public String getPaymentmodeid() {
+        return paymentmodeid;
     }
 
-    public void setPaymentModeOptionID(String paymentModeOptionID) {
-        PaymentModeOptionID = paymentModeOptionID;
+    public void setPaymentmodeid(String paymentmodeid) {
+        this.paymentmodeid = paymentmodeid;
     }
 
-    public String getCardNumberValue() {
-        return CardNumberValue;
+    public String getCardnovalue() {
+        return cardnovalue;
     }
 
-    public void setCardNumberValue(String cardNumberValue) {
-        CardNumberValue = cardNumberValue;
+    public void setCardnovalue(String cardnovalue) {
+        this.cardnovalue = cardnovalue;
     }
 
-    public String getCardType() {
-        return CardType;
+    public String getCardtype() {
+        return cardtype;
     }
 
-    public void setCardType(String cardType) {
-        CardType = cardType;
+    public void setCardtype(String cardtype) {
+        this.cardtype = cardtype;
     }
 
-    public String getExpiryMonth() {
-        return ExpiryMonth;
+    public String getExpirymon() {
+        return expirymon;
     }
 
-    public void setExpiryMonth(String expiryMonth) {
-        ExpiryMonth = expiryMonth;
+    public void setExpirymon(String expirymon) {
+        this.expirymon = expirymon;
     }
 
-    public String getExpiryYear() {
-        return ExpiryYear;
+    public String getExpiryyear() {
+        return expiryyear;
     }
 
-    public void setExpiryYear(String expiryYear) {
-        ExpiryYear = expiryYear;
+    public void setExpiryyear(String expiryyear) {
+        this.expiryyear = expiryyear;
     }
 
-    public String getCardCvvNumber() {
-        return CardCvvNumber;
+    public String getCardcvv() {
+        return cardcvv;
     }
 
-    public void setCardCvvNumber(String cardCvvNumber) {
-        CardCvvNumber = cardCvvNumber;
+    public void setCardcvv(String cardcvv) {
+        this.cardcvv = cardcvv;
     }
 
-    public String getNameOnCard() {
-        return NameOnCard;
+    public String getNamecard() {
+        return namecard;
     }
 
-    public void setNameOnCard(String nameOnCard) {
-        NameOnCard = nameOnCard;
+    public void setNamecard(String namecard) {
+        this.namecard = namecard;
     }
 
+    public List<PassengerJson> getPassengerinfo() {
+        return passengerinfo;
+    }
+
+    public void setPassengerinfo(List<PassengerJson> passengerinfo) {
+        this.passengerinfo = passengerinfo;
+    }
+
+    public List<ChildJson> getChildinfo() {
+        return childinfo;
+    }
+
+    public void setChildinfo(List<ChildJson> childinfo) {
+        this.childinfo = childinfo;
+    }
 }

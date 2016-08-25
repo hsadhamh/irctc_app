@@ -2,13 +2,9 @@ package irctc.factor.app.irctcmadeeasy.Fragments;
 
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,12 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.github.clans.fab.FloatingActionButton;
 import com.google.android.flexbox.FlexboxLayout;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
-import com.rey.material.widget.LinearLayout;
 import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.Spinner;
 import com.rey.material.widget.TextView;
@@ -39,22 +33,12 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import irctc.factor.app.irctcmadeeasy.Adapters.PassengerCursorAdapter;
-import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
-import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
-import irctc.factor.app.irctcmadeeasy.Events.SelectPassenger;
-import irctc.factor.app.irctcmadeeasy.Events.UnSelectPassenger;
 import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.ChildJson;
 import irctc.factor.app.irctcmadeeasy.Json.PassengerJson;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.R;
-import irctc.factor.app.irctcmadeeasy.Utils.TicketConstants;
-import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
-import irctc.factor.app.irctcmadeeasy.database.DaoSession;
-import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
-import irctc.factor.app.irctcmadeeasy.database.PassengerInfoDao;
 
 /**
  * Created by hassanhussain on 7/8/2016.
@@ -167,13 +151,13 @@ public final class PassengerListFragmentV2 extends Fragment{
                 passJson.setAge(holder.passenger_age.getText().toString());
                 passJson.setBerth(holder.spinner_berth.getSelectedItem().toString());
                 passJson.setName(holder.passenger_name.getText().toString());
-                passJson.setIDCard("" + 1234);
-                passJson.setIDCardNumber("" + 1234);
+                passJson.setIdcard("" + 1234);
+                passJson.setIdcard("" + 1234);
                 passJson.setNationality("Indian");
                 int nAge = Integer.parseInt(holder.passenger_age.getText().toString());
                 passJson.setType((nAge <=5? "CHILD" : nAge >=60? "SENIOR" : "ADULT"));
 
-                oJsonTicket.getPassengerInfo().add(passJson);
+                oJsonTicket.getPassengerinfo().add(passJson);
             }
         }
 
@@ -185,7 +169,7 @@ public final class PassengerListFragmentV2 extends Fragment{
                 child.setGender(holder.radio_male.isChecked() ? "Male" : "Female");
                 child.setAge(holder.passenger_age.getText().toString());
                 child.setName(holder.passenger_name.getText().toString());
-                oJsonTicket.getChildInfo().add(child);
+                oJsonTicket.getChildinfo().add(child);
             }
         }
         return oJsonTicket;
@@ -193,7 +177,7 @@ public final class PassengerListFragmentV2 extends Fragment{
 
     public void LoadValue() {
         TicketJson oJson = mPassedJson;
-        for(PassengerJson oPass : oJson.getPassengerInfo()){
+        for(PassengerJson oPass : oJson.getPassengerinfo()){
             if(mnPassCount < 6) {
                 mnPassCount++;
                 addPassengerView(++mnPassRef);
@@ -222,7 +206,7 @@ public final class PassengerListFragmentV2 extends Fragment{
             }
         }
 
-        for(ChildJson oPass : oJson.getChildInfo()){
+        for(ChildJson oPass : oJson.getChildinfo()){
             if(mnChildCount < 2) {
                 mnChildCount++;
                 addChildPassengerView(++mnChildRef);

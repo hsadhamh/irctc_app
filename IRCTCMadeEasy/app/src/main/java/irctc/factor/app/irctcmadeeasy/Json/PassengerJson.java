@@ -1,7 +1,6 @@
 package irctc.factor.app.irctcmadeeasy.Json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by hassanhussain on 7/14/2016.
@@ -9,111 +8,104 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class PassengerJson {
-    @JsonProperty("name")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Name;
+    String name;
 
-    @JsonProperty("age")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Age;
+    String age;
 
-    @JsonProperty("gender")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Gender;
+    String gender;
 
-    @JsonProperty("berth")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Berth;
+    String berth;
 
-    @JsonProperty("nationality")
     @JsonIgnoreProperties(ignoreUnknown=true)
-    String Nationality;
-
-    @JsonProperty("ID-card")
-    @JsonIgnoreProperties(ignoreUnknown=true)
-    String IDCard;
-
-    @JsonProperty("ID-card-no")
-    @JsonIgnoreProperties(ignoreUnknown=true)
-    String IDCardNumber;
-
-    @JsonProperty("type")
-    @JsonIgnoreProperties(ignoreUnknown=true)
-    String Type;
-
-    @JsonProperty("senior")
-    @JsonIgnoreProperties(ignoreUnknown=true)
-    boolean Senior;
+    String nationality;
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getAge() {
-        return Age;
+        return age;
     }
 
     public void setAge(String age) {
-        Age = age;
+        this.age = age;
     }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
     public void setGender(String gender) {
-        Gender = gender;
+        this.gender = gender;
     }
 
     public String getBerth() {
-        return Berth;
+        return berth;
     }
 
     public void setBerth(String berth) {
-        Berth = berth;
+        this.berth = berth;
     }
 
     public String getNationality() {
-        return Nationality;
+        return nationality;
     }
 
     public void setNationality(String nationality) {
-        Nationality = nationality;
+        this.nationality = nationality;
     }
 
-    public String getIDCard() {
-        return IDCard;
+    public String getIdcard() {
+        return idcard;
     }
 
-    public void setIDCard(String IDCard) {
-        this.IDCard = IDCard;
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
     }
 
-    public String getIDCardNumber() {
-        return IDCardNumber;
+    public String getIdcardno() {
+        return idcardno;
     }
 
-    public void setIDCardNumber(String IDCardNumber) {
-        this.IDCardNumber = IDCardNumber;
+    public void setIdcardno(String idcardno) {
+        this.idcardno = idcardno;
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        this.type = type;
     }
 
     public boolean isSenior() {
-        return Senior;
+        return senior;
     }
 
     public void setSenior(boolean senior) {
-        Senior = senior;
+        this.senior = senior;
     }
+
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    String idcard;
+
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    String idcardno;
+
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    String type;
+
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    boolean senior;
+
+
 }

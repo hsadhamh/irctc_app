@@ -329,51 +329,51 @@ public final class TrainDetailsFragment extends Fragment  {
     public TicketJson GetJsonObjectFilled() {
         TicketJson oJsonTicket = new TicketJson();
 
-        oJsonTicket.setUserName(mvUserName.getText() != null ? mvUserName.getText().toString() : "");
+        oJsonTicket.setUsername(mvUserName.getText() != null ? mvUserName.getText().toString() : "");
         oJsonTicket.setPassword(mvPassword.getText() != null ? mvPassword.getText().toString() : "");
-        oJsonTicket.setSrcStation(mvStationSource.getText() != null ? mvStationSource.getText().toString() : "");
-        oJsonTicket.setDestStation(mvStationDestination.getText().toString());
-        oJsonTicket.setBoardingStation(mvStationBoarding.getText().toString());
-        oJsonTicket.setDateOfJourney(mvDateJourney.getText().toString());
+        oJsonTicket.setSource(mvStationSource.getText() != null ? mvStationSource.getText().toString() : "");
+        oJsonTicket.setDestination(mvStationDestination.getText().toString());
+        oJsonTicket.setBoarding(mvStationBoarding.getText().toString());
+        oJsonTicket.setDatejourney(mvDateJourney.getText().toString());
 
         String sTrain  = mvTrainNumber.getText().toString();
         int nIndex = sTrain.indexOf(':');
         if(nIndex > 0)
             sTrain = sTrain.substring(0, nIndex).trim();
-        oJsonTicket.setTrainNumber(sTrain);
+        oJsonTicket.setTrainno(sTrain);
 
         String[] ClassXml = getContext().getResources().getStringArray(R.array.train_class);
         int pos = mSpClassTrain.getSelectedItemPosition();
-        oJsonTicket.setClassSelection(ClassXml[pos]);
+        oJsonTicket.setBclass(ClassXml[pos]);
 
         String sQuota = mvTatkalPremium.isChecked() ? "PREMIUM TATKAL" : mvTatkal.isChecked() ? "TATKAL" :
                 mvHandicapped.isChecked() ? "PHYSICALLY HANDICAPPED" : mvLadies.isChecked() ? "LADIES" : "GENERAL";
         oJsonTicket.setQuota(sQuota);
 
         if(mCbPreferredCoach.isChecked()) {
-            oJsonTicket.setPreferredCoachSelection(true);
-            oJsonTicket.setPreferredCoachID(mvPreferredCoachTxt.getText().toString());
+            oJsonTicket.setPrefercoach(true);
+            oJsonTicket.setCoachid(mvPreferredCoachTxt.getText().toString());
         }
         else {
-            oJsonTicket.setPreferredCoachSelection(false);
-            oJsonTicket.setPreferredCoachID("");
+            oJsonTicket.setPrefercoach(false);
+            oJsonTicket.setCoachid("");
         }
 
         if(mCbAutoUpgrade.isChecked())
-            oJsonTicket.setAutoUpgrade(true);
+            oJsonTicket.setAutoupgrade(true);
         else
-            oJsonTicket.setAutoUpgrade(false);
+            oJsonTicket.setAutoupgrade(false);
 
         if(mCbBookCondition.isChecked()){
-            oJsonTicket.setBookConfirmTickets(true);
+            oJsonTicket.setBookconfirm(true);
             int nCondition = mRbNone.isChecked()? 0 : mRbBookOneLower.isChecked()? 1 : mRbBookOnSameCoach.isChecked()? 2 : mRbBookTwoLower.isChecked()? 3 : 0;
-            oJsonTicket.setBookConfirmTicketOption("" + nCondition);
+            oJsonTicket.setBookidcond("" + nCondition);
         }
         else{
-            oJsonTicket.setBookConfirmTickets(false);
-            oJsonTicket.setBookConfirmTicketOption("0");
+            oJsonTicket.setBookconfirm(false);
+            oJsonTicket.setBookidcond("0");
         }
-        oJsonTicket.setMobileNumber(mvMobileNumber.getText().toString());
+        oJsonTicket.setMobile(mvMobileNumber.getText().toString());
         return oJsonTicket;
     }
 
@@ -416,16 +416,16 @@ public final class TrainDetailsFragment extends Fragment  {
     public void LoadValue(){
         TicketJson train = mPassedJson;
 
-        mvUserName.setText(train.getUserName());
+        mvUserName.setText(train.getUsername());
         mvPassword.setText(train.getPassword());
 
-        mvStationSource.setText(train.getSrcStation());
-        mvStationDestination.setText(train.getDestStation());
-        mvStationBoarding.setText(train.getBoardingStation());
-        mvDateJourney.setText(train.getDateOfJourney());
-        mvTrainNumber.setText(train.getTrainNumber());
+        mvStationSource.setText(train.getSource());
+        mvStationDestination.setText(train.getDestination());
+        mvStationBoarding.setText(train.getBoarding());
+        mvDateJourney.setText(train.getDatejourney());
+        mvTrainNumber.setText(train.getTrainno());
         ArrayAdapter<String> array_spinner = (ArrayAdapter<String>) mSpClassTrain.getAdapter();
-        mSpClassTrain.setSelection(array_spinner.getPosition(train.getClassSelection()));
+        mSpClassTrain.setSelection(array_spinner.getPosition(train.getBclass()));
 
         if (train.getQuota().equals("GENERAL")) {
             mvGeneralButton.setChecked(true);
@@ -442,20 +442,20 @@ public final class TrainDetailsFragment extends Fragment  {
             mvLadies.setChecked(true);
             mvTatkal.setChecked(false);
         }
-        mvMobileNumber.setText(train.getMobileNumber());
-        mCbPreferredCoach.setChecked(train.getPreferredCoachSelection());
-        if (train.getPreferredCoachSelection() && !(train.getPreferredCoachID() == null
-                || train.getPreferredCoachID().equals(" "))) {
-            mvPreferredCoachTxt.setText(train.getPreferredCoachID());
+        mvMobileNumber.setText(train.getMobile());
+        mCbPreferredCoach.setChecked(train.isPrefercoach());
+        if (train.isPrefercoach() && !(train.getCoachid() == null
+                || train.getCoachid().equals(" "))) {
+            mvPreferredCoachTxt.setText(train.getCoachid());
         }
 
-        if (train.getAutoUpgrade())
+        if (train.isAutoupgrade())
             mCbAutoUpgrade.setChecked(true);
 
-        if (train.getBookConfirmTickets())
+        if (train.isBookconfirm())
             mCbBookCondition.setChecked(true);
 
-        switch(train.getBookConfirmTicketOption()) {
+        switch(train.getBookidcond()) {
             case "0":
                 mRbNone.setChecked(true);
                 break;

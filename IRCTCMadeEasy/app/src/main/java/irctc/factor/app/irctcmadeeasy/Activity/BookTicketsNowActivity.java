@@ -34,7 +34,6 @@ import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
 import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
 import irctc.factor.app.irctcmadeeasy.Fragments.BookingPaymentFragment;
-import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragmentV2;
 import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;
 import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
@@ -187,34 +186,33 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
     String GetWarningsIfAny(){
         /* Validate all values */
         String msg = "";
-        int nSize = msg.length();
-        if(mFinalJson.getUserName().isEmpty())
+        if(mFinalJson.getUsername().isEmpty())
             msg += (msg.isEmpty() ? "" : ",\n ") + "<b>Username</b>";
         if(mFinalJson.getPassword().isEmpty())
             msg += (msg.isEmpty() ? "" : ",\n ") + "<b>Password</b>";
-        if(mFinalJson.getSrcStation().isEmpty())
+        if(mFinalJson.getSource().isEmpty())
             msg += (msg.isEmpty() ? "" : ",\n ") + "<b>Source Station</b>";
-        if(mFinalJson.getDestStation().isEmpty())
+        if(mFinalJson.getDestination().isEmpty())
             msg += (msg.isEmpty() ? "" : ",\n ") + "<b>Destination</b>";
-        if(mFinalJson.getDateOfJourney().isEmpty())
+        if(mFinalJson.getDatejourney().isEmpty())
             msg += (msg.isEmpty() ? "" : ",\n ") + "<b>Date of Journey</b>";
-        if(mFinalJson.getTrainNumber().isEmpty())
+        if(mFinalJson.getTrainno().isEmpty())
             msg += (msg.isEmpty() ? "" : ",\n ") + "<b>Train Number</b>";
-        if(mFinalJson.getClassSelection().isEmpty())
+        if(mFinalJson.getBclass().isEmpty())
             msg += (msg.isEmpty() ? "" : ",\n ") + "<b>Class</b>";
         if(mFinalJson.getQuota().isEmpty())
             msg += (msg.isEmpty() ? "" : ",\n ") + "<b>Quota</b>";
 
         msg += "\n";
-        if(mFinalJson.getPassengerInfo().size() == 0)
+        if(mFinalJson.getPassengerinfo().size() == 0)
             msg += (msg.isEmpty() ? "" : ",\n ") + "No passengers selected.";
-        if(mFinalJson.getPassengerInfo().size() > 4 && mFinalJson.getQuota().equals("TATKAL"))
+        if(mFinalJson.getPassengerinfo().size() > 4 && mFinalJson.getQuota().equals("TATKAL"))
             msg += (msg.isEmpty() ? "" : ",\n ")  + "More than 4 passengers selected. Only first 4 will be applied in tatkal booking.";
-        if(mFinalJson.getPassengerInfo().size() > 6)
+        if(mFinalJson.getPassengerinfo().size() > 6)
             msg += (msg.isEmpty() ? "" : ",\n ") + "More than 6 passengers selected. Only first 4 will be applied in booking.";
 
         if(msg.length() > 2)
-            msg = "Following information are provided \n" + msg;
+            msg = "Following information are not provided \n" + msg;
         else
             msg="";
         return msg;
@@ -225,19 +223,19 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
         Log.d("Json ", "Json : " + msFinalJson);
         if(msFinalJson.length() > 0){
             TicketDetails oTicketSave = new TicketDetails();
-            oTicketSave.setSource(mFinalJson.getSrcStation());
-            oTicketSave.setDestination(mFinalJson.getDestStation());
-            oTicketSave.setBoarding(mFinalJson.getBoardingStation());
-            oTicketSave.setJourneyDate(mFinalJson.getDateOfJourney());
-            oTicketSave.setTrainno(mFinalJson.getTrainNumber());
-            oTicketSave.setIrctcClass(mFinalJson.getClassSelection());
+            oTicketSave.setSource(mFinalJson.getSource());
+            oTicketSave.setDestination(mFinalJson.getDestination());
+            oTicketSave.setBoarding(mFinalJson.getBoarding());
+            oTicketSave.setJourneyDate(mFinalJson.getDatejourney());
+            oTicketSave.setTrainno(mFinalJson.getTrainno());
+            oTicketSave.setIrctcClass(mFinalJson.getBclass());
             oTicketSave.setQuota(mFinalJson.getQuota());
-            oTicketSave.setMobileNumber(mFinalJson.getMobileNumber());
-            oTicketSave.setCoach(mFinalJson.getPreferredCoachID());
-            oTicketSave.setAutoUpgrade(mFinalJson.getAutoUpgrade() ? "true" : "false");
-            oTicketSave.setBookOnConfirm(mFinalJson.getBookConfirmTickets() ? "true" : "false");
-            oTicketSave.setConditionsOnBook(mFinalJson.getBookConfirmTicketOption());
-            oTicketSave.setTrainno(mFinalJson.getTrainNumber());
+            oTicketSave.setMobileNumber(mFinalJson.getMobile());
+            oTicketSave.setCoach(mFinalJson.getCoachid());
+            oTicketSave.setAutoUpgrade(mFinalJson.isAutoupgrade() ? "true" : "false");
+            oTicketSave.setBookOnConfirm(mFinalJson.isBookconfirm() ? "true" : "false");
+            oTicketSave.setConditionsOnBook(mFinalJson.getBookidcond());
+            oTicketSave.setTrainno(mFinalJson.getTrainno());
             oTicketSave.setJson(msFinalJson);
 
             if (mnDetailsID > 0) {
@@ -262,6 +260,7 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
     public void getJsonString(){
         /* CODE to insert */
         try {
+            msFinalJson = "";
             msFinalJson = flJsonParser.getTicketDetailString(mFinalJson);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -276,42 +275,42 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
 
     @Override
     public void getTicketJsonValue(TicketJson jsonTicket) {
-        mFinalJson.setUserName(jsonTicket.getUserName());
+        mFinalJson.setUsername(jsonTicket.getUsername());
         mFinalJson.setPassword(jsonTicket.getPassword());
-        mFinalJson.setSrcStation(jsonTicket.getSrcStation());
-        mFinalJson.setDestStation(jsonTicket.getDestStation());
-        mFinalJson.setBoardingStation(jsonTicket.getBoardingStation());
-        mFinalJson.setDateOfJourney(jsonTicket.getDateOfJourney());
-        mFinalJson.setTrainNumber(jsonTicket.getTrainNumber());
-        mFinalJson.setClassSelection(jsonTicket.getClassSelection());
+        mFinalJson.setSource(jsonTicket.getSource());
+        mFinalJson.setDestination(jsonTicket.getDestination());
+        mFinalJson.setBoarding(jsonTicket.getBoarding());
+        mFinalJson.setDatejourney(jsonTicket.getDatejourney());
+        mFinalJson.setTrainno(jsonTicket.getTrainno());
+        mFinalJson.setBclass(jsonTicket.getBclass());
         mFinalJson.setQuota(jsonTicket.getQuota());
-        mFinalJson.setPreferredCoachSelection(jsonTicket.getPreferredCoachSelection());
-        mFinalJson.setPreferredCoachID(jsonTicket.getPreferredCoachID());
-        mFinalJson.setAutoUpgrade(jsonTicket.getAutoUpgrade());
-        mFinalJson.setBookConfirmTickets(jsonTicket.getBookConfirmTickets());
-        mFinalJson.setBookConfirmTicketOption(jsonTicket.getBookConfirmTicketOption());
-        mFinalJson.setMobileNumber(jsonTicket.getMobileNumber());
+        mFinalJson.setPrefercoach(jsonTicket.isPrefercoach());
+        mFinalJson.setCoachid(jsonTicket.getCoachid());
+        mFinalJson.setAutoupgrade(jsonTicket.isAutoupgrade());
+        mFinalJson.setBookconfirm(jsonTicket.isBookconfirm());
+        mFinalJson.setBookidcond(jsonTicket.getBookidcond());
+        mFinalJson.setMobile(jsonTicket.getMobile());
     }
 
     @Override
     public void getPaymentJsonValue(TicketJson jsonPay) {
-        mFinalJson.setPaymentMode(jsonPay.getPaymentMode());
-        mFinalJson.setPaymentModeOptionID(jsonPay.getPaymentModeOptionID());
-        mFinalJson.setCardNumberValue(jsonPay.getCardNumberValue());
-        mFinalJson.setCardType(jsonPay.getCardType());
-        mFinalJson.setExpiryMonth(jsonPay.getExpiryMonth());
-        mFinalJson.setExpiryYear(jsonPay.getExpiryYear());
-        mFinalJson.setCardCvvNumber(jsonPay.getCardCvvNumber());
-        mFinalJson.setNameOnCard(jsonPay.getNameOnCard());
+        mFinalJson.setPaymentmode(jsonPay.getPaymentmode());
+        mFinalJson.setPaymentmodeid(jsonPay.getPaymentmodeid());
+        mFinalJson.setCardnovalue(jsonPay.getCardnovalue());
+        mFinalJson.setCardtype(jsonPay.getCardtype());
+        mFinalJson.setExpirymon(jsonPay.getExpirymon());
+        mFinalJson.setExpiryyear(jsonPay.getExpiryyear());
+        mFinalJson.setCardcvv(jsonPay.getCardcvv());
+        mFinalJson.setNamecard(jsonPay.getNamecard());
     }
 
     @Override
     public void getPassengerJsonValue(TicketJson jsonTicket) {
         /* PASSENGERS */
-        mFinalJson.getPassengerInfo().clear();
-        mFinalJson.getPassengerInfo().addAll(jsonTicket.getPassengerInfo());
-        mFinalJson.getChildInfo().clear();
-        mFinalJson.getChildInfo().addAll(jsonTicket.getChildInfo());
+        mFinalJson.getPassengerinfo().clear();
+        mFinalJson.getPassengerinfo().addAll(jsonTicket.getPassengerinfo());
+        mFinalJson.getChildinfo().clear();
+        mFinalJson.getChildinfo().addAll(jsonTicket.getChildinfo());
     }
 
     public TicketDetailsDao getTicketInfo(){
@@ -330,7 +329,6 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
                 mFinalJson = flJsonParser.getTicketDetailObject(sJson);
                 ((TrainDetailsFragment)mListUiFragments.get(0)).setPassedJson(mFinalJson);
                 ((PassengerListFragmentV2)mListUiFragments.get(1)).setPassedJson(mFinalJson);
-                //((PassengerListFragment)mListUiFragments.get(1)).setCreateApproved(mCreateNotExists);
                 ((BookingPaymentFragment)mListUiFragments.get(2)).setPassedJson(mFinalJson);
             }
         } catch (JSONException | IOException e) {

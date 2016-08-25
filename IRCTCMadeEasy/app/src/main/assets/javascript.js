@@ -5,9 +5,11 @@ var timercounter=0;
 
 function scrollToGivenId(wrapper){
     console.log('Scrolling to ID ' + wrapper);
-    $('html, body').animate({
-        scrollTop: wrapper.offset().top
-    }, 1000);
+    if(wrapper !== null && wrapper.offset() !== null){
+        $('html, body').animate({
+            scrollTop: wrapper.offset().top
+        }, 1000);
+    }
 }
 
 function isUserLoggedIn(){
@@ -35,7 +37,7 @@ function isTrainsListed() {
         if(entered_board_station == ticketDetails['source']) {
             var entered_dest_station = $("input[id='jpform:toStation']").val().trim();
             if(entered_dest_station == ticketDetails['destination']) {
-                var dd = ticketDetails['date-journey'].split("-");
+                var dd = ticketDetails['datejourney'].split("-");
                 dd[0] = ('0' + dd[0]).slice(-2);
                 dd[1] = ('0' + dd[1]).slice(-2);
                 var d = new Date(dd[2] + "-" + dd[1] + "-" + dd[0]);
@@ -61,8 +63,11 @@ function loginToForm() {
         $("input[name='j_password']").val(ticketDetails['password']);
         $("input[name='j_captcha']").focus();
 
-        $("#cimage").css("width","200%");
-        $("#cimage").css("height","100%");
+        $("input[name='j_captcha']").css("width", "150%");
+        $("input[name='j_captcha']").css("height", "100%");
+
+        $("#cimage").css("width","250%");
+        $("#cimage").css("height","150%");
 
         scrollToGivenId($("input[id='usernameId']"));
     }
@@ -91,7 +96,7 @@ function planMyTravel() {
      */
     $("input[name='jpform:fromStation']").val(ticketDetails['source']);
     $("input[name='jpform:toStation']").val(ticketDetails['destination']);
-    var dd = ticketDetails['date-journey'].split("-");
+    var dd = ticketDetails['datejourney'].split("-");
     dd[0] = ('0' + dd[0]).slice(-2);
     dd[1] = ('0' + dd[1]).slice(-2);
     var d = new Date(dd[2] + "-" + dd[1] + "-" + dd[0]);
@@ -125,7 +130,7 @@ function bookNow(trainNo, berthclass, travelQuota) {
         return;
     }
 
-    var dd = ticketDetails['date-journey'].split("-");
+    var dd = ticketDetails['datejourney'].split("-");
     dd[0] = (dd[0]).slice(-2);
     dd[0] = dd[0].replace(/^0+/, '');
     dd[1] = (dd[1]).slice(-2);
@@ -201,7 +206,7 @@ function fillPassengerInformation() {
     $("#addPassengerForm").find("td").each(function() {
         if($(this).text().indexOf("Journey date :") == 0) {
             var str0 = $(this).next().text().trim();
-            var dd = ticketDetails['date-journey'].split("-");
+            var dd = ticketDetails['datejourney'].split("-");
             dd[0] = ('0' + dd[0]).slice(-2);
             dd[1] = ('0' + dd[1]).slice(-2);
             var d = new Date(dd[2] + "-" + dd[1] + "-" + dd[0]);
@@ -221,13 +226,13 @@ function fillPassengerInformation() {
 
                 var noOfPassengers = 6;
                 var noOfChilds = 2;
-                if(ticketDetails['Quota'])
+                if(ticketDetails['quota'])
                 {
-                    if(ticketDetails['Quota'] == 'GENERAL') {
+                    if(ticketDetails['quota'] == 'GENERAL') {
                         noOfPassengers = 6;
                         noOfChilds = 2;
                     }
-                    else if(ticketDetails['Quota'] == 'TATKAL') {
+                    else if(ticketDetails['quota'] == 'TATKAL') {
                         noOfPassengers = 4;
                         noOfChilds = 2;
                     }
@@ -235,23 +240,29 @@ function fillPassengerInformation() {
 
                 for(i=0; i < noOfPassengers; i++) {
                     console.log("fillPassengerInformation - pass details " + i);
-                    if (ticketDetails['passenger-info'][i]) {
-                        var passDetails = ticketDetails['passenger-info'][i];
+                    if (ticketDetails['passengerinfo'][i]) {
+                        var passDetails = ticketDetails['passengerinfo'][i];
                         var rowElement = $('tr[id="addPassengerForm:psdetail:' + i + '"]');
                         console.log("fillPassengerInformation - pass details " + i + " : adult.");
                         $(rowElement).find("input.psgn-name").val(passDetails.name);
+                        console.log("fillPassengerInformation - pass details " + passDetails.name);
                         $(rowElement).find("input.psgn-age").val(passDetails.age);
-                        $(rowElement).find("select.psgn-gender").val(passDetails.gender);
-                        $(rowElement).find("select.psgn-berth-choice").val(passDetails.berth);
-                        if (!(passDetails.nationality == 'indian')) {
+                        console.log("fillPassengerInformation - pass details " + passDetails.age);
+                        var strGen = passDetails.gender;
+                        strGen = (strGen == 'Male')? 'M' : 'F';
+                        $(rowElement).find("select.psgn-gender").val(strGen);
+                        console.log("fillPassengerInformation - pass details " + strGen);
+                        $(rowElement).find("select.psgn-berth-choice").val(getBerthValue(passDetails.berth));
+                        console.log("fillPassengerInformation - pass details " + getBerthValue(passDetails.berth));
+                        /*if (!(passDetails.nationality == 'indian')) {
                             $("select[name='addPassengerForm:psdetail:" + i + ":idCardType']").val(passDetails.idtype);
                             $("input[name='addPassengerForm:psdetail:" + i + ":idCardNumber']").val(passDetails.idno);
-                        }
-                        if (passDetails.food == 'Veg') {
+                        }*/
+                        /*if (passDetails.food == 'Veg') {
                             $("select[name='addPassengerForm:psdetail:" + i + ":foodChoice']").val("V");
                         } else {
                             $("select[name='addPassengerForm:psdetail:" + i + ":foodChoice']").val("N");
-                        }
+                        }*/
                         if (passDetails.age >= 5 && passDetails.age <= 11) {
                             $("input[name='addPassengerForm:psdetail:" + i + ":childBerthOpt']").removeAttr("disabled");
                         }
@@ -273,12 +284,17 @@ function fillPassengerInformation() {
                 }
 
                 for(i=0; i < noOfChilds; i++){
-                    if (ticketDetails['child-passenger-info'][i]) {
-                        var passDetails = ticketDetails['child-passenger-info'][i];
+                    if (ticketDetails['childinfo'][i]) {
+                        var passDetails = ticketDetails['childinfo'][i];
                         console.log("fillPassengerInformation - pass details " + i + " : child. ");
                         $("input[name='addPassengerForm:childInfoTable:"+ i +":infantName']").val(passDetails.name);
+                        console.log("fillPassengerInformation - pass details " + passDetails.name);
                         $("select[name='addPassengerForm:childInfoTable:"+ i +":infantAge']").val(passDetails.age);
-                        $("select[name='addPassengerForm:childInfoTable:"+ i +":infantGender']").val(passDetails.gender);
+                        console.log("fillPassengerInformation - pass details " + passDetails.age);
+                        var strGen = passDetails.gender;
+                        strGen = (strGen == 'Male')? 'M' : 'F';
+                        $("select[name='addPassengerForm:childInfoTable:"+ i +":infantGender']").val(strGen);
+                        console.log("fillPassengerInformation - pass details " + passDetails.gender);
                     }
                 }
 
@@ -287,27 +303,31 @@ function fillPassengerInformation() {
                     $("input[id='addPassengerForm:mobileNo']").val(mobNum);
                 }
 
-                if (ticketDetails['Auto-Upgrade']=='true')
+                if (ticketDetails['autoupgrade']=='true')
                     $("input[id='addPassengerForm:autoUpgrade']").prop('checked', 'checked');
 
-                if (ticketDetails['book-confirm']=='false')
+                if (ticketDetails['bookconfirm']=='false')
                     $("input[id='addPassengerForm:onlyConfirmBerths']").prop('checked', 'checked');
                 $("input[name='addPassengerForm:bookingCond'][value='"+ticketDetails['book-id-cond']+"']").each(function() {
                     $(this)[0].click();
                 });
 
-                if (ticketDetails['preferred-coach']=='false') {
+                if (ticketDetails['prefercoach']=='false') {
                     $("input[id='addPassengerForm:prefCoachOpt']").click();
-                    $("input[id='addPassengerForm:coachID']").val(ticketDetails['coachID']);
+                    $("input[id='addPassengerForm:coachID']").val(ticketDetails['coachid']);
                 }
 
                 if ($("input[id='#j_captcha']").length > 0) {
                     $("input[id='#j_captcha']").focus();
 
+                    $("input[id='#j_captcha']").css("width", "150%");
+                    $("input[id='#j_captcha']").css("width", "125%");
+
                     scrollToGivenId($("input[id='#j_captcha']"));
                 } else {
                     if($("div[id='nlpCaptchaContainer']").length > 0) {
-                        $("div[id='nlpCaptchaContainer']").css("width", "125%");
+                        $("div[id='nlpCaptchaContainer']").css("width", "250%");
+                        $("div[id='nlpCaptchaContainer']").css("width", "250%");
                         if ($("#nlpCaptchaImg").length > 0) {
                             $("input[id='#nlpAnswer']").focus();
 
@@ -346,51 +366,51 @@ function fillPaymentDetails() {
         }
     });
 
-    console.log(' fillPaymentDetails : '+ ticketDetails['payment-mode'] +' id : ' + ticketDetails['payment-mode-id']);
+    console.log(' fillPaymentDetails : '+ ticketDetails['paymentmode'] +' id : ' + ticketDetails['paymentmodeid']);
 
-    $("td[id='"+ticketDetails['payment-mode']+"']").click();
-    if(ticketDetails['payment-mode'] == 'NETBANKING') {
-        $("input[name='NETBANKING'][value='"+ticketDetails['payment-mode-id']+"']").each(function(){
+    $("td[id='"+ticketDetails['paymentmode']+"']").click();
+    if(ticketDetails['paymentmode'] == 'NETBANKING') {
+        $("input[name='NETBANKING'][value='"+ticketDetails['paymentmodeid']+"']").each(function(){
             $(this)[0].click();
         });
     }
-    if(ticketDetails['payment-mode'] == 'CREDIT_CARD') {
-        $("input[name='CREDIT_CARD'][value='"+ticketDetails['payment-mode-id']+"']").each(function(){
+    if(ticketDetails['paymentmode'] == 'CREDIT_CARD') {
+        $("input[name='CREDIT_CARD'][value='"+ticketDetails['paymentmodeid']+"']").each(function(){
             $(this)[0].click();
         });
     }
-    if(ticketDetails['payment-mode'] == 'DEBIT_CARD') {
-        $("input[name='DEBIT_CARD'][value='"+ticketDetails['payment-mode-id']+"']").each(function(){
+    if(ticketDetails['paymentmode'] == 'DEBIT_CARD') {
+        $("input[name='DEBIT_CARD'][value='"+ticketDetails['paymentmodeid']+"']").each(function(){
             $(this)[0].click();
         });
     }
-    if(ticketDetails['payment-mode'] == 'CASH_CARD') {
-        $("input[name='CASH_CARD'][value='"+ticketDetails['payment-mode-id']+"']").each(function(){
+    if(ticketDetails['paymentmode'] == 'CASH_CARD') {
+        $("input[name='CASH_CARD'][value='"+ticketDetails['paymentmodeid']+"']").each(function(){
             $(this)[0].click();
         });
     }
-    if(ticketDetails['payment-mode'] == 'IRCTC_PREPAID') {
-        $("input[name='IRCTC_PREPAID'][value='"+ticketDetails['payment-mode-id']+"']").each(function(){
+    if(ticketDetails['paymentmode'] == 'IRCTC_PREPAID') {
+        $("input[name='IRCTC_PREPAID'][value='"+ticketDetails['paymentmodeid']+"']").each(function(){
             $(this)[0].click();
         });
     }
 
-    if ((ticketDetails['payment-mode'] == "CREDIT_CARD" || ticketDetails['payment-mode'] == "IRCTC_PREPAID") &&
-        (ticketDetails['payment-mode-id'] == 21 || ticketDetails['payment-mode-id'] == 59))
+    if ((ticketDetails['paymentmode'] == "CREDIT_CARD" || ticketDetails['paymentmode'] == "IRCTC_PREPAID") &&
+        (ticketDetails['paymentmodeid'] == 21 || ticketDetails['paymentmodeid'] == 59))
     {
         $("div[id='card_div_id']").css("display","");
-        $("select[id='card_type_id']").val(ticketDetails['card-type']);
+        $("select[id='card_type_id']").val(ticketDetails['cardtype']);
 
-        var ccNum = ticketDetails['card-no-value'];
+        var ccNum = ticketDetails['cardnovalue'];
         if(ccNum) {
             $("input[id='card_no_id']").val(ccNum);
         }
 
-        $("select[id='card_expiry_mon_id']").val(ticketDetails['expiry-mon']);
-        $("input[id='card_expiry_year_id']").val(ticketDetails['expiry-year']);
+        $("select[id='card_expiry_mon_id']").val(ticketDetails['expirymon']);
+        $("input[id='card_expiry_year_id']").val(ticketDetails['expiryyear']);
         $("input[id='card_name_id']").val(ticketDetails['name-card']);
-        if(ticketDetails['Card-CVV']) {
-            $("input[id='cvv_no_id']").val(ticketDetails['Card-CVV']);
+        if(ticketDetails['cardcvv']) {
+            $("input[id='cvv_no_id']").val(ticketDetails['cardcvv']);
             $("input[id='captcha_txt']").focus();
         } else {
             $("input[id='cvv_no_id']").focus();
@@ -415,6 +435,23 @@ function fillPaymentDetails() {
     });
 }
 
+function getBerthValue(berth_txt){
+    var quota_txt = ' ';
+    if(berth_txt == 'Lower')
+        quota_txt = 'LB';
+    else if(berth_txt == 'Middle')
+        quota_txt = 'MB';
+    else if(berth_txt == 'Upper')
+        quota_txt = 'UB';
+    else if(berth_txt == 'Side Upper')
+        quota_txt = 'SU';
+    else if(berth_txt == 'Side Lower')
+        quota_txt = 'SL';
+    else if(berth_txt == 'Window Seat')
+            quota_txt = 'WS';
+    return quota_txt;
+}
+
 function doAutomation() {
     ticketDetails = JSON.parse(jsonString);
     if(!isUserLoggedIn())
@@ -430,7 +467,7 @@ function doAutomation() {
     	scrollToGivenId($("table[id='avlAndFareForm:trainbtwnstns']"));
 var frame = document.getElementById("randomid");
  frame.parentNode.removeChild(frame);
-        var quota = ticketDetails["Quota"];
+        var quota = ticketDetails["quota"];
         var quotaRadioButtons = $("input[name='quota']").get();
         var quota_txt = getQuotaText(quota);
         var eachRadioElement;
@@ -440,8 +477,8 @@ var frame = document.getElementById("randomid");
                 eachRadioElement.checked = true;
             }
         }
-        var trainNo = ticketDetails["train-no"].split(":")[0].trim();
-        var berthclass = ticketDetails["class"];
+        var trainNo = ticketDetails["trainno"].split(":")[0].trim();
+        var berthclass = ticketDetails["bclass"];
         var elements = $("table[id='avlAndFareForm:trainbtwnstns'] > tbody > tr[id*='avlAndFareForm:trainbtwnstns']").get();
         if(elements != null && elements.length > 0) {
             var trainFound = false;
@@ -453,7 +490,7 @@ var frame = document.getElementById("randomid");
                         if($(this).text() == berthclass) {
                             $(this)[0].click();
                             berthFound = true;
-                            var dd = ticketDetails['date-journey'].split("-");
+                            var dd = ticketDetails['datejourney'].split("-");
                             dd[0] = ('0' + dd[0]).slice(-2);
                             dd[1] = ('0' + dd[1]).slice(-2);
                             var d = new Date(dd[2] + "-" + dd[1] + "-" + dd[0]);
