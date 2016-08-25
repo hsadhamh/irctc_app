@@ -143,36 +143,10 @@ public class TicketsListActivity extends AppCompatActivity {
 
     @Subscribe
     public void onEvent(final EditFormInfo e){
-        new MaterialDialog
-            .Builder(TicketsListActivity.this)
-            .positiveText("YES")
-            .negativeText("NO")
-            .title("Create entries if not exists")
-            .content("Would like to create passenger details if entry not found?")
-            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    dialog.dismiss();
-
-                    Intent i = new Intent(TicketsListActivity.this, BookTicketsNowActivity.class);
-                    i.putExtra("FORM_EDIT_ID", e.getTrainID());
-                    i.putExtra("CreateNotExists", true);
-                    startActivity(i);
-                }
-            })
-            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    dialog.dismiss();
-
-                    Intent i = new Intent(TicketsListActivity.this, BookTicketsNowActivity.class);
-                    i.putExtra("FORM_EDIT_ID", e.getTrainID());
-                    i.putExtra("CreateNotExists", false);
-                    startActivity(i);
-                }
-            })
-            .show();
-
+        Intent i = new Intent(TicketsListActivity.this, BookTicketsNowActivity.class);
+        i.putExtra("FORM_EDIT_ID", e.getTrainID());
+        i.putExtra("CreateNotExists", true);
+        startActivity(i);
     }
 
     public void onListUpdatedEvent(){

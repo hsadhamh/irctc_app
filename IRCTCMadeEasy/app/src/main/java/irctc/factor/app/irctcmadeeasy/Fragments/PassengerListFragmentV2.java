@@ -122,8 +122,6 @@ public final class PassengerListFragmentV2 extends Fragment{
         return view;
     }
 
-
-
     @OnClick(R.id.id_add_btn_passenger)
     public void onAddPassenger(){
         if(mnPassCount < 6) {

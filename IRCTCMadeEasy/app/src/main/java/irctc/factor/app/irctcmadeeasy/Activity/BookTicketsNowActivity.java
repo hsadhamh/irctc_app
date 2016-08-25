@@ -103,7 +103,6 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
     protected void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
-
         if(mnDetailsID > 0) { LoadInfo(); }
     }
 
