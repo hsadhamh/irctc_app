@@ -4,22 +4,26 @@ var timerID;
 var timercounter=0;
 
 function scrollToGivenId(wrapper){
+    console.log('Scrolling to ID ' + wrapper);
     $('html, body').animate({
         scrollTop: wrapper.offset().top
     }, 1000);
 }
 
 function isUserLoggedIn(){
+    console.log('is Logged in');
     var elements = $("a[title='Log Out']").get();
     return !!(elements !== null && elements.length > 0);
 }
 
 function isPlanMyTravelAvailable(){
+console.log('isPlanMyTravelAvailable - check for it');
     var elements = $("form[id='jpform']").get();
     return !!(elements !== null && elements.length > 0);
 }
 
 function isLoginPage() {
+    console.log('isLoginPage - check for it');
     var elements = $("form[id='loginFormId']").get();
     return !!(elements !== null && elements.length > 0);
 }
@@ -39,6 +43,7 @@ function isTrainsListed() {
                 var curr_year = d.getFullYear();
                 var full_date = curr_date + "-" + dd[1] + "-" + curr_year;
                 var entered_travel_date = $("input[name='jpform:journeyDateInputDate']").val().trim();
+                console.log('isTrainsListed - check for date [' + full_date + '] : ['+ entered_travel_date +'] ');
                 if(entered_travel_date == full_date) {
                     return true;
                 }
@@ -51,6 +56,7 @@ function isTrainsListed() {
 function loginToForm() {
     if(ticketDetails['username'])
     {
+        console.log(' login form ');
         $("input[id='usernameId']").val(ticketDetails['username']);
         $("input[name='j_password']").val(ticketDetails['password']);
         $("input[name='j_captcha']").focus();
@@ -99,8 +105,7 @@ function planMyTravel() {
 
 function bookNow(trainNo, berthclass, travelQuota) {
     timercounter++;
-    if($("div[id ='tabcontent']").length === 0)
-    {
+    if($("div[id ='tabcontent']").length === 0){
         return;
     }
     clearInterval(timerID);
@@ -173,6 +178,7 @@ function IsLoadAvailabilityError() {
 }
 
 function isPaymentPage() {
+    console.log(' isPaymentPage ');
     var elements = $("div[id='paymentMsgBox']").get();
     if(elements != null && elements.length > 0) {
         return true;
@@ -318,6 +324,8 @@ function fillPassengerInformation() {
 }
 
 function fillPaymentDetails() {
+    console.log(' fillPaymentDetails ');
+
     var alertVal = false;
     var availStatus = "";
     $("div[id*='jpBook:']").find("td").each(function(){
@@ -337,6 +345,8 @@ function fillPaymentDetails() {
             }
         }
     });
+
+    console.log(' fillPaymentDetails : '+ ticketDetails['payment-mode'] +' id : ' + ticketDetails['payment-mode-id']);
 
     $("td[id='"+ticketDetails['payment-mode']+"']").click();
     if(ticketDetails['payment-mode'] == 'NETBANKING') {

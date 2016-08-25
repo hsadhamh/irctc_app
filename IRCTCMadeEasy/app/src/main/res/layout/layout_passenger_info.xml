@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_pass_0"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.rey.material.widget.TextView
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:gravity="fill"
+            android:hint="Passenger 1: "
+            android:textSize="18sp"
+            android:layout_weight="1" />
+        <com.rey.material.widget.Button
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:text="delete"
+            android:layout_weight="2.5"
+            android:padding="15dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.rey.material.widget.EditText
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/user24"
+            android:drawablePadding="10dp"
+            android:gravity="fill"
+            android:id="@+id/txt_passenger_name"
+            android:hint="Passenger Name"
+            android:paddingLeft="15dp"
+            android:layout_weight=".4" />
+        <com.rey.material.widget.EditText
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/user24"
+            android:drawablePadding="10dp"
+            android:gravity="fill"
+            android:id="@+id/txt_passenger_age"
+            android:hint="Age"
+            android:inputType="number"
+            android:paddingLeft="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/layout_radio_group1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/gender24"
+            android:drawablePadding="10dp"
+            android:paddingLeft="15dp"/>
+
+        <com.rey.material.widget.RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/id_radio_male"
+            android:text="@string/add_passenger_male"
+            android:padding="@dimen/padding_two"
+            android:checked="true"
+            android:gravity="center" />
+        <com.rey.material.widget.RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/id_radio_female"
+            android:padding="@dimen/padding_two"
+            android:gravity="center"
+            android:text="@string/add_passenger_female" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/berth24"
+                android:id="@+id/id_view_berth"
+                android:drawablePadding="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="7dp" />
+            <com.rey.material.widget.Spinner
+                android:layout_toRightOf="@id/id_view_berth"
+                android:id="@+id/spinner_berth"
+                android:layout_height="50dp"
+                style="@style/SpinnerStyle"
+                android:layout_width="match_parent"
+                android:gravity="center|start"
+                custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                android:layout_gravity="center"
+                android:entries="@array/passenger_berth"
+                android:spinnerMode="dialog"
+                android:paddingLeft="15dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/food24"
+                android:id="@+id/id_view_food"
+                android:drawablePadding="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="7dp" />
+            <com.rey.material.widget.Spinner
+                android:layout_toRightOf="@id/id_view_food"
+                android:id="@+id/spinner_food"
+                android:layout_height="50dp"
+                style="@style/SpinnerStyle"
+                android:layout_width="match_parent"
+                custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                android:gravity="center|start"
+                android:layout_gravity="center"
+                android:entries="@array/passenger_food"
+                android:spinnerMode="dialog"
+                android:paddingLeft="15dp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.rey.material.widget.EditText
+        android:layout_width="match_parent"
+        style="@style/Material.Widget.EditText"
+        android:layout_height="50dp"
+        android:drawableLeft="@drawable/user24"
+        android:drawablePadding="10dp"
+        android:gravity="fill"
+        android:id="@+id/txt_passenger_nationality"
+        android:hint="Nationality"
+        android:paddingLeft="15dp" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_misc_options"
+        custom:flexWrap="wrap">
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/check_box_child"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/add_passenger_child_text"
+            android:gravity="center|start"
+            android:enabled="false"
+            android:paddingLeft="0dp" />
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/check_box_senior"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/add_passenger_senior_text"
+            android:gravity="center|start"
+            android:enabled="false"
+            android:padding="@dimen/padding_two"/>
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/check_box_bed_roll"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/add_passenger_bed_roll_text"
+            android:enabled="true"
+            android:padding="@dimen/padding_two"
+            android:gravity="center|start"/>
+        <com.rey.material.widget.CheckBox
+            android:id="@+id/check_box_opt_berth"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/add_passenger_opt_berth_text"
+            android:enabled="false"
+            android:checked="true"
+            android:gravity="center|start" />
+    </com.google.android.flexbox.FlexboxLayout>
+</LinearLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_pass_0"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.rey.material.widget.TextView
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:gravity="fill"
+            android:hint="Child 1: "
+            android:textSize="18sp"
+            android:layout_weight="1" />
+        <com.rey.material.widget.Button
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:text="delete"
+            android:layout_weight="2.5"
+            android:padding="15dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.rey.material.widget.EditText
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/user24"
+            android:drawablePadding="10dp"
+            android:gravity="fill"
+            android:id="@+id/txt_passenger_name"
+            android:hint="Passenger Name"
+            android:paddingLeft="15dp"
+            android:layout_weight=".4" />
+        <com.rey.material.widget.EditText
+            android:layout_width="match_parent"
+            style="@style/Material.Widget.EditText"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/user24"
+            android:drawablePadding="10dp"
+            android:gravity="fill"
+            android:id="@+id/txt_passenger_age"
+            android:hint="Age"
+            android:inputType="number"
+            android:paddingLeft="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/layout_radio_group1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/gender24"
+            android:drawablePadding="10dp"
+            android:paddingLeft="15dp"/>
+
+        <com.rey.material.widget.RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/id_radio_male"
+            android:text="@string/add_passenger_male"
+            android:padding="@dimen/padding_two"
+            android:checked="true"
+            android:gravity="center" />
+        <com.rey.material.widget.RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/id_radio_female"
+            android:padding="@dimen/padding_two"
+            android:gravity="center"
+            android:text="@string/add_passenger_female" />
+    </com.google.android.flexbox.FlexboxLayout>
+</LinearLayout>

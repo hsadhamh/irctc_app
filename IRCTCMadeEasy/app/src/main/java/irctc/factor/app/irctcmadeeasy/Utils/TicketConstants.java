@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import irctc.factor.app.irctcmadeeasy.Activity.AdBlocker;
 import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
 
 /**
@@ -75,6 +76,10 @@ public class TicketConstants {
     public static boolean InitializeDatabase(Context context) {
         mDbHelper = new DaoMaster.DevOpenHelper(context, "irctc_db_info1.db", null);
         return true;
+    }
+
+    public static void InitializeAdsModule(Context con){
+        AdBlocker.init(con);
     }
 
     public static boolean InitializeJavaScript(Context context){

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
@@ -163,7 +162,7 @@ public class AddPassengerActivity extends AppCompatActivity{
             passenger.setBerth(mBerthOption.getSelectedItem().toString());
             passenger.setChild(mCbChild.isChecked() ? "CHILD" : mCbSenior.isChecked() ? "SENIOR" : "ADULT");
             passenger.setFood(mFoodOption.getSelectedItem().toString());
-            passenger.setGender(mRbMale.isChecked() ? "MALE" : "FEMALE");
+            passenger.setGender(mRbMale.isChecked() ? "Male" : "Female");
             passenger.setName(mPassengerName.getText().toString());
             passenger.setNationality("Indian");
             passenger.setTransactionId(256);
@@ -188,7 +187,7 @@ public class AddPassengerActivity extends AppCompatActivity{
         mPassengerName.setText(pass.getName());
         mPassengerAge.setText(""+pass.getAge());
 
-        if(pass.getGender().equals("MALE"))
+        if(pass.getGender().equals("Male"))
             mRbMale.setChecked(true);
         else
             mRbFemale.setChecked(true);

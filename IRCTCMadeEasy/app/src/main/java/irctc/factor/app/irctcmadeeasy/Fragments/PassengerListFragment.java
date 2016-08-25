@@ -17,7 +17,6 @@ import com.github.clans.fab.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,7 +29,6 @@ import irctc.factor.app.irctcmadeeasy.Events.DeletePassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
 import irctc.factor.app.irctcmadeeasy.Events.SelectPassenger;
 import irctc.factor.app.irctcmadeeasy.Events.UnSelectPassenger;
-import irctc.factor.app.irctcmadeeasy.Events.UpdateJsonValues;
 import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.ChildJson;
 import irctc.factor.app.irctcmadeeasy.Json.PassengerJson;
@@ -142,10 +140,15 @@ public final class PassengerListFragment extends Fragment{
     }
 
     @Subscribe
-    public void onEventHandle(SelectPassenger e){ mAdapter.getSelectedPassengerList().add((long)e.getPassengerID()); }
+    public void onEventHandle(SelectPassenger e){
+        if(!mAdapter.getSelectedPassengerList().contains((long)e.getPassengerID()))
+            mAdapter.getSelectedPassengerList().add((long)e.getPassengerID());
+    }
 
     @Subscribe
-    public void onEventHandle(UnSelectPassenger e){ mAdapter.getSelectedPassengerList().remove((long)e.getPassengerID()); }
+    public void onEventHandle(UnSelectPassenger e){
+        mAdapter.getSelectedPassengerList().remove((long)e.getPassengerID());
+    }
 
     public TicketJson GetJsonObjectFilled() {
         TicketJson oJsonTicket = new TicketJson();
@@ -210,7 +213,7 @@ public final class PassengerListFragment extends Fragment{
     boolean CheckIfPassengerInfoFound(List<PassengerInfo> listPass, PassengerJson info){
         for(PassengerInfo pass : listPass){
             if( info.getName().equalsIgnoreCase(pass.getName())
-                    && info.getGender().equalsIgnoreCase(pass.getGender() == null ? "MALE" : pass.getGender())
+                    && info.getGender().equalsIgnoreCase(pass.getGender() == null ? "Male" : pass.getGender())
                     && pass.getAge() == Integer.parseInt(info.getAge())){
                 if(!mAdapter.getSelectedPassengerList().contains(pass.getId()))
                     mAdapter.getSelectedPassengerList().add(pass.getId());

@@ -1,11 +1,9 @@
 package irctc.factor.app.irctcmadeeasy.Activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.Utils.TicketConstants;
@@ -44,6 +42,7 @@ public class FactorSplashScreen extends AppCompatActivity {
             try {
                 TicketConstants.Initialize(getApplicationContext());
                 TicketConstants.InitializeJavaScript(getApplicationContext());
+                TicketConstants.InitializeAdsModule(getApplicationContext());
                 Thread.sleep(SPLASH_TIME_OUT);
             } catch (Exception e) {
                 e.printStackTrace();

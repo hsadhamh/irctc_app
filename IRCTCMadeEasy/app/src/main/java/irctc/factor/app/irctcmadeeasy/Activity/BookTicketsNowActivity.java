@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-
-
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -17,8 +15,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.rey.material.widget.Button;
-
-import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.TabPageIndicator;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,20 +32,17 @@ import irctc.factor.app.irctcmadeeasy.Adapters.BookTicketAdapter;
 import irctc.factor.app.irctcmadeeasy.Events.AddPassengerEvent;
 import irctc.factor.app.irctcmadeeasy.Events.EditPassengerInfo;
 import irctc.factor.app.irctcmadeeasy.Events.EventConstants;
-
 import irctc.factor.app.irctcmadeeasy.Events.GetMeJsonValues;
-import irctc.factor.app.irctcmadeeasy.Events.UpdateJsonValues;
 import irctc.factor.app.irctcmadeeasy.Fragments.BookingPaymentFragment;
-import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Fragments.PassengerListFragment;
 import irctc.factor.app.irctcmadeeasy.Fragments.TrainDetailsFragment;
+import irctc.factor.app.irctcmadeeasy.Interfaces.IGetValue;
 import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
 import irctc.factor.app.irctcmadeeasy.Json.flJsonParser;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.Utils.TicketConstants;
 import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
 import irctc.factor.app.irctcmadeeasy.database.DaoSession;
-import irctc.factor.app.irctcmadeeasy.database.PassengerInfo;
 import irctc.factor.app.irctcmadeeasy.database.TicketDetails;
 import irctc.factor.app.irctcmadeeasy.database.TicketDetailsDao;
 
@@ -320,7 +313,9 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
     @Override
     public void getPassengerJsonValue(TicketJson jsonTicket) {
         /* PASSENGERS */
+        mFinalJson.getPassengerInfo().clear();
         mFinalJson.getPassengerInfo().addAll(jsonTicket.getPassengerInfo());
+        mFinalJson.getChildInfo().clear();
         mFinalJson.getChildInfo().addAll(jsonTicket.getChildInfo());
     }
 

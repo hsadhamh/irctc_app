@@ -4,8 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.ValueCallback;
@@ -33,11 +33,7 @@ public class IrctcMainActivity extends AppCompatActivity {
     String mJsAutoFile = TicketConstants.JavaScriptForAutoFill;
 
     String mLoginUrlPattern =".*?(\\/www\\.irctc\\.co\\.in\\/eticketing\\/loginHome\\.jsf)";
-    String mPassengerListPage = ".*?(\\/www\\.irctc\\.co\\.in\\/eticketing\\/trainbetweenstns\\.jsf";
-    String mGoogleAdsPattern =".*?(pagead2\\.googlesyndication\\.com)";
-    String mGoogleAdContainerPattern=".*?(tpc\\.googlesyndication\\.com)";
-    String mGoogleAdsPattern2 = ".*?(securepubads\\.g\\.doubleclick\\.net\\/)";	;
-
+    String mPassengerListPage = ".*?(\\/www\\.irctc\\.co\\.in\\/eticketing\\/trainbetweenstns\\.jsf)";
     String mHomeURL = "http://www.irctc.co.in/eticketing/loginHome.jsf";
 
     @BindView(R.id.irctc_web_view_id)
@@ -56,7 +52,6 @@ public class IrctcMainActivity extends AppCompatActivity {
         GetJsString(sJson);
 
         assert mWebIrctc != null;
-        AdBlocker.init(this);
 
         mWebIrctc.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 6.1; rv:13.0) Gecko/20100101 Firefox/12");
         setChromeClientProgress();
@@ -69,12 +64,10 @@ public class IrctcMainActivity extends AppCompatActivity {
     public boolean isPassengerListPage(String url){ return isMatch(url, mPassengerListPage); }
 
     public boolean isMatch(String text, String pattern){
-        /*Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-        Matcher m = p.matcher(text);*/
+        Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Matcher m = p.matcher(text);
         return false;
     }
-
-    public boolean isGoogleAds(String url){ return (isMatch(url, mGoogleAdsPattern) || isMatch(url, mGoogleAdContainerPattern) || isMatch(url, mGoogleAdsPattern2)); }
 
     public void setChromeClientProgress(){
         mWebIrctc.setWebChromeClient(new WebChromeClient() {
@@ -102,22 +95,12 @@ public class IrctcMainActivity extends AppCompatActivity {
             @TargetApi(Build.VERSION_CODES.HONEYCOMB)
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-                boolean ad;
-
                 if (!loadedUrls.containsKey(url)) {
-                    ad = AdBlocker.isAd(url);
-                    loadedUrls.put(url, ad);
-                } else {
-                    ad = loadedUrls.get(url);
+                    loadedUrls.put(url, AdBlocker.isAd(url));
                 }
-                return ad ? AdBlocker.createEmptyResource() :
+                return loadedUrls.get(url) ? AdBlocker.createEmptyResource() :
                         super.shouldInterceptRequest(view, url);
             }
-
-         /*   @Override
-            public WebResourceResponse shouldInterceptRequest (WebView view, String url){
-                return super.shouldInterceptRequest(view, url);
-            }*/
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

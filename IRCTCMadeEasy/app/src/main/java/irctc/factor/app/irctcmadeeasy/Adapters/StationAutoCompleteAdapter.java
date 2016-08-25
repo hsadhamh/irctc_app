@@ -188,8 +188,13 @@ public class StationAutoCompleteAdapter extends BaseAdapter implements Filterabl
                 for (int i = 0; i < count; i++) {
                     final StationDetails value = values.get(i);
                     if(value.StationCode.toLowerCase().contains(prefixString.toLowerCase())){
-                        int iLoc = ((value.StationCode.length() == prefix.length()) ?  0 : 1);
-                        finalValues.add(iLoc, value);
+                        int iLoc = ((value.StationCode.length() == prefix.length())  ?  0 : 1);
+                        if(finalValues.size() > 1 && iLoc == 1)
+                            finalValues.add(1, value);
+                        else if(finalValues.size() > 0 && iLoc == 0)
+                            finalValues.add(0, value);
+                        else
+                            finalValues.add(value);
                     }
                     else if(value.StationName.toLowerCase().contains(prefixString.toLowerCase())){
                         finalValues.add(value);

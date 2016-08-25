@@ -1,17 +1,10 @@
 package irctc.factor.app.irctcmadeeasy.Activity;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.webkit.WebResourceResponse;
-
-
-import okhttp3.HttpUrl;
-import okio.BufferedSource;
-import okio.Okio;
-
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,26 +12,21 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import okhttp3.HttpUrl;
+import okio.BufferedSource;
+import okio.Okio;
+
 public class AdBlocker {
     private static final String AD_HOSTS_FILE = "pgl.yoyo.org.txt";
     private static final Set<String> AD_HOSTS = new HashSet<>();
 
     public static void init(final Context context) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    loadFromAssets(context);
-                } catch (IOException e) {
-                    // noop
-                }
-                return null;
-            }
-        }.execute();
+        try {
+            AdBlocker.loadFromAssets(context);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-
-
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static WebResourceResponse createEmptyResource() {
