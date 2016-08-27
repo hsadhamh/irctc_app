@@ -53,7 +53,7 @@ public class TicketsListActivity extends AppCompatActivity {
     @BindView(R.id.fab_add_forms)
     public FloatingActionButton mListAddForm;
     @BindView(R.id.center_button)
-    public ImageView mCenterButton;
+    public android.widget.ImageView mCenterButton;
     @BindView(R.id.id_discover_btn)
     public Button mDiscoverButton;
     @BindView(R.id.entry_view)
@@ -73,7 +73,8 @@ public class TicketsListActivity extends AppCompatActivity {
 
         if(getTicketsDao() == null || getTicketsDao().count() < 1) {
             mListAddForm.setVisibility(View.GONE);
-            getSupportActionBar().hide();
+            mListForm.setVisibility(View.GONE);
+            //getSupportActionBar().hide();
         }
         else{
             mLyEntrytext.setVisibility(LinearLayout.GONE);
@@ -118,13 +119,14 @@ public class TicketsListActivity extends AppCompatActivity {
 
     @OnClick(R.id.center_button)
     public void addFormsOnclick(){
-        Intent i = new Intent(TicketsListActivity.this,BookTicketsNowActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(TicketsListActivity.this,BookTicketsNowActivity.class);
+        //startActivity(i);
     }
 
     @OnClick(R.id.id_discover_btn)
     public void discoverClick(){
-        Intent i = new Intent(TicketsListActivity.this,IntroSlideActivity.class);
+        //Intent i = new Intent(TicketsListActivity.this,IntroSlideActivity.class);
+        Intent i = new Intent(TicketsListActivity.this,BookTicketsNowActivity.class);
         startActivity(i);
     }
 

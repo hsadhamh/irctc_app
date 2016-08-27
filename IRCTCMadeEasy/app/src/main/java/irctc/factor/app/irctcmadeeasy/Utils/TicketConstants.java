@@ -74,7 +74,7 @@ public class TicketConstants {
     }
 
     public static boolean InitializeDatabase(Context context) {
-        mDbHelper = new DaoMaster.DevOpenHelper(context, "irctc_db_info1.db", null);
+        mDbHelper = new DaoMaster.DevOpenHelper(context, "irctc_db_info2.db", null);
         return true;
     }
 
@@ -110,7 +110,7 @@ public class TicketConstants {
 
     public static DaoMaster.DevOpenHelper getDbHelper(Context context){
         if(mDbHelper == null)
-            mDbHelper = new DaoMaster.DevOpenHelper(context, "irctc_db_info1.db", null);
+            mDbHelper = new DaoMaster.DevOpenHelper(context, "irctc_db_info2.db", null);
         return mDbHelper;
     }
 

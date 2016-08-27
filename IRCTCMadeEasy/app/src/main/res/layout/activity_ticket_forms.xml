@@ -2,89 +2,53 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto">
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/entry_view"
+        android:minHeight="400dp"
+        android:background="#1c3c4d">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/center_button"
+            android:scaleType="centerInside"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginRight="6dip"
+            android:src="@drawable/journey5"
+            android:layout_marginTop="-30dp" />
+        <com.rey.material.widget.Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Add Journey Details"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="15dp"
+            android:background="#e74c3c"
+            android:textColor="@color/colorWhite"
+            app:rd_backgroundColor ="#e74c3c"
+            android:id="@+id/id_discover_btn"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="-12dp" />
 
 
+    </LinearLayout>
 
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_list_forms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#1c3c4d"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1.0"
-        android:id="@+id/entry_view"
-        android:minHeight="400dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.7"
-            android:orientation="vertical"
-            android:background="@color/colorAccent"
-            android:layout_gravity="center">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/no_information_found"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Welcome! "
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:textSize="20sp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorWhite"/>
-                <com.rey.material.widget.Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="10dip"
-                    android:id="@+id/id_discover_btn"
-                    android:text="Discover App"
-                    android:clickable="true"/>
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="0.3"
-            android:background="@drawable/screen_background">
-
-            <com.rey.material.widget.ImageView
-                android:src="@drawable/circular_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"
-                android:id="@+id/center_button"/>
-            <TextView
-                android:id="@+id/add_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Add Deatils "
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:textSize="20sp"
-                android:layout_gravity="center"
-                android:textColor="@color/colorAccent"/>
-
-
-        </LinearLayout>
-
-
-
-
-    </LinearLayout>
     <com.github.clans.fab.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
