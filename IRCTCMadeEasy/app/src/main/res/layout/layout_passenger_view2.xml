@@ -17,6 +17,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
+            android:drawableLeft="@drawable/add_passenger24"
             android:padding="15dp"
             android:textColor="@color/abc_primary_text_material_light"
             android:id="@+id/id_add_btn_passenger" />
@@ -24,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Add Child"
+            android:drawableLeft="@drawable/add_child_passenger24"
             android:textColor="@color/abc_primary_text_material_light"
             android:layout_gravity="center"
             android:layout_weight="1"

@@ -26,17 +26,22 @@
             style="@style/Material.Widget.EditText"
             android:layout_height="50dp"
             android:gravity="fill"
-            android:text=" "
+            android:text="Passenger 0"
             android:id="@+id/id_passenger_title"
+            android:drawableLeft="@drawable/passenger24"
+            android:textColor="#e74c3c"
             android:textSize="18sp"
+            android:textStyle="bold|normal"
+            android:typeface="serif"
             android:layout_weight="1" />
         <com.rey.material.widget.Button
             android:layout_width="match_parent"
             style="@style/Material.Widget.EditText"
             android:layout_height="50dp"
             android:text="delete"
+            android:drawableLeft="@drawable/delete24"
             android:id="@+id/id_passenger_delete"
-            android:layout_weight="2.5"
+            android:layout_weight="1.5"
             android:padding="15dp" />
     </LinearLayout>
 
