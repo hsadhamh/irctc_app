@@ -55,6 +55,9 @@ public final class PassengerListFragmentV2 extends Fragment{
     @BindView(R.id.id_add_btn_child)
     Button mAddChild;
 
+    TextView mPassengerTitle;
+    TextView mChildTitle;
+
     private Unbinder unbinder;
     IGetValue mCallback;
     TicketJson mPassedJson = null;
@@ -129,14 +132,19 @@ public final class PassengerListFragmentV2 extends Fragment{
     }
 
     public void addPassengerView(int nRef){
+
         android.widget.LinearLayout passInfo = (android.widget.LinearLayout) InflateAndAddView(R.layout.layout_passenger_info, nRef);
         mLayoutPassenger.addView(passInfo, mLayoutPassenger.getChildCount() - 1);
+        mPassengerTitle=(TextView) passInfo.findViewById(R.id.id_passenger_title);
+        mPassengerTitle.setText("Passenger "+(mnPassCount+1));
         mListPassViews.add(passInfo);
     }
 
     public void addChildPassengerView(int nRef){
         android.widget.LinearLayout passInfo = (android.widget.LinearLayout) InflateAndAddView(R.layout.layout_child_info, nRef);
         mLayoutChild.addView(passInfo, mLayoutChild.getChildCount() - 1);
+        mChildTitle=(TextView) passInfo.findViewById(R.id.id_child_title);
+        mChildTitle.setText("Child "+(mnChildCount+1));
         mListChildViews.add(passInfo);
     }
 
@@ -308,8 +316,8 @@ public final class PassengerListFragmentV2 extends Fragment{
     }
 
     class ChildPassengerInfoViewHolder {
-        @BindView(R.id.id_passenger_title)
-        TextView passenger_title;
+        @BindView(R.id.id_child_title)
+        TextView child_title;
         @BindView(R.id.id_passenger_delete)
         Button delete;
         @BindView(R.id.txt_passenger_name)
