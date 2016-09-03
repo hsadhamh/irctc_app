@@ -8,8 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import irctc.factor.app.irctcmadeeasy.Activity.AdBlocker;
 import irctc.factor.app.irctcmadeeasy.database.DaoMaster;
@@ -112,6 +116,17 @@ public class TicketConstants {
         if(mDbHelper == null)
             mDbHelper = new DaoMaster.DevOpenHelper(context, "irctc_db_info2.db", null);
         return mDbHelper;
+    }
+
+    public static boolean CheckIfDatePast(String strDate){
+        try {
+            if (new SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(strDate).before(new Date())) {
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

@@ -249,10 +249,14 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
     }
 
     void startBooking(){
+        goForBooking();
+    }
+
+    void goForBooking(){
         /* Code for next activity after JSON string */
         getJsonString();
         Intent i = new Intent(BookTicketsNowActivity.this, IrctcMainActivity.class);
-        i.putExtra("JSON_String",  msFinalJson);
+        i.putExtra("JSON_String", msFinalJson);
         startActivity(i);
         finish();
     }
