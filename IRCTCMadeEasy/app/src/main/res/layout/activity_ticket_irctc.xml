@@ -236,7 +236,6 @@
                         android:id="@+id/id_radio_pt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/id_radio_gn"
                         android:gravity="center"
                         android:padding="@dimen/padding_two"
                         android:text="@string/quota_premium_tatkal" />
@@ -245,7 +244,6 @@
                         android:id="@+id/id_radio_ck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/id_radio_pt"
                         android:checked="true"
                         android:gravity="center"
                         android:padding="@dimen/padding_two"
@@ -255,7 +253,6 @@
                         android:id="@+id/id_radio_hp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/id_radio_ck"
                         android:checked="false"
                         android:gravity="center"
                         android:padding="@dimen/padding_two"
@@ -265,7 +262,6 @@
                         android:id="@+id/id_radio_ld"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/id_radio_hp"
                         android:gravity="center"
                         android:padding="@dimen/padding_two"
                         android:text="@string/quota_ladies" />
@@ -396,7 +392,6 @@
                     android:id="@+id/id_radio_book_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/id_radio_gn"
                     android:gravity="center"
                     android:text="@string/book_same_coach" />
 
@@ -404,7 +399,6 @@
                     android:id="@+id/id_radio_book_at_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/id_radio_pt"
                     android:gravity="center"
                     android:text="@string/book_one_lower_alloted" />
 
@@ -412,10 +406,48 @@
                     android:id="@+id/id_radio_book_at_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/id_radio_ck"
                     android:checked="false"
                     android:gravity="center"
                     android:text="@string/book_two_lower_alloted" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/padding_two"
+                custom:flexWrap="wrap">
+
+                <com.rey.material.widget.TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center|start"
+                    android:padding="2dp"
+                    android:text="Opt Insurance: "
+                    android:textSize="@dimen/header_text_size"
+                    android:textStyle="bold|normal" />
+
+                <com.rey.material.widget.RadioButton
+                    android:id="@+id/id_radio_yes_insurance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="YES" />
+
+                <com.rey.material.widget.RadioButton
+                    android:id="@+id/id_radio_no_insurance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:checked="true"
+                    android:text="NO" />
+
             </com.google.android.flexbox.FlexboxLayout>
         </LinearLayout>
 

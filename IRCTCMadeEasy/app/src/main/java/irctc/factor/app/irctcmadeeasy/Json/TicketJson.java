@@ -82,6 +82,20 @@ public class TicketJson {
     @JsonIgnoreProperties(ignoreUnknown=true)
     String namecard;
 
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    boolean optinsurance;
+
+    public boolean getOptinsurance() {
+        return optinsurance;
+    }
+
+    public void setOptinsurance(boolean optinsurance) {
+        this.optinsurance = optinsurance;
+    }
+
+
+
+
     /* Passenger Info */
     @JsonIgnoreProperties(ignoreUnknown=true)
     List<PassengerJson> passengerinfo = new ArrayList<>();

@@ -312,6 +312,15 @@ function fillPassengerInformation() {
                     $(this)[0].click();
                 });
 
+                if (ticketDetails['optinsurance']=='true')
+                {
+                    $("input[id='addPassengerForm:travelInsurance:0']").prop('checked', 'checked');
+                }
+                else
+                {
+                    $("input[id='addPassengerForm:travelInsurance:1']").prop('checked', 'checked');
+                }
+
                 if (ticketDetails['prefercoach']=='false') {
                     $("input[id='addPassengerForm:prefCoachOpt']").click();
                     $("input[id='addPassengerForm:coachID']").val(ticketDetails['coachid']);

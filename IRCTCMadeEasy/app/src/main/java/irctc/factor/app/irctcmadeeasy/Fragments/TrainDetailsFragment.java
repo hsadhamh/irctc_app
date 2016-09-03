@@ -25,6 +25,7 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import irctc.factor.app.irctcmadeeasy.Adapters.AutoCompleteStringAdapter;
@@ -93,6 +94,11 @@ public final class TrainDetailsFragment extends Fragment  {
     public RadioButton mRbBookOneLower;
     @BindView(R.id.id_radio_book_at_two)
     public RadioButton mRbBookTwoLower;
+
+    @BindView(R.id.id_radio_yes_insurance)
+    public RadioButton mRbOptInsurance;
+    @BindView(R.id.id_radio_no_insurance)
+    public RadioButton mRbOptOutInsurance;
 
     private Unbinder unbinder;
     AutoCompleteStringAdapter trainAdapter;
@@ -251,6 +257,15 @@ public final class TrainDetailsFragment extends Fragment  {
         });
     }
 
+    @OnCheckedChanged({R.id.id_radio_yes_insurance, R.id.id_radio_no_insurance})
+    public void OnSelectInsurance(RadioButton btn, boolean isChecked){
+        if(isChecked){
+            int btnRes = btn.getId();
+            mRbOptInsurance.setChecked(btnRes == R.id.id_radio_yes_insurance);
+            mRbOptOutInsurance.setChecked(btnRes == R.id.id_radio_no_insurance);
+        }
+    }
+
     public void ShowDatePicker(final ViewGroup container) {
 
 
@@ -373,6 +388,12 @@ public final class TrainDetailsFragment extends Fragment  {
             oJsonTicket.setBookconfirm(false);
             oJsonTicket.setBookidcond("0");
         }
+
+        if(mRbOptOutInsurance.isChecked())
+            oJsonTicket.setOptinsurance(false);
+        else if(mRbOptInsurance.isChecked())
+            oJsonTicket.setOptinsurance(true);
+
         oJsonTicket.setMobile(mvMobileNumber.getText().toString());
         return oJsonTicket;
     }
@@ -454,6 +475,11 @@ public final class TrainDetailsFragment extends Fragment  {
 
         if (train.isBookconfirm())
             mCbBookCondition.setChecked(true);
+
+        if(train.getOptinsurance())
+            mRbOptInsurance.setChecked(true);
+        else
+            mRbOptOutInsurance.setChecked(true);
 
         switch(train.getBookidcond()) {
             case "0":
