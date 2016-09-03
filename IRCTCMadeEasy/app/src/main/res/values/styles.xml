@@ -43,5 +43,17 @@
         <item name="lpd_strokeColor">@color/colorAccent</item>
     </style>
 
+    <style name="Material.Widget.TabPageIndicator1">
+        <item name="tpi_tabPadding">12dp</item>
+        <item name="tpi_tabRipple">@style/Material.Drawable.Ripple.Wave</item>
+        <item name="tpi_indicatorHeight">2dp</item>
+        <item name="tpi_indicatorAtTop">false</item>
+        <item name="tpi_tabSingleLine">true</item>
+        <item name="tpi_centerCurrentTab">false</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <item name="tpi_indicatorColor">@color/colorWhite</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="tpi_mode">scroll</item>
+    </style>
 
 </resources>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
     <com.rey.material.widget.TabPageIndicator
         android:id="@+id/id_pager_indicator"
-        style="@style/Material.Widget.TabPageIndicator"
+        style="@style/Material.Widget.TabPageIndicator1"
         android:layout_width="match_parent"
         android:background="@color/colorPrimary"
         android:layout_height="@dimen/width_image_button"/>
