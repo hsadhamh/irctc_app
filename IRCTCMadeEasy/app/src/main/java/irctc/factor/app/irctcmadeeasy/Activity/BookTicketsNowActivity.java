@@ -219,37 +219,45 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
     }
 
     void SaveInformationToDB(){
-        getJsonString();
-        Log.d("Json ", "Json : " + msFinalJson);
-        if(msFinalJson.length() > 0){
-            TicketDetails oTicketSave = new TicketDetails();
-            oTicketSave.setSource(mFinalJson.getSource());
-            oTicketSave.setDestination(mFinalJson.getDestination());
-            oTicketSave.setBoarding(mFinalJson.getBoarding());
-            oTicketSave.setJourneyDate(mFinalJson.getDatejourney());
-            oTicketSave.setTrainno(mFinalJson.getTrainno());
-            oTicketSave.setIrctcClass(mFinalJson.getBclass());
-            oTicketSave.setQuota(mFinalJson.getQuota());
-            oTicketSave.setMobileNumber(mFinalJson.getMobile());
-            oTicketSave.setCoach(mFinalJson.getCoachid());
-            oTicketSave.setAutoUpgrade(mFinalJson.isAutoupgrade() ? "true" : "false");
-            oTicketSave.setBookOnConfirm(mFinalJson.isBookconfirm() ? "true" : "false");
-            oTicketSave.setConditionsOnBook(mFinalJson.getBookidcond());
-            oTicketSave.setTrainno(mFinalJson.getTrainno());
-            oTicketSave.setJson(msFinalJson);
-
-            if (mnDetailsID > 0) {
-                oTicketSave.setId(mnDetailsID);
-                getTicketInfo().update(oTicketSave);
-            }
-            else
-                getTicketInfo().insert(oTicketSave);
+        if(!TicketConstants.CheckIfDatePast(mFinalJson.getDatejourney())) {
+            Toast.makeText(getApplicationContext(),
+                    "Please update date and proceed to save the ticket.", Toast.LENGTH_LONG).show();
         }
-        finish();
+        else {
+            getJsonString();
+            Log.d("Json ", "Json : " + msFinalJson);
+            if (msFinalJson.length() > 0) {
+                TicketDetails oTicketSave = new TicketDetails();
+                oTicketSave.setSource(mFinalJson.getSource());
+                oTicketSave.setDestination(mFinalJson.getDestination());
+                oTicketSave.setBoarding(mFinalJson.getBoarding());
+                oTicketSave.setJourneyDate(mFinalJson.getDatejourney());
+                oTicketSave.setTrainno(mFinalJson.getTrainno());
+                oTicketSave.setIrctcClass(mFinalJson.getBclass());
+                oTicketSave.setQuota(mFinalJson.getQuota());
+                oTicketSave.setMobileNumber(mFinalJson.getMobile());
+                oTicketSave.setCoach(mFinalJson.getCoachid());
+                oTicketSave.setAutoUpgrade(mFinalJson.isAutoupgrade() ? "true" : "false");
+                oTicketSave.setBookOnConfirm(mFinalJson.isBookconfirm() ? "true" : "false");
+                oTicketSave.setConditionsOnBook(mFinalJson.getBookidcond());
+                oTicketSave.setTrainno(mFinalJson.getTrainno());
+                oTicketSave.setJson(msFinalJson);
+
+                if (mnDetailsID > 0) {
+                    oTicketSave.setId(mnDetailsID);
+                    getTicketInfo().update(oTicketSave);
+                } else
+                    getTicketInfo().insert(oTicketSave);
+            }
+            finish();
+        }
     }
 
     void startBooking(){
-        goForBooking();
+        if(TicketConstants.CheckIfDatePast(mFinalJson.getDatejourney()))
+            goForBooking();
+        else
+            Toast.makeText(getApplicationContext(), "Please update date and proceed for booking.", Toast.LENGTH_LONG).show();
     }
 
     void goForBooking(){
