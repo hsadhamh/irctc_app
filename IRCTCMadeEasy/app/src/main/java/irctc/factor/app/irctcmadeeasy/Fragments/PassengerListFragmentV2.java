@@ -134,7 +134,7 @@ public final class PassengerListFragmentV2 extends Fragment{
     public void addPassengerView(int nRef){
 
         android.widget.LinearLayout passInfo = (android.widget.LinearLayout) InflateAndAddView(R.layout.layout_passenger_info, nRef);
-        mLayoutPassenger.addView(passInfo, mLayoutPassenger.getChildCount() - 1);
+        mLayoutPassenger.addView(passInfo);
         mPassengerTitle=(TextView) passInfo.findViewById(R.id.id_passenger_title);
         mPassengerTitle.setText("Passenger "+(mnPassCount+1));
         mListPassViews.add(passInfo);
@@ -142,7 +142,7 @@ public final class PassengerListFragmentV2 extends Fragment{
 
     public void addChildPassengerView(int nRef){
         android.widget.LinearLayout passInfo = (android.widget.LinearLayout) InflateAndAddView(R.layout.layout_child_info, nRef);
-        mLayoutChild.addView(passInfo, mLayoutChild.getChildCount() - 1);
+        mLayoutChild.addView(passInfo);
         mChildTitle=(TextView) passInfo.findViewById(R.id.id_child_title);
         mChildTitle.setText("Child "+(mnChildCount+1));
         mListChildViews.add(passInfo);
