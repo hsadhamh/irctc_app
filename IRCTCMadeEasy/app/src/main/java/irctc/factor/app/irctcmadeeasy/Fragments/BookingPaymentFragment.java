@@ -153,8 +153,10 @@ public final class BookingPaymentFragment extends Fragment  {
 
         showCardOrInternetBanking(R.id.id_radio_banking);
 
-        if(mPassedJson != null){ LoadValue(); }
-
+        if(mPassedJson != null)
+        { LoadValue(); }
+        else
+        { setHdfcCreditPaymentDefault(); }
         return view;
     }
 
@@ -352,5 +354,10 @@ public final class BookingPaymentFragment extends Fragment  {
         mvYear.setText(oJson.getExpiryyear());
         mvCVVNumber.setText(oJson.getCardcvv());
         mvCardName.setText(oJson.getNamecard());
+    }
+
+    public void setHdfcCreditPaymentDefault(){
+        mRbCreditCard.setChecked(true);
+        mSpPaymentOptions.setSelection(3);
     }
 }

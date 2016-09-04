@@ -305,12 +305,12 @@ function fillPassengerInformation() {
                     $("input[id='addPassengerForm:mobileNo']").val(mobNum);
                 }
 
-                if (ticketDetails['autoupgrade'])
+                if (ticketDetails['autoupgrade'] == true)
                     $("input[id='addPassengerForm:autoUpgrade']").prop('checked', 'checked');
 
-                if (ticketDetails['bookconfirm']){
+                if (ticketDetails['bookconfirm'] == true){
                     $("input[id='addPassengerForm:onlyConfirmBerths']").prop('checked', 'checked');
-                $("input[name='addPassengerForm:bookingCond'][value='"+ticketDetails['book-id-cond']+"']").prop('checked', 'checked');
+                    $("input[id='addPassengerForm:bookingCond:"+ ticketDetails['bookidcond'] +"']").prop('checked', true);
                 }
                 /*.each(function() {
                     $(this)[0].click();
@@ -325,7 +325,7 @@ function fillPassengerInformation() {
                     $("input[id='addPassengerForm:travelInsurance:1']").prop('checked', 'checked');
                 }
 
-                if (ticketDetails['prefercoach']) {
+                if (ticketDetails['prefercoach'] == true) {
                     $("input[id='addPassengerForm:prefCoachOpt']").click();
                     $("input[id='addPassengerForm:coachID']").val(ticketDetails['coachid']);
                 }
