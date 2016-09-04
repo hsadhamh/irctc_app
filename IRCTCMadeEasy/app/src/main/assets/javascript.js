@@ -299,20 +299,24 @@ function fillPassengerInformation() {
                 }
 
                 var mobNum = ticketDetails['mobile'];
+                 console.log("mobile - pass details "+mobNum);
                 if(mobNum) {
+                console.log("mobNum- pass details "+mobNum);
                     $("input[id='addPassengerForm:mobileNo']").val(mobNum);
                 }
 
-                if (ticketDetails['autoupgrade']=='true')
+                if (ticketDetails['autoupgrade'])
                     $("input[id='addPassengerForm:autoUpgrade']").prop('checked', 'checked');
 
-                if (ticketDetails['bookconfirm']=='false')
+                if (ticketDetails['bookconfirm']){
                     $("input[id='addPassengerForm:onlyConfirmBerths']").prop('checked', 'checked');
-                $("input[name='addPassengerForm:bookingCond'][value='"+ticketDetails['book-id-cond']+"']").each(function() {
+                $("input[name='addPassengerForm:bookingCond'][value='"+ticketDetails['book-id-cond']+"']").prop('checked', 'checked');
+                }
+                /*.each(function() {
                     $(this)[0].click();
-                });
+                });*/
 
-                if (ticketDetails['optinsurance']=='true')
+                if (ticketDetails['optinsurance'])
                 {
                     $("input[id='addPassengerForm:travelInsurance:0']").prop('checked', 'checked');
                 }
@@ -321,7 +325,7 @@ function fillPassengerInformation() {
                     $("input[id='addPassengerForm:travelInsurance:1']").prop('checked', 'checked');
                 }
 
-                if (ticketDetails['prefercoach']=='false') {
+                if (ticketDetails['prefercoach']) {
                     $("input[id='addPassengerForm:prefCoachOpt']").click();
                     $("input[id='addPassengerForm:coachID']").val(ticketDetails['coachid']);
                 }
@@ -329,14 +333,14 @@ function fillPassengerInformation() {
                 if ($("input[id='#j_captcha']").length > 0) {
                     $("input[id='#j_captcha']").focus();
 
-                    $("input[id='#j_captcha']").css("width", "150%");
-                    $("input[id='#j_captcha']").css("width", "125%");
+                   // $("input[id='#j_captcha']").css("width", "150%");
+                   // $("input[id='#j_captcha']").css("width", "125%");
 
                     scrollToGivenId($("input[id='#j_captcha']"));
                 } else {
                     if($("div[id='nlpCaptchaContainer']").length > 0) {
-                        $("div[id='nlpCaptchaContainer']").css("width", "250%");
-                        $("div[id='nlpCaptchaContainer']").css("width", "250%");
+                        //$("div[id='nlpCaptchaContainer']").css("width", "250%");
+                        //$("div[id='nlpCaptchaContainer']").css("width", "250%");
                         if ($("#nlpCaptchaImg").length > 0) {
                             $("input[id='#nlpAnswer']").focus();
 
@@ -474,8 +478,11 @@ function doAutomation() {
     }
     else if(isTrainsListed()) {
     	scrollToGivenId($("table[id='avlAndFareForm:trainbtwnstns']"));
-var frame = document.getElementById("randomid");
- frame.parentNode.removeChild(frame);
+
+        //Ad removal
+        var frame = document.getElementById("randomid");
+        frame.parentNode.removeChild(frame);
+
         var quota = ticketDetails["quota"];
         var quotaRadioButtons = $("input[name='quota']").get();
         var quota_txt = getQuotaText(quota);
