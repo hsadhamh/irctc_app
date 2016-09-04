@@ -280,7 +280,8 @@ public final class BookingPaymentFragment extends Fragment  {
         String sCard = mSpCardType.getSelectedItem().toString();
         sCard = sCard.equals("MASTER") ? "MC" : "VISA";
         oJsonTicket.setCardtype(sCard);
-        oJsonTicket.setExpirymon("" + mSpMonth.getSelectedItemPosition() + 1);
+        int no = mSpMonth.getSelectedItemPosition() + 1;
+        oJsonTicket.setExpirymon((no > 10) ? ("" + no) : ("0" + no));
         oJsonTicket.setExpiryyear(mvYear.getText().toString());
         oJsonTicket.setCardcvv(mvCVVNumber.getText().toString());
         oJsonTicket.setNamecard(mvCardName.getText().toString());

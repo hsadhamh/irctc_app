@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.rey.material.widget.ProgressView;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -25,6 +28,8 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import irctc.factor.app.irctcmadeeasy.Json.TicketJson;
+import irctc.factor.app.irctcmadeeasy.Json.flJsonParser;
 import irctc.factor.app.irctcmadeeasy.R;
 import irctc.factor.app.irctcmadeeasy.Utils.TicketConstants;
 import irctc.factor.app.irctcmadeeasy.View.WebView.LxWebView;
@@ -35,7 +40,9 @@ public class IrctcMainActivity extends AppCompatActivity {
 
     String mLoginUrlPattern =".*?(www\\.irctc\\.co\\.in\\/eticketing\\/loginHome\\.jsf)";
     String mPassengerListPage = ".*?(www\\.irctc\\.co\\.in\\/eticketing\\/trainbetweenstns\\.jsf)";
+    String mPaymentPage = ".*?(www\\.irctc\\.co\\.in\\/eticketing\\/jpInput\\.jsf)";
     String mHomeURL = "http://www.irctc.co.in/eticketing/loginHome.jsf";
+    String mJson;
 
     @BindView(R.id.irctc_web_view_id)
     LxWebView mWebIrctc;
@@ -49,8 +56,8 @@ public class IrctcMainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent i = getIntent();
-        String sJson = i.getStringExtra("JSON_String");
-        GetJsString(sJson);
+        mJson = i.getStringExtra("JSON_String");
+        GetJsString(mJson);
 
         assert mWebIrctc != null;
 
@@ -64,6 +71,8 @@ public class IrctcMainActivity extends AppCompatActivity {
     public boolean isLoginPage(String url){ return isMatch(url, mLoginUrlPattern); }
 
     public boolean isPassengerListPage(String url){ return isMatch(url, mPassengerListPage); }
+
+    public boolean isPaymentPage(String url){ return isMatch(url, mPaymentPage); }
 
     public boolean isMatch(String text, String pattern){
         Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
@@ -125,7 +134,7 @@ public class IrctcMainActivity extends AppCompatActivity {
                     });
 
                     String webUrl = mWebIrctc.getUrl();
-                    if(isLoginPage(webUrl) || isPassengerListPage(webUrl)) {
+                    if(isLoginPage(webUrl) || isPassengerListPage(webUrl) || doShowInputForPaymentPage(webUrl)) {
                         showSoftKeyBoard();
                     }
                 } else {
@@ -148,5 +157,17 @@ public class IrctcMainActivity extends AppCompatActivity {
         String JsPrefix = String.format("%s='%s';", TicketConstants.mJsAutoPrefix, sJson);
         mJsAutoFile = JsPrefix + mJsAutoFile;
         Log.d("GetJS", sJson);
+    }
+
+    public boolean doShowInputForPaymentPage(String webUrl){
+        try {
+            TicketJson ticket = flJsonParser.getTicketDetailObject(mJson);
+            return (((Integer.parseInt(ticket.getPaymentmodeid()) ==  21)
+                    || (Integer.parseInt(ticket.getPaymentmodeid()) == 59))
+                    && isPaymentPage(webUrl));
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

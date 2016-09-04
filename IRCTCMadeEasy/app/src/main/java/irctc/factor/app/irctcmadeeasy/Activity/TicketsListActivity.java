@@ -170,7 +170,7 @@ public class TicketsListActivity extends AppCompatActivity {
     public void onEventHandle(StartBookingEvent o){
         final long ticketId = (long)o.id;
         TicketDetails train = getTicketsDao().load(ticketId);
-        if(TicketConstants.CheckIfDatePast(train.getJourneyDate()))
+        if(!TicketConstants.CheckIfDatePast(train.getJourneyDate()))
         {
             new MaterialDialog
                 .Builder(TicketsListActivity.this)
@@ -219,7 +219,7 @@ public class TicketsListActivity extends AppCompatActivity {
         int yr = c.get(Calendar.YEAR);
         int mm = c.get(Calendar.MONTH);
         int dd = c.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getApplicationContext(),
+        DatePickerDialog datePickerDialog = new DatePickerDialog(TicketsListActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(android.widget.DatePicker view, int year, int month, int day) {

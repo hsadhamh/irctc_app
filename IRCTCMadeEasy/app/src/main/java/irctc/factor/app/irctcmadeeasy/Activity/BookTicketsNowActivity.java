@@ -274,11 +274,7 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
         try {
             msFinalJson = "";
             msFinalJson = flJsonParser.getTicketDetailString(mFinalJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(BookTicketsNowActivity.this,
-                    "Failed to create JSON on exception("+ e.getMessage() +").", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
             Toast.makeText(BookTicketsNowActivity.this,
                     "Failed to create JSON on exception("+ e.getMessage() +").", Toast.LENGTH_LONG).show();

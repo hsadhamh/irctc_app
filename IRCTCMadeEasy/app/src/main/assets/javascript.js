@@ -417,7 +417,7 @@ function fillPaymentDetails() {
 
         $("select[id='card_expiry_mon_id']").val(ticketDetails['expirymon']);
         $("input[id='card_expiry_year_id']").val(ticketDetails['expiryyear']);
-        $("input[id='card_name_id']").val(ticketDetails['name-card']);
+        $("input[id='card_name_id']").val(ticketDetails['namecard']);
         if(ticketDetails['cardcvv']) {
             $("input[id='cvv_no_id']").val(ticketDetails['cardcvv']);
             $("input[id='captcha_txt']").focus();
