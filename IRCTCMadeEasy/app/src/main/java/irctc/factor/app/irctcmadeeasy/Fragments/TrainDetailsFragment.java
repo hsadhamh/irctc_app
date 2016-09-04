@@ -283,7 +283,7 @@ public final class TrainDetailsFragment extends Fragment  {
                                 @Override
                                 public void onDateSet(android.widget.DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
-                                    mvDateJourney.setText(dayOfMonth + "-" + (monthOfYear +1 < 10 ? ("0" + (monthOfYear+1)) : (monthOfYear)) + "-" + year);
+                                    mvDateJourney.setText((dayOfMonth< 10 ? ("0" + (dayOfMonth)) : (dayOfMonth) ) + "-" + (monthOfYear +1 < 10 ? ("0" + (monthOfYear+1)) : (monthOfYear+1)) + "-" + year);
                                 }
                             }, mYear, mMonth, mDay);
                     datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
