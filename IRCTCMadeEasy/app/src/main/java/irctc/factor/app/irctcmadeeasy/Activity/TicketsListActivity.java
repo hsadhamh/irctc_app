@@ -170,7 +170,7 @@ public class TicketsListActivity extends AppCompatActivity {
     public void onEventHandle(StartBookingEvent o){
         final long ticketId = (long)o.id;
         TicketDetails train = getTicketsDao().load(ticketId);
-        if(TicketConstants.CheckIfDatePast(train.getJourneyDate()))
+        if(!TicketConstants.CheckIfDatePast(train.getJourneyDate()))
         {
             new MaterialDialog
                 .Builder(TicketsListActivity.this)

@@ -120,10 +120,10 @@ public class TicketConstants {
 
     public static boolean CheckIfDatePast(String strDate){
         try {
-            if (new SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(strDate).before(new Date())) {
+            String currentDate=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            if( currentDate.compareTo(strDate)<=0)
                 return true;
-            }
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

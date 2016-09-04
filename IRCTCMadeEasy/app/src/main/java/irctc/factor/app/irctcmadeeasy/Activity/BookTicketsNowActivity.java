@@ -254,7 +254,7 @@ public class BookTicketsNowActivity extends AppCompatActivity implements IGetVal
     }
 
     void startBooking(){
-        if(TicketConstants.CheckIfDatePast(mFinalJson.getDatejourney()))
+        if(!TicketConstants.CheckIfDatePast(mFinalJson.getDatejourney()))
             goForBooking();
         else
             Toast.makeText(getApplicationContext(), "Please update date and proceed for booking.", Toast.LENGTH_LONG).show();
