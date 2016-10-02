@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -119,7 +120,17 @@ public class TicketConstants {
 
     public static boolean CheckIfDatePast(String strDate){
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(new Date());
-        return (currentDate.compareTo(strDate) <= 0);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("dd-MM-yyyy");
+        try {
+            Date date1 = dateFormat.parse(currentDate);
+            Date date2 = dateFormat.parse(strDate);
+            return (date2.after(date1)||date2.equals(date1))?true:false;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 

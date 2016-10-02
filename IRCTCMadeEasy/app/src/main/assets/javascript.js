@@ -473,10 +473,24 @@ function doAutomation() {
             loginToForm();
             $("img[id='cimage']").width('125%');
         } else {
-            window.location.href = "https://www.irctc.co.in/eticketing/loginHome.jsf";
+            //window.location.href = "https://www.irctc.co.in/eticketing/loginHome.jsf";
         }
     }
+    else if(isPlanMyTravelAvailable()) {
+        	scrollToGivenId($("input[name='jpform:fromStation']"));
+        	var currentUrl=window.location.href;
+        	console.log("CurrentURL"+currentUrl);
+        	var mPlanPage="https://www.irctc.co.in/eticketing/mainpage.jsf";
+        	var p1="https://www.irctc.co.in/eticketing/trainbetweenstns.jsf";
+        	if(!((currentUrl===mPlanPage)||(currentUrl===p1)))
+            {
+            console.log("called planmy travel");
+            planMyTravel();
+            }
+        }
     else if(isTrainsListed()) {
+
+
     	scrollToGivenId($("table[id='avlAndFareForm:trainbtwnstns']"));
 
         //Ad removal
@@ -532,11 +546,9 @@ function doAutomation() {
                 $.prompt('The selected berth \'' + berthclass + '\' is not available in the chosen train. Please check if the data entered is correct.');
             }
         }
-    }
-    else if(isPlanMyTravelAvailable()) {
-    	scrollToGivenId($("input[name='jpform:fromStation']"));
-        planMyTravel();
-    }
+        }
+
+
     else if(isPaymentPage()) {
     	scrollToGivenId($("div[id='paymentMsgBox']"));
         fillPaymentDetails();
