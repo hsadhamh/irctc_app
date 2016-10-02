@@ -42,7 +42,6 @@ public class IrctcMainActivity extends AppCompatActivity {
     String mPassengerListPage = ".*?(www\\.irctc\\.co\\.in\\/eticketing\\/trainbetweenstns\\.jsf)";
     String mPaymentPage = ".*?(www\\.irctc\\.co\\.in\\/eticketing\\/jpInput\\.jsf)";
     String mHomeURL = "http://www.irctc.co.in/eticketing/loginHome.jsf";
-    String mPlanPage="https://www.irctc.co.in/eticketing/mainpage.jsf";
 
 
     String mJson;
@@ -77,7 +76,6 @@ public class IrctcMainActivity extends AppCompatActivity {
 
     public boolean isPaymentPage(String url){ return isMatch(url, mPaymentPage); }
 
-    public boolean isPlanMyTravelPage(String url){return isMatch(url,mPlanPage);}
 
     public boolean isMatch(String text, String pattern){
         Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
